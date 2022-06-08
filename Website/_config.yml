@@ -23,13 +23,18 @@ email: bonne.jongsm@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   ClueModel
 domain: "bvjongsma.github.io"
-baseurl: "/ClueModel/" # the subpath of your site, e.g. /blog
+baseurl: "/ClueModel/Website/_site/" # the subpath of your site, e.g. /blog
 url: "https://bvjongsma.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: jekyllrb
 #github_username:  jekyll
 
+remote_theme: pages-themes/cayman@v0.2.0
+#remote_theme: pages-themes/modernist@v0.2.0
+plugins:
+- jekyll-remote-theme # add this line to the plugins list if you already have one
+
 # Build settings
-theme: minima
+#theme: minima
 plugins:
   - jekyll-feed
 
