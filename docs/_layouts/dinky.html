@@ -30,14 +30,17 @@
       </ul>
     </nav>
 
+    {% if page.page == "index.html" %}
     <header class="page-header" role="banner">
       <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
       <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
       <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
       <a href="https://google.com" class="btn">Google it</a>
     </header>
+    {% endif %}
 
     <main id="content" class="main-content" role="main">
+	    {{ page.page }}
       {{ content }}
 
       <footer class="site-footer">
