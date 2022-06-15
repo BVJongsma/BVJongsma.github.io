@@ -1,7 +1,7 @@
 # This is a pseudocode idea of how we want to set up the model.
 __authors__ = "Bonne Jongsma", "Naomï Broersma", "Iris Kamsteeg"
 
-import cards
+from Implementation.Pseudocode import cards
 import model
 
 def distribute_cards():
