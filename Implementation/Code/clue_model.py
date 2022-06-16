@@ -2,24 +2,8 @@ import mesa
 from mesa import space
 from mesa import time
 
-
-class EnvelopeAgent(mesa.Agent):
-    """The envelope containing the murder weapon and killer cards."""
-
-    def __init__(self, unique_id, model):
-        super().__init__(unique_id, model)
-
-
-class ClueAgent(mesa.Agent):
-    """An agent who plays the game of Clue."""
-
-    def __init__(self, unique_id, model):
-        super().__init__(unique_id, model)
-
-    # During a step, the agent will ask another agent if they have a card.
-    # TODO what does an agent do during a step
-    def step(self):
-        print("This is agent " + str(self.unique_id) + ".")
+from Implementation.Code.clue_agent import ClueAgent
+from Implementation.Code.envelope_agent import EnvelopeAgent
 
 
 class ClueModel(mesa.Model):
