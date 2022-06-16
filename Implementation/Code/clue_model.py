@@ -4,7 +4,7 @@ from mesa import time
 
 from Implementation.Code.clue_agent import ClueAgent
 from Implementation.Code.envelope_agent import EnvelopeAgent
-
+from Implementation.Code.cards import Cards
 
 class ClueModel(mesa.Model):
     """A model with some number of agents."""
@@ -12,6 +12,7 @@ class ClueModel(mesa.Model):
     # TODO do we want width and height, currently not used.
     def __init__(self, N, width, height):
         self.num_agents = N
+        self.cards = Cards(self.num_agents)
         self.grid = mesa.space.MultiGrid(width, height, True)
         # The agents activate one at a time, in the order they were added.
         self.schedule = mesa.time.BaseScheduler(self)
@@ -20,11 +21,15 @@ class ClueModel(mesa.Model):
         # Create the envelope. This agent is not added to the schedule.
         # TODO we do not want this agent to have a step, but how do we actually use it. Is it possible to not have this
         #  agent or initialise it in some other way?
-        a = EnvelopeAgent(0, self)
+        envelope_cards = [self.cards.get_envelope_weapon()]
+        envelope_cards = envelope_cards.append(self.cards.get_envelope_suspect())
+
+        a = EnvelopeAgent(0, envelope_cards, self)
 
         # Create playing agents.
         for i in range(self.num_agents):
-            a = ClueAgent(i+1, self)
+            agent_cards = self.cards.get_agent_cards()
+            a = ClueAgent(i+1, agent_cards, self)
             self.schedule.add(a)
             # TODO do we want to add the agents to a grid?
             # Add the agent to a random grid cell
