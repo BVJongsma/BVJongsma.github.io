@@ -6,8 +6,8 @@ Module contains data model for three wise men puzzle as Kripke strukture and age
 formulas
 """
 
-from mlsolver.kripke import KripkeStructure, World
-from mlsolver.formula import Atom, And, Not, Or, Box_a, Box_star
+from Implementation.Code.mlsolver.kripke import KripkeStructure, World
+from Implementation.Code.mlsolver.formula import Atom, And, Not, Or, Box_a, Box_star
 
 
 class WiseMenWithHat:
@@ -52,6 +52,48 @@ class WiseMenWithHat:
 
         # This announcement implies that third men has be the one, who wears a red hat
         self.knowledge_base.append(Box_a('3', Atom('3:R')))
+
+
+class Clue:
+    """
+    Class models the Kripke structure of Clue.
+    """
+
+    knowledge_base = []
+
+    def __init__(self):
+        worlds = self.initialise_worlds()
+        relations = self.initialise_relations()
+
+        # TODO do we add reflexive and symmetric edges?
+        relations.update(add_reflexive_edges(worlds, relations))
+        relations.update(add_symmetric_edges(relations))
+
+        self.ks = KripkeStructure(worlds, relations)
+
+    def initialise_worlds(self):
+        # TODO create worlds
+        worlds = [
+            World('RWW', {'1:R': True, '2:W': True, '3:W': True}),
+            World('RRW', {'1:R': True, '2:R': True, '3:W': True}),
+            World('RRR', {'1:R': True, '2:R': True, '3:R': True}),
+            World('WRR', {'1:W': True, '2:R': True, '3:R': True}),
+
+            World('WWR', {'1:W': True, '2:W': True, '3:R': True}),
+            World('RWR', {'1:R': True, '2:W': True, '3:R': True}),
+            World('WRW', {'1:W': True, '2:R': True, '3:W': True}),
+            World('WWW', {'1:W': True, '2:W': True, '3:W': True}),
+        ]
+        return worlds
+
+    def initialise_relations(self):
+        # TODO create relations
+        relations = {
+            '1': {('RWW', 'WWW'), ('RRW', 'WRW'), ('RWR', 'WWR'), ('WRR', 'RRR')},
+            '2': {('RWR', 'RRR'), ('RWW', 'RRW'), ('WRR', 'WWR'), ('WWW', 'WRW')},
+            '3': {('WWR', 'WWW'), ('RRR', 'RRW'), ('RWW', 'RWR'), ('WRW', 'WRR')}
+        }
+        return relations
 
 
 def add_symmetric_edges(relations):
