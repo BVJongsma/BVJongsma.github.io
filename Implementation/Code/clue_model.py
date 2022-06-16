@@ -29,7 +29,7 @@ class ClueModel(mesa.Model):
         # Create playing agents.
         for i in range(self.num_agents):
             agent_cards = self.cards.get_agent_cards()
-            a = ClueAgent(i+1, agent_cards, self)
+            a = ClueAgent(i+1, self.cards.get_all_cards(), agent_cards, self)
             self.schedule.add(a)
             # TODO do we want to add the agents to a grid?
             # Add the agent to a random grid cell
