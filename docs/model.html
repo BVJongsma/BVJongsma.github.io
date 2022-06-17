@@ -30,7 +30,8 @@ layout: dinky
             and $j \in \textrm{Players} \cup \textrm{Envelope}$. An example is $\textrm{revolver}_2$, meaning that player 2 has the revolver. In the example $\textrm{Scarlet}_{\textrm{env}}$, Scarlet is the suspect that is in the case file envelope.
         </p>
         <p>
-            \subsubsection{Rules that players can use to determine more information}
+        <div id="formal-rules">
+        <h3>Rules that players can use to determine more information</h3>
             In a game of clue, one can make use of the following logical rules to gather more information. [TODO: potentially specify notation first and then just use rule + logic, and not the in-between notation. If there are more rules we can think of, add them to the model. Also work out logically the remaining rules.]
         <ul>
             <li> If one player has a certain card, then the other player cannot have that card.\\
@@ -60,6 +61,7 @@ layout: dinky
                 If in all possible states of the Kripke model, the cards that are in the envelope are the same for some player, then that player can win the game by stating that those cards are the murder weapon and killer.
             </li>
         </ul>
+        </div>
         </p>
     </div>
     <div id="the-kripke-model">
@@ -95,15 +97,15 @@ layout: dinky
             <h2>Asking for cards: showing a card</h2>
             [TODO: explain this and work out using an example.]
             During a turn a player can ask another player for 2 cards: a weapon and a suspect. If this player has one of those cards, this card will be shown only to the player who asked for the card. This is a private announcement and action models can be used to show the update of the Kripke model after showing a card.\\
-        </div>>
-        \subsection{Asking for cards: not showing a card}
+        </div>
+        <h2>Asking for cards: not showing a card</h2>
         [TODO: explain this and work out using an example.]
         During a turn a player can ask another player for 2 cards: a weapon and a suspect. If this player does not have those cards, then no card will be shown. This is a public announcement and action models can be used to show the update of the Kripke model after not showing any card.\\
 
-        \subsection{`Guessing' the content of the envelope}
+        <h2>`Guessing' the content of the envelope</h2>
         If a player knows the content of the envelope, then this player will `guess' the content of the envelope. If this player is correct, they win the game and the game ends.\\
 
-        \subsection{After the turn: updating the model using the Clue rules}
+        <h2>After the turn: updating the model using the Clue rules</h2>
         After showing/not showing any cards, the turn of that player ends. However, more knowledge might be part of the system, so an extra step will be used to update the Kripke model using all rules from section 3.1.2. [TODO: we are not sure about the implementation yet, so this is something we will need to focus on next.]
     </div>
 

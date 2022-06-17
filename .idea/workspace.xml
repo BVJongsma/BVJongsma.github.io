@@ -6,12 +6,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ffccbdc3-082f-4195-bc19-150d35e5e17d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/game.html" afterDir="false" />
+    <list default="true" id="fbbfd18b-7a08-4c68-a6df-e25a9f3d4e5b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_layouts/dinky.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_layouts/dinky.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/introduction.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/introduction.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/model.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/model.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
