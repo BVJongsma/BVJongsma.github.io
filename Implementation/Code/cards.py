@@ -11,7 +11,9 @@ class Cards():
     def get_all_cards(self):
         return self.all_cards
 
-    def 
+    # TODO change this function to get a random weapon/random suspect
+    def get_random_cards(self, num_random_cards):
+        return random.sample(self.all_cards, num_random_cards)
 
     def get_envelope_weapon(self):
         envelope_weapon = random.choice(self.weapons)

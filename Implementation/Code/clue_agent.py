@@ -14,3 +14,6 @@ class ClueAgent(mesa.Agent):
     def step(self):
         print("This is agent " + str(self.unique_id) + ".")
         print("With cards " + str(self.agent_cards) + ".")
+        # TODO pick suggestion
+        # TOOO ask other agent
+        # TODO update knowledge for all
