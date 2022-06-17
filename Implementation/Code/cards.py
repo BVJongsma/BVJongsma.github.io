@@ -11,17 +11,22 @@ class Cards():
     def get_all_cards(self):
         return self.all_cards
 
-    # TODO change this function to get a random weapon/random suspect
     def get_random_cards(self, num_random_cards):
         return random.sample(self.all_cards, num_random_cards)
 
+    def get_random_weapon(self):
+        return random.choice(self.weapons)
+
+    def get_random_suspect(self):
+        return random.choice(self.suspects)
+
     def get_envelope_weapon(self):
-        envelope_weapon = random.choice(self.weapons)
+        envelope_weapon = self.get_random_weapon()
         self.available_cards.remove(envelope_weapon)
         return envelope_weapon
 
     def get_envelope_suspect(self):
-        envelope_suspect = random.choice(self.suspects)
+        envelope_suspect = self.get_random_suspect()
         self.available_cards.remove(envelope_suspect)
         return envelope_suspect
 
