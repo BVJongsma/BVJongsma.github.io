@@ -9,7 +9,6 @@
     <list default="true" id="ffccbdc3-082f-4195-bc19-150d35e5e17d" name="Default Changelist" comment="Work on initialising Kripke worlds">
       <change beforePath="$PROJECT_DIR$/.idea/ClueModel.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ClueModel.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Implementation/Code/cards.py" beforeDir="false" afterPath="$PROJECT_DIR$/Implementation/Code/cards.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Implementation/Code/clue_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/Implementation/Code/clue_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Implementation/Code/mlsolver/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/Implementation/Code/mlsolver/model.py" afterDir="false" />
     </list>
@@ -51,13 +50,6 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;
-  }
-}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Implementation/Pseudocode" />
@@ -159,6 +151,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Work on initialising Kripke worlds" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ClueModel$main.coverage" NAME="main Coverage Results" MODIFIED="1655463091724" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Implementation/Code" />
+    <SUITE FILE_PATH="coverage/ClueModel$main.coverage" NAME="main Coverage Results" MODIFIED="1655467313001" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Implementation/Code" />
   </component>
 </project>

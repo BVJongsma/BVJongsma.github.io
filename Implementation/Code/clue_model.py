@@ -21,7 +21,7 @@ class ClueModel(mesa.Model):
         self.running = True
         self.envelope = self.initialise_envelope()
         self.agents = self.initialise_agents()
-        self.kripke_model = Clue(self.cards)
+        self.kripke_model = Clue(self.cards, self.num_agents)
 
         # TODO Does this go here?
         for agent in self.agents:

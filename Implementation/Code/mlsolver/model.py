@@ -66,15 +66,16 @@ class Clue:
 
     knowledge_base = []
 
-    def __init__(self, cards):
-        worlds = self.initialise_worlds(cards)
-        relations = self.initialise_relations()
+    def __init__(self, cards, num_agents):
+        self.num_agents = num_agents
+        self.worlds = self.initialise_worlds(cards)
+        self.relations = self.initialise_relations()
 
         # TODO do we add reflexive and symmetric edges?
-        relations.update(add_reflexive_edges(worlds, relations))
-        relations.update(add_symmetric_edges(relations))
+        self.relations.update(add_reflexive_edges(self.worlds, self.relations))
+        self.relations.update(add_symmetric_edges(self.relations))
 
-        self.ks = KripkeStructure(worlds, relations)
+        self.ks = KripkeStructure(self.worlds, self.relations)
 
     def initialise_worlds(self, cards):
         # TODO create worlds
@@ -83,6 +84,7 @@ class Clue:
 
     def initialise_relations(self):
         # TODO create relations
+        relations = self.generate_relations()
         relations = {
             '1': {('RWW', 'WWW'), ('RRW', 'WRW'), ('RWR', 'WWR'), ('WRR', 'RRR')},
             '2': {('RWR', 'RRR'), ('RWW', 'RRW'), ('WRR', 'WWR'), ('WWW', 'WRW')},
@@ -105,6 +107,29 @@ class Clue:
                 remaining_cards_list.remove(suspect)
                 worlds, cnt = self.make_kripke_states_players(range(6), remaining_cards_list, worlds, envelope, cnt)
         return worlds
+
+    # TODO does not work at the moment
+    def generate_relations(self):
+        relations = {}
+        for agent in range(1, self.num_agents + 1):
+            print(str(agent))
+            relations[str(agent)] = []
+            for i in range(len(self.worlds)):
+                for j in range(i + 1, len(self.worlds)):
+                    if set(self.worlds[i].assignment[agent]) == set(self.worlds[j].assignment[agent]):
+                        relations[str(agent)].append((self.worlds[i], self.worlds[j]))
+                    else:
+                        print("no")
+                    if j > 3:
+                        break
+                if i > 3:
+                    break
+
+        # for relation in relations:
+        #     relations[relation] = set(relations[relation])
+
+        print(relations)
+        return relations
 
     # TODO make more general by replacing 2, range(4) and item[0], item[1] references.
     def make_kripke_states_players(self, indices, cards, worlds, envelope, cnt):
