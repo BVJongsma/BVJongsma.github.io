@@ -11,6 +11,12 @@ class Cards():
     def get_all_cards(self):
         return self.all_cards
 
+    def get_all_weapon_cards(self):
+        return self.weapons
+
+    def get_all_suspect_cards(self):
+        return self.suspects
+
     def get_random_cards(self, num_random_cards):
         return random.sample(self.all_cards, num_random_cards)
 
