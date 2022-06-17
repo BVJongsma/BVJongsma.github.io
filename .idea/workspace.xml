@@ -7,8 +7,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ffccbdc3-082f-4195-bc19-150d35e5e17d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/docs/.style.css.swp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_layouts/.dinky.html.swp" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/game.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_layouts/dinky.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_layouts/dinky.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/introduction.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/introduction.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/model.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/model.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,9 +50,9 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../HelloWorldHtml" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
   </component>
@@ -62,7 +66,8 @@
       <updated>1654680696641</updated>
       <workItem from="1654680697858" duration="3318000" />
       <workItem from="1654720349979" duration="2972000" />
-      <workItem from="1654765852320" duration="2538000" />
+      <workItem from="1654765852320" duration="4497000" />
+      <workItem from="1655484654153" duration="2081000" />
     </task>
     <task id="LOCAL-00001" summary="added basic navigation and latex-notation ability">
       <created>1654721470513</created>
