@@ -5,6 +5,8 @@ from mesa import time
 from Implementation.Code.clue_agent import ClueAgent
 from Implementation.Code.envelope_agent import EnvelopeAgent
 from Implementation.Code.cards import Cards
+from Implementation.Code.mlsolver.model import Clue
+
 
 class ClueModel(mesa.Model):
     """A model with some number of agents."""
@@ -19,6 +21,7 @@ class ClueModel(mesa.Model):
         self.running = True
         self.envelope = self.initialise_envelope()
         self.agents = self.initialise_agents()
+        self.kripke_model = Clue(self.cards)
 
         # TODO Does this go here?
         for agent in self.agents:
