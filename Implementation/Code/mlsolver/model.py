@@ -5,6 +5,10 @@
 Module contains data model for three wise men puzzle as Kripke strukture and agents announcements as modal logic
 formulas
 """
+import copy
+import itertools
+
+import numpy as np
 
 from Implementation.Code.mlsolver.kripke import KripkeStructure, World
 from Implementation.Code.mlsolver.formula import Atom, And, Not, Or, Box_a, Box_star
@@ -94,6 +98,22 @@ class Clue:
             '3': {('WWR', 'WWW'), ('RRR', 'RRW'), ('RWW', 'RWR'), ('WRW', 'WRR')}
         }
         return relations
+
+    # TODO make more general by replacing 2, range(4) and item[0], item[1] references.
+    def make_kripke_states_players(self, indices, cards, worlds):
+        for item in list(itertools.combinations(indices, 2)):
+            world_temp = [[cards[item[0]], cards[item[1]]]]
+            delete_indices = [item[0], item[1]]
+            remaining_cards = cards
+            remaining_cards = np.delete(remaining_cards, delete_indices)
+            for second_item in list(itertools.combinations(range(4), 2)):
+                world = copy.deepcopy(world_temp)
+                world.append([remaining_cards[second_item[0]], remaining_cards[second_item[1]]])
+                delete_indices = [second_item[0], second_item[1]]
+                remaining_indices = np.delete(range(4), delete_indices)
+                world.append([remaining_cards[remaining_indices[0]], remaining_cards[remaining_indices[1]]])
+                worlds.append(world)
+        return worlds
 
 
 def add_symmetric_edges(relations):
