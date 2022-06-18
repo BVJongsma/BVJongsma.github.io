@@ -7,9 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fbbfd18b-7a08-4c68-a6df-e25a9f3d4e5b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_layouts/dinky.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_layouts/dinky.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/results.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/results.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/model.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/model.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +85,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655585430810</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="tiny changes">
+      <created>1655590269171</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1655590269171</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -110,6 +115,7 @@
     <MESSAGE value="added basic navigation and latex-notation ability" />
     <MESSAGE value="changed jekyll file config for theme" />
     <MESSAGE value="rules of clue page added&#10;figured out math notation, changed latex notation to html mathjax notation for rules of clue.&#10;added a results section." />
-    <option name="LAST_COMMIT_MESSAGE" value="rules of clue page added&#10;figured out math notation, changed latex notation to html mathjax notation for rules of clue.&#10;added a results section." />
+    <MESSAGE value="tiny changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="tiny changes" />
   </component>
 </project>
