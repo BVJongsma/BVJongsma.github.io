@@ -1,0 +1,72 @@
+<h1>The official rules of Clue</h1>
+<p>
+    We will now first give the official rules of Clue.
+    Note that there exist different versions of the game.
+    We will present the rules as described by the 1996 version.
+</p><p>
+    Clue can be played with three to six people.
+    Each player receives a game token and places it in any of the designated starting spaces on the game board.
+    This game board consists of nine rooms with hallways and passages between the rooms.
+</p><p>
+    The story is that someone has been killed.
+    The `who-what-where' of the murder is described by cards.
+    There are three categories of cards: weapons, suspects and rooms.
+    There are six weapon cards, six suspect cards and nine room cards.
+    For each category of cards, one card is taken at random, without any player seeing the card, and put into the case file envelope.
+    The three cards that are in this envelope describe with what weapon was used to murder, where the murder happened and who the murderer is.
+    The remaining cards are shuffled and distributed equally over the players.
+    Note that this does not necessarily mean that each player has the same amount of cards per category.
+</p><p>
+    In order to win, the players need to find out what cards are in the case file envelope.
+    They can deduce this by looking at what cards are in their own hands, and what cards are in other people's hands.
+    Cards that are in any player's hands are by definition not in the case file envelope.
+    Alternatively, if a player knows that none of the players has a certain card, they know that this card must be in the case file envelope.
+</p><p>
+    Players take turns to find out what is in the hands of other players.
+    During a turn, a player first rolls dice to determine where they can move their game token to.
+    The player moves through hallways and passages and aims to arrive at a room.
+    This is because a player can make `suggestion' only when they are in a room.
+    Such a suggestion consists of naming a weapon, suspect and room.
+    For example, a player A can suggest ``weapon X, suspect Y, room Z".
+    The other player on the right, player B, checks if they have any of the suggested cards.
+    If they do, they will need to show one of these cards to player A and to player A only.
+    If they do not have one of the cards, they publicly announce this and the player on the right of player B checks if they have any of the suggested cards.
+    This continues until either one of the players has at least one of the suggested cards, or until all players have announced that they do not have any of the suspected cards.
+    The turn is then handed over to the next player on the left.
+</p><p>
+    Players can keep notes of the information that other players give them.
+    If they have deduced what the cards should be that are in the case file envelope,
+    they make an `accusation' and state to the group what weapon, suspect and room they think are in the envelope.
+    They can check the envelope.
+    If the player was correct, they have now won the game and the game is over.
+    If they were incorrect, they put the cards back in the envelope and are out of the game.
+    Players can still make suggestions to the player that is out of the game.
+    The player that is out of the game cannot make suggestions or accusations themselves anymore.
+</p>
+
+<h1>Simplifications</h1>
+<p>
+    We want to simplify the official, full game of Clue to make it suitable for modelling and analysis.
+    In order to do this, we limit the number of cards and modify some of the rules.
+</p><p>
+    To begin with, we dispose of the game board altogether.
+    This means that players no longer have to roll dice and move their game tokens around the board.
+    Rooms are no longer part of the game.
+    This also means that players only need to find out what murder weapon and what suspect is in the case file envelope.
+</p><p>
+    We use three players that take turns one after each other.
+    In each turn, a player can suggest a weapon-suspect combination to another player.
+    Player 1 can only suggest to player 2, player 2 can only suggest to player 3, and player 3 can only suggest to player 1.
+    If the other player has one, or both, of the cards that are suggested, they show one of their cards.
+    They only show this card to the player who suggested.
+    This is the same as in the original game of Clue.
+</p><p>
+    We use four weapon cards and four character cards for our initial model.
+    This means that there is one weapon and one suspect in the case file envelope and that each player has two cards.
+</p><p>
+    Our simplified game ends in the same way as the official game.
+    A player can make an accusation on what cards are in the envelope.
+    Players can only make accusations if they know for sure what is in the envelope.
+    This makes it impossible for players to make a false accusation and lose the game as a result.
+    Players can derive what cards are in the envelope by making use of logic.
+</p>

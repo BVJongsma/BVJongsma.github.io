@@ -1,0 +1,107 @@
+<article>
+    <h1>Implementation</h1>
+    <div id="rule-representation">
+        <h2>Knowledge and rule representation</h2>
+
+        <h3>Card and player representation</h3>
+
+        There are two different card categories: weapon and suspect. These are represented by the following sets:
+
+        <ul>
+            <li>
+                Weapons = {revolver, dagger, rope, wrench}
+            </li>
+            <li>
+                Suspects = {Scarlet, Mustard, White, Plum}
+            </li>
+        </ul>
+
+        <p>
+            We will use the set $$\textrm{Cards} = \textrm{Weapons} \cup \textrm{Suspects}$$ to refer to the set of all cards.
+            There are three different players. We refer to them as 1, 2 and 3. That is, Players = $\{$1, 2, 3$\}$. The case file envelope is denoted by the singleton set Envelope = $\{$\textrm{env}$\}$\\
+        </p>
+        <p>
+            Each player or envelope might have a certain card, and therefore we will make use of the notation $i_j$. Here, $i \in \textrm{Cards}$ %\cup \textrm{Location}$
+            and $j \in \textrm{Players} \cup \textrm{Envelope}$. An example is $\textrm{revolver}_2$, meaning that player 2 has the revolver. In the example $\textrm{Scarlet}_{\textrm{env}}$, Scarlet is the suspect that is in the case file envelope.
+        </p>
+        <p>
+        <div id="formal-rules">
+        <h3>Rules that players can use to determine more information</h3>
+            In a game of clue, one can make use of the following logical rules to gather more information. [TODO: potentially specify notation first and then just use rule + logic, and not the in-between notation. If there are more rules we can think of, add them to the model. Also work out logically the remaining rules.]
+        <ul>
+            <li> If one player has a certain card, then the other player cannot have that card.\\
+                If $card_i$ with $card \in \textrm{Cards}$ and $i \in \textrm{Players} \cup \textrm{Envelope}$, then $\neg card_j$ with $j \in \textrm{Players} \cup \textrm{Envelope}$ and $i \neq j$. That is, $card_i \rightarrow \neg card_j$ for $i \neq j$.
+            </li>
+            <li>
+                If you know that a player has a card, then they have that card.\\
+                If player $i$ knows that player $j$ has a card $card$ with $i, j \in \textrm{Players} \cup \textrm{Envelope}$ and $card \in \textrm{Cards}$, then player $j$ has that card. So, $K_i card_j \rightarrow card_j$.
+            </li>
+            <li>
+                If you have seen all the cards of a player, then they do not have any other cards.\\
+                If each player has $n$ cards and player $i$ knows that player $j$ has the set $Cards_j$ with $|Cards_j| = n$, then if $card \notin Cards_j$: $\neg card_j$. Thus, $(card \notin Cards_j \land |Cards_j| = n) \rightarrow \neg card_j$. [TODO: maybe use a boolean for if all the cards have been seen.]
+            </li>
+            <li>
+                You know that a player has a certain amount of cards, so using the cards you have seen and the cards that you know they do not have, it might be possible to determine which cards they have. [TODO: try to make this more clear and also figure out how to use logic to write this out.] % A player has $m$ cards, where $m$ is some real number. Let $t$ be the total number of cards in the game and $n$ corresponds to the cards that you know that the player does not have. If $t-n = m$, then the player must
+                If a player does not show any cards, then they do not have any of the cards that were asked for.
+            </li>
+            <li>
+                If none of the players have a certain card, then this card must be in the envelope.\\
+                $\neg card_1 \land \neg card_2 \land \neg card_3 \rightarrow card_{\textrm{env}}$.
+            </li>
+            <li>
+                If a player shows a card, then that must be one of the cards that was asked for.
+                If you know for all weapons $\{$suspects$\}$ except for one that some player has that card, then the remaining card must be in the envelope.
+            </li>
+            <li>
+                If in all possible states of the Kripke model, the cards that are in the envelope are the same for some player, then that player can win the game by stating that those cards are the murder weapon and killer.
+            </li>
+        </ul>
+        </div>
+        </p>
+    </div>
+    <div id="the-kripke-model">
+        <h2>The Kripke Model</h2>
+        <p>
+            The Kripke model should represent the state combinations that include four weapons,
+            four suspects and three players.
+            There is one weapon card and one suspect card in the envelope.
+            This means that there are $4 \times 4 = 16$ possibilities for the envelope.
+            For the three players, there are six cards left (weapons and suspects combined).
+            This leads to there being $\frac{6!}{2! \times (6-2)!} = 15$ possible card combinations for player 1.
+            When two of the six cards are given to player 1, that leaves four cards for player 2.
+            In effect, there are $\frac{4!}{2! \times (4-2)!} = 6$ possible combinations for player 2.
+            For player 3 there is only one option: they are left with the $4 - 2 = 2$ remaining cards.
+            In total, this all results in $16 \times 15 \times 6 \times 1 = 1440$ states.
+        </p>
+        <p>
+            Each state contains one of the possible combinations of the 8 weapon and suspect cards. As an example, one such state is given by: revolver$_1$, dagger$_1$, rope$_2$, scarlet$_2$, mustard$_3$, white$_3$, wrench$_\textrm{env}$, plum$_\textrm{env}$. [TODO: add a figure to better explain the potential states]\\
+        </p>
+        <p>
+            As far as relations go, the envelope does not have any relations, since we do not care about potential ways that the envelope can have the same card and about what the envelope `knows'. For the players, each player has relations from a state to another state if that players has the same cards in both states. From the previous example, player 1 has the revolver and dagger in that state, so from that state can reach any state where they also have the revolver and dagger. [TODO: use that same figure to explain relations for players]\\
+        </p>
+        <p>
+            The Kripke model is updated during every time step. Firstly, using public announcement when not showing a card. Secondly, using a private announcement when showing a card. Thirdly, the additional rules as described in the previous subsection are used. \\
+        </p>
+        <p>
+            A player knows the cards in the envelope and will guess the cards in the envelope when all possible states that agent can reach have the same cards in the envelope.\\
+    </div>
+
+    <div id="turn">
+        <h1>What happens during a turn</h1>
+        <div id="show-a-card">
+            <h2>Asking for cards: showing a card</h2>
+            [TODO: explain this and work out using an example.]
+            During a turn a player can ask another player for 2 cards: a weapon and a suspect. If this player has one of those cards, this card will be shown only to the player who asked for the card. This is a private announcement and action models can be used to show the update of the Kripke model after showing a card.\\
+        </div>
+        <h2>Asking for cards: not showing a card</h2>
+        [TODO: explain this and work out using an example.]
+        During a turn a player can ask another player for 2 cards: a weapon and a suspect. If this player does not have those cards, then no card will be shown. This is a public announcement and action models can be used to show the update of the Kripke model after not showing any card.\\
+
+        <h2>`Guessing' the content of the envelope</h2>
+        If a player knows the content of the envelope, then this player will `guess' the content of the envelope. If this player is correct, they win the game and the game ends.\\
+
+        <h2>After the turn: updating the model using the Clue rules</h2>
+        After showing/not showing any cards, the turn of that player ends. However, more knowledge might be part of the system, so an extra step will be used to update the Kripke model using all rules from section 3.1.2. [TODO: we are not sure about the implementation yet, so this is something we will need to focus on next.]
+    </div>
+
+</article>
