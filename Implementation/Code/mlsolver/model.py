@@ -103,18 +103,24 @@ class Clue:
         return relations
 
     # TODO make more general
+    # Creates all possible different combinations that can be in the envelope.
     def all_different_combinations_envelope(self, cards):
         cards_list = cards.get_all_cards()
         weapons_list = cards.get_all_weapon_cards()
         suspects_list = cards.get_all_suspect_cards()
         worlds = []
         cnt = 0
+        # Draw one weapon.
         for weapon in weapons_list:
+            # Draw one suspect.
             for suspect in suspects_list:
+                # Add the weapon and suspect to the envelope.
                 envelope = [[weapon, suspect]]
+                # Make a list of the cards that remain after removing the cards in the envelope.
                 remaining_cards_list = copy.deepcopy(cards_list)
                 remaining_cards_list.remove(weapon)
                 remaining_cards_list.remove(suspect)
+                # For this combination of cards in the envelope, create all possible worlds.
                 worlds, cnt = self.make_kripke_states_players(range(6), remaining_cards_list, worlds, envelope, cnt)
         return worlds
 
@@ -135,20 +141,32 @@ class Clue:
         return relations
 
     # TODO make more general by replacing 2, range(4) and item[0], item[1] references.
+
+
+    # After adding cards to the envelope, create all possible combinations of dividing the cards among the players.
     def make_kripke_states_players(self, indices, cards, worlds, envelope, cnt):
+        # Loop over all possible combinations of two cards out of all remaining cards using their indices.
         for item in list(itertools.combinations(indices, 2)):
+            # Add those cards to a temporary world variable, as cards for player 1.
             world_temp = copy.deepcopy(envelope)
             world_temp.append([cards[item[0]], cards[item[1]]])
+            # Remove the cards that player 1 has from the remaining cards.
             delete_indices = [item[0], item[1]]
             remaining_cards = cards
             remaining_cards = np.delete(remaining_cards, delete_indices)
+            # Loop over all possible combinations of two cards out of all remaining cards using their indices.
             for second_item in list(itertools.combinations(range(4), 2)):
+                # Add those cards as cards for player 2.
                 world = copy.deepcopy(world_temp)
                 world.append([remaining_cards[second_item[0]], remaining_cards[second_item[1]]])
                 delete_indices = [second_item[0], second_item[1]]
+                # Add the remaining cards as cards for player 3.
                 remaining_indices = np.delete(range(4), delete_indices)
                 world.append([remaining_cards[remaining_indices[0]], remaining_cards[remaining_indices[1]]])
+                # Make sure the world is given in the correct format:
+                # World(name, [[cards envelope], [cards player 1], [cards player 2], [cards player 3]])
                 world_correct_format = World(str(cnt), world)
+                # Add the world to the list of all worlds
                 worlds.append(world_correct_format)
                 cnt = cnt + 1
         return worlds, cnt

@@ -6,14 +6,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fbbfd18b-7a08-4c68-a6df-e25a9f3d4e5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/references.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/simplifications.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Implementation/Code/mlsolver/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/Implementation/Code/mlsolver/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_layouts/dinky.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_layouts/dinky.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/game.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/game.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
-    </list>
+    <list default="true" id="fbbfd18b-7a08-4c68-a6df-e25a9f3d4e5b" name="Default Changelist" comment="tiny changes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,19 +40,46 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../HelloWorldHtml" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ClueModel" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Implementation/Code" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Implementation/Code/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="fbbfd18b-7a08-4c68-a6df-e25a9f3d4e5b" name="Default Changelist" comment="" />
+      <changelist id="ffccbdc3-082f-4195-bc19-150d35e5e17d" name="Default Changelist" comment="" />
       <created>1654680696641</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -68,7 +88,6 @@
       <workItem from="1654720349979" duration="2972000" />
       <workItem from="1654765852320" duration="4497000" />
       <workItem from="1655484654153" duration="2081000" />
-      <workItem from="1655716774187" duration="3802000" />
     </task>
     <task id="LOCAL-00001" summary="added basic navigation and latex-notation ability">
       <created>1654721470513</created>
@@ -98,14 +117,7 @@
       <option name="project" value="LOCAL" />
       <updated>1655590269171</updated>
     </task>
-    <task id="LOCAL-00005" summary="tiny changes - added spaces to make the list of rules a bit easier to read">
-      <created>1655590577977</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1655590577977</updated>
-    </task>
-    <option name="localTasksCounter" value="6" />
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -121,7 +133,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
@@ -129,7 +140,9 @@
     <MESSAGE value="changed jekyll file config for theme" />
     <MESSAGE value="rules of clue page added&#10;figured out math notation, changed latex notation to html mathjax notation for rules of clue.&#10;added a results section." />
     <MESSAGE value="tiny changes" />
-    <MESSAGE value="tiny changes - added spaces to make the list of rules a bit easier to read" />
-    <option name="LAST_COMMIT_MESSAGE" value="tiny changes - added spaces to make the list of rules a bit easier to read" />
+    <option name="LAST_COMMIT_MESSAGE" value="tiny changes" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/ClueModel$main.coverage" NAME="main Coverage Results" MODIFIED="1655464356125" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Implementation/Code" />
   </component>
 </project>
