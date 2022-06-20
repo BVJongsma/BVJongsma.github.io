@@ -14,49 +14,49 @@ from Implementation.Code.mlsolver.kripke import KripkeStructure, World
 from Implementation.Code.mlsolver.formula import Atom, And, Not, Or, Box_a, Box_star
 from Implementation.Code.cards import Cards
 
-
-class WiseMenWithHat:
-    """
-    Class models the Kripke structure of the "Three wise men example.
-    """
-
-    knowledge_base = []
-
-    def __init__(self):
-        worlds = [
-            World('RWW', {'1:R': True, '2:W': True, '3:W': True}),
-            World('RRW', {'1:R': True, '2:R': True, '3:W': True}),
-            World('RRR', {'1:R': True, '2:R': True, '3:R': True}),
-            World('WRR', {'1:W': True, '2:R': True, '3:R': True}),
-
-            World('WWR', {'1:W': True, '2:W': True, '3:R': True}),
-            World('RWR', {'1:R': True, '2:W': True, '3:R': True}),
-            World('WRW', {'1:W': True, '2:R': True, '3:W': True}),
-            World('WWW', {'1:W': True, '2:W': True, '3:W': True}),
-        ]
-
-        relations = {
-            '1': {('RWW', 'WWW'), ('RRW', 'WRW'), ('RWR', 'WWR'), ('WRR', 'RRR')},
-            '2': {('RWR', 'RRR'), ('RWW', 'RRW'), ('WRR', 'WWR'), ('WWW', 'WRW')},
-            '3': {('WWR', 'WWW'), ('RRR', 'RRW'), ('RWW', 'RWR'), ('WRW', 'WRR')}
-        }
-
-        relations.update(add_reflexive_edges(worlds, relations))
-        relations.update(add_symmetric_edges(relations))
-
-        self.ks = KripkeStructure(worlds, relations)
-
-        # Wise man ONE does not know whether he wears a red hat or not
-        self.knowledge_base.append(And(Not(Box_a('1', Atom('1:R'))), Not(Box_a('1', Not(Atom('1:R'))))))
-
-        # This announcement implies that either second or third wise man wears a red hat.
-        self.knowledge_base.append(Box_star(Or(Atom('2:R'), Atom('3:R'))))
-
-        # Wise man TWO does not know whether he wears a red hat or not
-        self.knowledge_base.append(And(Not(Box_a('2', Atom('2:R'))), Not(Box_a('2', Not(Atom('2:R'))))))
-
-        # This announcement implies that third men has be the one, who wears a red hat
-        self.knowledge_base.append(Box_a('3', Atom('3:R')))
+#
+# class WiseMenWithHat:
+#     """
+#     Class models the Kripke structure of the "Three wise men example.
+#     """
+#
+#     knowledge_base = []
+#
+#     def __init__(self):
+#         worlds = [
+#             World('RWW', {'1:R': True, '2:W': True, '3:W': True}),
+#             World('RRW', {'1:R': True, '2:R': True, '3:W': True}),
+#             World('RRR', {'1:R': True, '2:R': True, '3:R': True}),
+#             World('WRR', {'1:W': True, '2:R': True, '3:R': True}),
+#
+#             World('WWR', {'1:W': True, '2:W': True, '3:R': True}),
+#             World('RWR', {'1:R': True, '2:W': True, '3:R': True}),
+#             World('WRW', {'1:W': True, '2:R': True, '3:W': True}),
+#             World('WWW', {'1:W': True, '2:W': True, '3:W': True}),
+#         ]
+#
+#         relations = {
+#             '1': {('RWW', 'WWW'), ('RRW', 'WRW'), ('RWR', 'WWR'), ('WRR', 'RRR')},
+#             '2': {('RWR', 'RRR'), ('RWW', 'RRW'), ('WRR', 'WWR'), ('WWW', 'WRW')},
+#             '3': {('WWR', 'WWW'), ('RRR', 'RRW'), ('RWW', 'RWR'), ('WRW', 'WRR')}
+#         }
+#
+#         relations.update(add_reflexive_edges(worlds, relations))
+#         relations.update(add_symmetric_edges(relations))
+#
+#         self.ks = KripkeStructure(worlds, relations)
+#
+#         # Wise man ONE does not know whether he wears a red hat or not
+#         self.knowledge_base.append(And(Not(Box_a('1', Atom('1:R'))), Not(Box_a('1', Not(Atom('1:R'))))))
+#
+#         # This announcement implies that either second or third wise man wears a red hat.
+#         self.knowledge_base.append(Box_star(Or(Atom('2:R'), Atom('3:R'))))
+#
+#         # Wise man TWO does not know whether he wears a red hat or not
+#         self.knowledge_base.append(And(Not(Box_a('2', Atom('2:R'))), Not(Box_a('2', Not(Atom('2:R'))))))
+#
+#         # This announcement implies that third men has be the one, who wears a red hat
+#         self.knowledge_base.append(Box_a('3', Atom('3:R')))
 
 
 class Clue:
@@ -72,8 +72,23 @@ class Clue:
         self.relations = self.initialise_relations()
 
         # TODO do we add reflexive and symmetric edges?
-        self.relations.update(add_reflexive_edges(self.worlds, self.relations))
         self.relations.update(add_symmetric_edges(self.relations))
+
+        print("after update")
+
+        print(len(self.relations))
+        print(len(self.relations['1']))
+        print(len(self.relations['2']))
+        print(len(self.relations['3']))
+
+        # for relation in relations:
+        #     for connection in relations[relation]:
+        #         print("\n\n")
+        #         print(relation)
+        #         print(str(connection[0]))
+        #         print("and")
+        #         print(str(connection[1]))
+        #         print("\n\n")
 
         self.ks = KripkeStructure(self.worlds, self.relations)
 
@@ -85,11 +100,6 @@ class Clue:
     def initialise_relations(self):
         # TODO create relations
         relations = self.generate_relations()
-        # relations = {
-        #     '1': {('RWW', 'WWW'), ('RRW', 'WRW'), ('RWR', 'WWR'), ('WRR', 'RRR')},
-        #     '2': {('RWR', 'RRR'), ('RWW', 'RRW'), ('WRR', 'WWR'), ('WWW', 'WRW')},
-        #     '3': {('WWR', 'WWW'), ('RRR', 'RRW'), ('RWW', 'RWR'), ('WRW', 'WRR')}
-        # }
         return relations
 
     # TODO make more general
@@ -108,27 +118,20 @@ class Clue:
                 worlds, cnt = self.make_kripke_states_players(range(6), remaining_cards_list, worlds, envelope, cnt)
         return worlds
 
-    # TODO does not work at the moment
     def generate_relations(self):
         relations = {}
         for agent in range(1, self.num_agents + 1):
-            print(str(agent))
             relations[str(agent)] = []
             for i in range(len(self.worlds)):
-                for j in range(i + 1, len(self.worlds)):
+                for j in range(i, len(self.worlds)):
                     if set(self.worlds[i].assignment[agent]) == set(self.worlds[j].assignment[agent]):
                         relations[str(agent)].append((self.worlds[i], self.worlds[j]))
-                    else:
-                        print("no")
-                    if j > 3:
-                        break
-                if i > 3:
-                    break
 
-        # for relation in relations:
-        #     relations[relation] = set(relations[relation])
 
-        print(relations)
+        print(len(relations))
+        print(len(relations['1']))
+        print(len(relations['2']))
+        print(len(relations['3']))
         return relations
 
     # TODO make more general by replacing 2, range(4) and item[0], item[1] references.
@@ -154,23 +157,12 @@ class Clue:
 def add_symmetric_edges(relations):
     """Routine adds symmetric edges to Kripke frame
     """
+    # print(relations)
     result = {}
     for agent, agents_relations in relations.items():
         result_agents = agents_relations.copy()
         for r in agents_relations:
             x, y = r[1], r[0]
-            result_agents.add((x, y))
+            result_agents.append((x, y))
         result[agent] = result_agents
-    return result
-
-
-def add_reflexive_edges(worlds, relations):
-    """Routine adds reflexive edges to Kripke frame
-    """
-    result = {}
-    for agent, agents_relations in relations.items():
-        result_agents = agents_relations.copy()
-        for world in worlds:
-            result_agents.add((world.name, world.name))
-            result[agent] = result_agents
     return result
