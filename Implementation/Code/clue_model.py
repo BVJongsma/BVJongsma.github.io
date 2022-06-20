@@ -6,6 +6,7 @@ from Implementation.Code.clue_agent import ClueAgent
 from Implementation.Code.envelope_agent import EnvelopeAgent
 from Implementation.Code.cards import Cards
 from Implementation.Code.mlsolver.model import Clue
+from Implementation.Code.mlsolver.formula import Atom, And, Not, Or, Box_a, Box_star
 
 
 class ClueModel(mesa.Model):
@@ -61,6 +62,18 @@ class ClueModel(mesa.Model):
 
     def get_agent_from_id(self, agent_id):
         return self.agents[agent_id - 1]
+
+    def get_kripke_model(self):
+        return self.kripke_model
+
+    def publicly_announce(self, agent, suggestion, affirmed):
+        if affirmed: # agent did have one of the suggested cards
+
+        else: # agent has none of the suggested cards
+           # announcement = Box_a('3', Atom('3:'))
+
+    def check_end_state(self):
+        return
 
     def step(self):
         # self.datacollector.collect(self)

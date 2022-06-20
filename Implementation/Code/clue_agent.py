@@ -13,6 +13,7 @@ class ClueAgent(mesa.Agent):
         self.agent_cards = agent_cards
         self.model = model
         self.next_agent = None
+        # TODO remove relations based on agent's cards
 
     def initialise_next_agent(self):
         next_agent_id = self.unique_id + 1
@@ -42,6 +43,17 @@ class ClueAgent(mesa.Agent):
         print("They suggest " + str(suggestion) + ".")
         # TODO ask other agent
         print("The agent they suggest to is agent " + str(self.next_agent.get_unique_id()) + ".")
+        response = self.next_agent.get_response(suggestion)
         print("Their response is " + str(self.next_agent.get_response(suggestion)) + ".")
+        self.update_knowledge(suggestion, response)
+        # Check if there is a winner
+        self.model.check_end_state()
 
-        # TODO update knowledge for all
+    def update_knowledge(self, suggestion, response):
+        if response is None: # Next agent does not have any of the cards
+            # Publicly announce that next agent does not have any
+            self.model.publicly_announce(self.next_agent, suggestion, False)
+        else: # Next agent does have one of the cards
+            # Publicly announce that next agent does have one
+            self.model.publicly_announce(self.next_agent, suggestion, True)
+            # Privately announce the card of next agent to this self agent
