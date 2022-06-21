@@ -75,8 +75,15 @@ class Clue:
         # Add symmetric relations
         self.relations.update(add_symmetric_edges(self.relations))
 
-        # for relation in relations:
-        #     for connection in relations[relation]:
+        print(len(self.relations))
+        print(len(self.relations['1']))
+        print(len(self.relations['2']))
+        print(len(self.relations['3']))
+
+
+        # print(len(set(self.relations['2'])))
+        # for relation in self.relations:
+        #     for connection in self.relations[relation]:
         #         print("\n\n")
         #         print(relation)
         #         print(str(connection[0]))
@@ -111,12 +118,8 @@ class Clue:
                 worlds, cnt = self.make_kripke_states_players(range(6), remaining_cards_list, worlds, envelope, cnt)
         return worlds
 
+    # Initialise the relations between the worlds
     def initialise_relations(self):
-        # TODO create relations
-        relations = self.generate_relations()
-        return relations
-
-    def generate_relations(self):
         relations = {}
         for agent in range(1, self.num_agents + 1):
             relations[str(agent)] = []
@@ -124,11 +127,7 @@ class Clue:
                 for j in range(i, len(self.worlds)):
                     if set(self.worlds[i].assignment[str(agent)]) == set(self.worlds[j].assignment[str(agent)]):
                         relations[str(agent)].append((self.worlds[i], self.worlds[j]))
-
-        print(len(relations))
-        print(len(relations['1']))
-        print(len(relations['2']))
-        print(len(relations['3']))
+            print(len(relations[str(agent)]))
         return relations
 
     # TODO make more general by replacing 2, range(4) and item[0], item[1] references.
