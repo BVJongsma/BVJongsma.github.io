@@ -35,7 +35,7 @@ class KripkeStructure:
             if ks.nodes_not_follow_formula(formula) == []:
                 return ks
 
-    # ADDED THIS for solving a kripke model and only deleting relations instead of worlds
+    # Solve a kripke model and only delete relations instead of worlds
     # Taken from https://github.com/JohnRoyale/MAS2018/blob/master/mlsolver/kripke.py#L36
     def relation_solve(self, agent, formula):
         nodes_to_remove = self.nodes_not_follow_formula(formula)

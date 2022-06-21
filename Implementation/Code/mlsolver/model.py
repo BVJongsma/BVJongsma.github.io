@@ -72,15 +72,8 @@ class Clue:
         self.worlds = self.initialise_worlds(cards)
         self.relations = self.initialise_relations()
 
-        # TODO do we add reflexive and symmetric edges?
+        # Add symmetric relations
         self.relations.update(add_symmetric_edges(self.relations))
-
-        print("after update")
-
-        print(len(self.relations))
-        print(len(self.relations['1']))
-        print(len(self.relations['2']))
-        print(len(self.relations['3']))
 
         # for relation in relations:
         #     for connection in relations[relation]:
@@ -93,19 +86,12 @@ class Clue:
 
         self.ks = KripkeStructure(self.worlds, self.relations)
 
+    # Get the Kripke structure
+    def get_kripke_structure(self):
+        return self.ks
+
+    # Initialise the worlds that represent the possible states in a game of Clue
     def initialise_worlds(self, cards):
-        # TODO create worlds
-        worlds = self.all_different_combinations_envelope(cards)
-        return worlds
-
-    def initialise_relations(self):
-        # TODO create relations
-        relations = self.generate_relations()
-        return relations
-
-    # TODO make more general
-    # Creates all possible different combinations that can be in the envelope.
-    def all_different_combinations_envelope(self, cards):
         cards_list = cards.get_all_cards()
         weapons_list = cards.get_all_weapon_cards()
         suspects_list = cards.get_all_suspect_cards()
@@ -125,13 +111,18 @@ class Clue:
                 worlds, cnt = self.make_kripke_states_players(range(6), remaining_cards_list, worlds, envelope, cnt)
         return worlds
 
+    def initialise_relations(self):
+        # TODO create relations
+        relations = self.generate_relations()
+        return relations
+
     def generate_relations(self):
         relations = {}
         for agent in range(1, self.num_agents + 1):
             relations[str(agent)] = []
             for i in range(len(self.worlds)):
                 for j in range(i, len(self.worlds)):
-                    if set(self.worlds[i].assignment[agent]) == set(self.worlds[j].assignment[agent]):
+                    if set(self.worlds[i].assignment[str(agent)]) == set(self.worlds[j].assignment[str(agent)]):
                         relations[str(agent)].append((self.worlds[i], self.worlds[j]))
 
         print(len(relations))
@@ -145,6 +136,7 @@ class Clue:
     # After adding cards to the envelope, create all possible combinations of dividing the cards among the players.
     def make_kripke_states_players(self, indices, cards, worlds, envelope, cnt):
         # Loop over all possible combinations of two cards out of all remaining cards using their indices.
+        world_cards = {}
         for item in list(itertools.combinations(indices, 2)):
             # Add those cards to a temporary world variable, as cards for player 1.
             world_temp = copy.deepcopy(envelope)
@@ -162,19 +154,32 @@ class Clue:
                 # Add the remaining cards as cards for player 3.
                 remaining_indices = np.delete(range(4), delete_indices)
                 world.append([remaining_cards[remaining_indices[0]], remaining_cards[remaining_indices[1]]])
+                # Sort the cards per envelope or player alphabetically
+                world = self.sort_world(world)
+                # Make a dictionary for the cards per envelope or player
+                world_cards['env'] = world[0]
+                world_cards['1'] = world[1]
+                world_cards['2'] = world[2]
+                world_cards['3'] = world[3]
                 # Make sure the world is given in the correct format:
-                # World(name, [[cards envelope], [cards player 1], [cards player 2], [cards player 3]])
-                world_correct_format = World(str(cnt), world)
+                # World(name, {'env' : [cards envelope], '1' : [cards player 1], '2' : [cards player 2], '3' : [cards player 3]})
+                world_correct_format = World(str(cnt), world_cards)
                 # Add the world to the list of all worlds
                 worlds.append(world_correct_format)
                 cnt = cnt + 1
         return worlds, cnt
 
+    # Sort the cards within a world (per envelope or player) alphabetically
+    def sort_world(self, world):
+        new_world = []
+        for card_set in world:
+            card_set = sorted(card_set, key = str.lower)
+            new_world.append(card_set)
+        return new_world
 
 def add_symmetric_edges(relations):
     """Routine adds symmetric edges to Kripke frame
     """
-    # print(relations)
     result = {}
     for agent, agents_relations in relations.items():
         result_agents = agents_relations.copy()
