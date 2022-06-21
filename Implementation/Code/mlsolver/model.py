@@ -14,6 +14,7 @@ from Implementation.Code.mlsolver.kripke import KripkeStructure, World
 from Implementation.Code.mlsolver.formula import Atom, And, Not, Or, Box_a, Box_star
 from Implementation.Code.cards import Cards
 
+
 #
 # class WiseMenWithHat:
 #     """
@@ -133,7 +134,6 @@ class Clue:
                     if set(self.worlds[i].assignment[agent]) == set(self.worlds[j].assignment[agent]):
                         relations[str(agent)].append((self.worlds[i], self.worlds[j]))
 
-
         print(len(relations))
         print(len(relations['1']))
         print(len(relations['2']))
@@ -141,7 +141,6 @@ class Clue:
         return relations
 
     # TODO make more general by replacing 2, range(4) and item[0], item[1] references.
-
 
     # After adding cards to the envelope, create all possible combinations of dividing the cards among the players.
     def make_kripke_states_players(self, indices, cards, worlds, envelope, cnt):

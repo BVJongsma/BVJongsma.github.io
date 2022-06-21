@@ -36,10 +36,10 @@ layout: dinky
 
             <ul>
                 <li>
-                    Weapons = {revolver, dagger, rope, wrench}
+                    Weapons = {candlestick, dagger, rope, wrench}
                 </li>
                 <li>
-                    Suspects = {Scarlet, Mustard, White, Plum}
+                    Suspects = {Scarlet, Mustard, Green, Plum}
                 </li>
             </ul>
 
@@ -141,17 +141,21 @@ layout: dinky
         <p>
             Each state contains one of the possible combinations of the 8 weapon and suspect cards.
             As an example, one such state is given by:
-            revolver\(_1\), dagger\(_1\),
-            rope\(_2\), scarlet\(_2\), mustard\(_3\),
-            white\(_3\), wrench\(_\textrm{env}\),
-            plum\(_\textrm{env}\).
+            candlestick\(_1\), dagger\(_1\),
+            rope\(_2\), Scarlet\(_2\), Mustard\(_3\),
+            Green\(_3\), wrench\(_\textrm{env}\),
+            Plum\(_\textrm{env}\).
             <strong><br>[TODO: add a figure to better explain the potential states]</strong>
         </p>
+        <figure>
+            <img src="figures/example_kripke_reflexive.png" alt="kripke_example" style="width:100%">
+            <figcaption>Fig.1 - Kripke model with 3 states and its relations.</figcaption>
+        </figure>
         <p>
             As far as relations go, the envelope does not have any relations,
             since we do not care about potential ways that the envelope can have the same card and about what the envelope `knows'.
             For the players, each player has relations from a state to another state if that players has the same cards in both states.
-            From the previous example, player 1 has the revolver and dagger in that state,
+            From the previous example, player 1 has the candlestick and dagger in that state,
             so from that state can reach any state where they also have the revolver and dagger.
             <strong><br>[TODO: use that same figure to explain relations for players]</strong>
         </p>
@@ -205,7 +209,7 @@ layout: dinky
         <h2>After the turn: updating the model using the Clue rules</h2>
         After showing/not showing any cards, the turn of that player ends.
         However, more knowledge might be part of the system,
-        so an extra step will be used to update the Kripke model using all rules from section 3.1.2.
+        so an extra step will be used to update the Kripke model using all rules from the rules section above.
         <br><strong>[TODO: we are not sure about the implementation yet,
         so this is something we will need to focus on next.]</strong>
     </div> <!--6.4 After a turn: updating the model-->
