@@ -6,9 +6,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fbbfd18b-7a08-4c68-a6df-e25a9f3d4e5b" name="Default Changelist" comment="Work on initialising Kripke worlds">
-      <change afterPath="$PROJECT_DIR$/docs/figures/example_kripke_reflexive.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Implementation/Code/mlsolver/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/Implementation/Code/mlsolver/model.py" afterDir="false" />
+    <list default="true" id="fbbfd18b-7a08-4c68-a6df-e25a9f3d4e5b" name="Default Changelist" comment="Added figure to website">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/model.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/model.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -121,7 +120,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655590269171</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added figure to website">
+      <created>1655801596312</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1655801596312</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -144,7 +150,8 @@
     <MESSAGE value="changed jekyll file config for theme" />
     <MESSAGE value="rules of clue page added&#10;figured out math notation, changed latex notation to html mathjax notation for rules of clue.&#10;added a results section." />
     <MESSAGE value="tiny changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="tiny changes" />
+    <MESSAGE value="Added figure to website" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added figure to website" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
