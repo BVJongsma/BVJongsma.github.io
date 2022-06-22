@@ -6,7 +6,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fbbfd18b-7a08-4c68-a6df-e25a9f3d4e5b" name="Default Changelist" comment="Another figure" />
+    <list default="true" id="fbbfd18b-7a08-4c68-a6df-e25a9f3d4e5b" name="Default Changelist" comment="Another figure">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,11 +38,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
@@ -87,6 +91,7 @@
       <workItem from="1654765852320" duration="4497000" />
       <workItem from="1655484654153" duration="2081000" />
       <workItem from="1655889707176" duration="643000" />
+      <workItem from="1655892553807" duration="1454000" />
     </task>
     <task id="LOCAL-00001" summary="added basic navigation and latex-notation ability">
       <created>1654721470513</created>
@@ -137,7 +142,21 @@
       <option name="project" value="LOCAL" />
       <updated>1655805862421</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Another figure">
+      <created>1655892793040</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1655892793040</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Another figure">
+      <created>1655893402563</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1655893402563</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,7 +182,8 @@
     <MESSAGE value="Added figure to website" />
     <MESSAGE value="Added explanation of figure." />
     <MESSAGE value="Added a figure" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added a figure" />
+    <MESSAGE value="Another figure" />
+    <option name="LAST_COMMIT_MESSAGE" value="Another figure" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
