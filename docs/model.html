@@ -32,14 +32,15 @@ layout: dinky
         <div id="card-player-representation">
             <h3>Card and player representation</h3>
 
-            There are two different card categories: weapon and suspect. These are represented by the following sets:
+            There are two different card categories: weapon and suspect.
+            These are represented by the following sets:
 
             <ul>
                 <li>
-                    Weapons = {revolver, dagger, rope, wrench}
+                    Weapons = {candlestick, dagger, rope, wrench}
                 </li>
                 <li>
-                    Suspects = {Scarlet, Mustard, White, Plum}
+                    Suspects = {Scarlet, Mustard, Green, Plum}
                 </li>
             </ul>
 
@@ -126,6 +127,7 @@ layout: dinky
     <!-- subsection 5.2: kripke model -->
     <div id="the-kripke-model">
         <h2>The Kripke Model</h2>
+        <strong>[TODO: add a formal definition of the Kripke model.]<br></strong>
         <p>
             The Kripke model should represent the state combinations that include four weapons,
             four suspects and three players.
@@ -141,19 +143,35 @@ layout: dinky
         <p>
             Each state contains one of the possible combinations of the 8 weapon and suspect cards.
             As an example, one such state is given by:
-            revolver\(_1\), dagger\(_1\),
-            rope\(_2\), scarlet\(_2\), mustard\(_3\),
-            white\(_3\), wrench\(_\textrm{env}\),
-            plum\(_\textrm{env}\).
-            <strong><br>[TODO: add a figure to better explain the potential states]</strong>
+            candlestick\(_1\), dagger\(_1\),
+            rope\(_2\), Scarlet\(_2\), Mustard\(_3\),
+            Green\(_3\), wrench\(_\textrm{env}\),
+            Plum\(_\textrm{env}\).
+            Assume that this is the real-life situation, and use the following abbreviations:
+            candlestick is c, dagger is d, rope is r, wrench is w, Scarlet is S, Mustard is M,
+            Green is G and Plum is P. Now see figure 1, which shows a Kripke model of 3 states and their relations.
+            The actual real-life state is shown in the top left.
         </p>
+        <figure>
+            <img src="figures/example_kripke_reflexive.png" alt="kripke_example" style="width:100%">
+            <figcaption>Fig.1 - Kripke model with 3 states and its relations.</figcaption>
+        </figure>
         <p>
             As far as relations go, the envelope does not have any relations,
-            since we do not care about potential ways that the envelope can have the same card and about what the envelope `knows'.
-            For the players, each player has relations from a state to another state if that players has the same cards in both states.
-            From the previous example, player 1 has the revolver and dagger in that state,
-            so from that state can reach any state where they also have the revolver and dagger.
-            <strong><br>[TODO: use that same figure to explain relations for players]</strong>
+            since we do not care about potential ways that the envelope can have the same card
+            and about what the envelope `knows'. For the players, each player has relations
+            from a state to another state if that players has the same cards in both states.
+            From the previous example, player 1 has the candlestick and dagger in that state,
+            so from that state can reach any state where they also have the candlestick and dagger.
+        </p>
+
+        <p>
+            Now consider figure 1 and the relations that are shown there.
+            Agent 1 can reach all states shown in the figure. In our model, we decided to only
+            keep reflexive relations if the agent considers that state possible, since this
+            reduces the amount of relations. A state is considered possible by an agent if
+            the cards of that agent in the state correspond to the cards the agent actually has.
+            As an example, agent 2 only has a reflexive relation in the top left state.
         </p>
         <p>
             The Kripke model is updated during every time step.
@@ -179,6 +197,11 @@ layout: dinky
             this card will be shown only to the player who asked for the card.
             This is a private announcement and action models can be used to show the update of the Kripke model after showing a card.
         </p>
+        <strong>[TODO: see if this figure works or not.]<br></strong>
+        <figure>
+            <img src="figures/kripke_show_card_3_knows.png" alt="kripke_example" style="width:100%">
+            <figcaption>Fig.1 - Kripke model showing updates of the model after player 2 shows a cards.</figcaption>
+        </figure>
     </div>
     <!-- 6.2 Asking for cards: not showing a card -->
     <div id="dont-show-a-card"> <!-- 6.2 Asking for cards: not showing a card -->
@@ -205,7 +228,7 @@ layout: dinky
         <h2>After the turn: updating the model using the Clue rules</h2>
         After showing/not showing any cards, the turn of that player ends.
         However, more knowledge might be part of the system,
-        so an extra step will be used to update the Kripke model using all rules from section 3.1.2.
+        so an extra step will be used to update the Kripke model using all rules from the rules section above.
         <br><strong>[TODO: we are not sure about the implementation yet,
         so this is something we will need to focus on next.]</strong>
     </div> <!--6.4 After a turn: updating the model-->
