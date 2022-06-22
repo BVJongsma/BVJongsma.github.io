@@ -6,9 +6,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fbbfd18b-7a08-4c68-a6df-e25a9f3d4e5b" name="Default Changelist" comment="New figures">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="fbbfd18b-7a08-4c68-a6df-e25a9f3d4e5b" name="Default Changelist" comment="New figures again" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -91,7 +89,7 @@
       <workItem from="1654765852320" duration="4497000" />
       <workItem from="1655484654153" duration="2081000" />
       <workItem from="1655889707176" duration="643000" />
-      <workItem from="1655892553807" duration="3149000" />
+      <workItem from="1655892553807" duration="3782000" />
     </task>
     <task id="LOCAL-00001" summary="added basic navigation and latex-notation ability">
       <created>1654721470513</created>
@@ -170,7 +168,21 @@
       <option name="project" value="LOCAL" />
       <updated>1655899957759</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="New figures again">
+      <created>1655900521693</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1655900521693</updated>
+    </task>
+    <task id="LOCAL-00013" summary="New figures again">
+      <created>1655900530059</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1655900530059</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -199,7 +211,8 @@
     <MESSAGE value="Another figure" />
     <MESSAGE value="Figure of not showing cards, testing font size" />
     <MESSAGE value="New figures" />
-    <option name="LAST_COMMIT_MESSAGE" value="New figures" />
+    <MESSAGE value="New figures again" />
+    <option name="LAST_COMMIT_MESSAGE" value="New figures again" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
