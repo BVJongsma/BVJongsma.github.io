@@ -80,7 +80,6 @@ class Clue:
         print(len(self.relations['2']))
         print(len(self.relations['3']))
 
-
         # print(len(set(self.relations['2'])))
         # for relation in self.relations:
         #     for connection in self.relations[relation]:
@@ -135,7 +134,6 @@ class Clue:
     # After adding cards to the envelope, create all possible combinations of dividing the cards among the players.
     def make_kripke_states_players(self, indices, cards, worlds, envelope, cnt):
         # Loop over all possible combinations of two cards out of all remaining cards using their indices.
-        world_cards = {}
         for item in list(itertools.combinations(indices, 2)):
             # Add those cards to a temporary world variable, as cards for player 1.
             world_temp = copy.deepcopy(envelope)
@@ -146,6 +144,7 @@ class Clue:
             remaining_cards = np.delete(remaining_cards, delete_indices)
             # Loop over all possible combinations of two cards out of all remaining cards using their indices.
             for second_item in list(itertools.combinations(range(4), 2)):
+                world_cards = {}
                 # Add those cards as cards for player 2.
                 world = copy.deepcopy(world_temp)
                 world.append([remaining_cards[second_item[0]], remaining_cards[second_item[1]]])
@@ -156,10 +155,10 @@ class Clue:
                 # Sort the cards per envelope or player alphabetically
                 world = self.sort_world(world)
                 # Make a dictionary for the cards per envelope or player
-                world_cards['env'] = world[0]
-                world_cards['1'] = world[1]
-                world_cards['2'] = world[2]
-                world_cards['3'] = world[3]
+                world_cards['env' + str(world[0])] = True
+                world_cards['1' + str(world[1])] = True
+                world_cards['2' + str(world[2])] = True
+                world_cards['3' + str(world[3])] = True
                 # Make sure the world is given in the correct format:
                 # World(name, {'env' : [cards envelope], '1' : [cards player 1], '2' : [cards player 2], '3' : [cards player 3]})
                 world_correct_format = World(str(cnt), world_cards)
