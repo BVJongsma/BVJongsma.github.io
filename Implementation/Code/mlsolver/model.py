@@ -70,15 +70,20 @@ class Clue:
     def __init__(self, cards, num_agents):
         self.num_agents = num_agents
         self.worlds = self.initialise_worlds(cards)
+
+        print("NUMBER OF WORLDS:")
+        print(len(self.worlds))
+
         self.relations = self.initialise_relations()
 
         # Add symmetric relations
         self.relations.update(add_symmetric_edges(self.relations))
 
-        print(len(self.relations))
+        print("NUMBER OF RELATIONS PER PLAYER:")
         print(len(self.relations['1']))
         print(len(self.relations['2']))
         print(len(self.relations['3']))
+        print("//////////////////////////////")
 
         # print(len(set(self.relations['2'])))
         # for relation in self.relations:
@@ -124,9 +129,8 @@ class Clue:
             relations[str(agent)] = []
             for i in range(len(self.worlds)):
                 for j in range(i, len(self.worlds)):
-                    if set(self.worlds[i].assignment[str(agent)]) == set(self.worlds[j].assignment[str(agent)]):
-                        relations[str(agent)].append((self.worlds[i], self.worlds[j]))
-            print(len(relations[str(agent)]))
+                    if list(self.worlds[i].assignment.keys())[agent] == list(self.worlds[j].assignment.keys())[agent]:
+                        relations[str(agent)].append((self.worlds[i].name, self.worlds[j].name))
         return relations
 
     # TODO make more general by replacing 2, range(4) and item[0], item[1] references.
@@ -155,12 +159,12 @@ class Clue:
                 # Sort the cards per envelope or player alphabetically
                 world = self.sort_world(world)
                 # Make a dictionary for the cards per envelope or player
-                world_cards['env' + str(world[0])] = True
-                world_cards['1' + str(world[1])] = True
-                world_cards['2' + str(world[2])] = True
-                world_cards['3' + str(world[3])] = True
+                world_cards['env:' + str(world[0])] = True
+                world_cards['1:' + str(world[1])] = True
+                world_cards['2:' + str(world[2])] = True
+                world_cards['3:' + str(world[3])] = True
                 # Make sure the world is given in the correct format:
-                # World(name, {'env' : [cards envelope], '1' : [cards player 1], '2' : [cards player 2], '3' : [cards player 3]})
+                # World(name, {'env:['card1', 'card2']', '1:['card3', 'card4']', '2:['card5', 'card6']', '3:['card7', 'card8']'})
                 world_correct_format = World(str(cnt), world_cards)
                 # Add the world to the list of all worlds
                 worlds.append(world_correct_format)

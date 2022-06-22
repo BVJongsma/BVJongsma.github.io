@@ -75,9 +75,9 @@ class ClueModel(mesa.Model):
     # Make a public announcement
     def publicly_announce(self, agent, suggestion, affirmed):
         if affirmed: # agent did have one of the suggested cards
-            announcement = Box_a('3', Atom('3:[candle, dagger]'))
+            announcement = Box_a('3', Atom('3:[\'candle\', \'dagger\']'))
         else: # agent has none of the suggested cards
-            announcement = Box_a('3', Atom('3:[candle, dagger]'))
+            announcement = Box_a('3', Atom('3:[\'candle\', \'dagger\']'))
 
         self.kripke_model.get_kripke_structure().relation_solve(agent, announcement)
 
