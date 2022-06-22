@@ -6,14 +6,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fbbfd18b-7a08-4c68-a6df-e25a9f3d4e5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/references.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/simplifications.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Implementation/Code/mlsolver/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/Implementation/Code/mlsolver/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_layouts/dinky.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_layouts/dinky.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/game.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/game.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
-    </list>
+    <list default="true" id="fbbfd18b-7a08-4c68-a6df-e25a9f3d4e5b" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
