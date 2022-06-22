@@ -6,7 +6,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fbbfd18b-7a08-4c68-a6df-e25a9f3d4e5b" name="Default Changelist" comment="Figure of not showing cards, testing font size">
+    <list default="true" id="fbbfd18b-7a08-4c68-a6df-e25a9f3d4e5b" name="Default Changelist" comment="New figures">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,7 +91,7 @@
       <workItem from="1654765852320" duration="4497000" />
       <workItem from="1655484654153" duration="2081000" />
       <workItem from="1655889707176" duration="643000" />
-      <workItem from="1655892553807" duration="2272000" />
+      <workItem from="1655892553807" duration="3149000" />
     </task>
     <task id="LOCAL-00001" summary="added basic navigation and latex-notation ability">
       <created>1654721470513</created>
@@ -163,7 +163,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655897899922</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="New figures">
+      <created>1655899957759</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1655899957759</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -191,7 +198,8 @@
     <MESSAGE value="Added a figure" />
     <MESSAGE value="Another figure" />
     <MESSAGE value="Figure of not showing cards, testing font size" />
-    <option name="LAST_COMMIT_MESSAGE" value="Figure of not showing cards, testing font size" />
+    <MESSAGE value="New figures" />
+    <option name="LAST_COMMIT_MESSAGE" value="New figures" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
