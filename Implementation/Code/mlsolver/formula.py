@@ -65,6 +65,7 @@ class Box_a:
     def semantic(self, ks, world_to_test):
         result = True
         for relation in ks.relations.get(self.agent, {}):
+            # print("relation[0]: ", type(relation[0]), "world_to_test: ", type(world_to_test))
             if relation[0] == world_to_test:
                 result = result and self.inner.semantic(ks, relation[1])
         return result
@@ -75,7 +76,7 @@ class Box_a:
 
     # TODO
     def __str__(self):
-        raise NotImplementedError
+        return "Box_" + str(self.agent) + ":" + str(self.inner)
 
 
 class Box_star:

@@ -73,13 +73,28 @@ class ClueModel(mesa.Model):
         return self.kripke_model
 
     # Make a public announcement
+    # type Agent: 'Implementation.Code.clue_agent.ClueAgent'
+    # type suggestion"list of strings
     def publicly_announce(self, agent, suggestion, affirmed):
+        #print(type(agent), "this is type agent")
+        full_announcement = None
         if affirmed: # agent did have one of the suggested cards
-            announcement = Box_a('3', Atom('3:[\'candle\', \'dagger\']'))
-        else: # agent has none of the suggested cards
-            announcement = Box_a('3', Atom('3:[\'candle\', \'dagger\']'))
+            #   TODO: replace this
+            fake_announcement = Box_a('3', Atom('3:[\'candle\', \'dagger\']'))
+            print(fake_announcement)
+        else: # agent has none of the suggested cards (affirmed = False)
+            #all agents know that agent does not have both suggested cards
+            # announcement = Box_a('3', Atom('3:[\'candle\', \'dagger\']'))
+            #TODO: make a forloop
+            for a in self.agents:
+                announcement = Box_a(str(a.get_unique_id()), Not(Atom(str(agent.get_unique_id()) + ":" + str(suggestion))))
+                print(announcement)
+                self.kripke_model.get_kripke_structure().relation_solve(a, announcement)
 
-        self.kripke_model.get_kripke_structure().relation_solve(agent, announcement)
+
+
+        # for a in self.agents:
+        #     self.kripke_model.get_kripke_structure().relation_solve(a, announcement)
 
     # Check if there is a winner of the game
     def check_end_state(self):

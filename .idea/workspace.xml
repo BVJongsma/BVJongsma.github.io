@@ -6,7 +6,15 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fbbfd18b-7a08-4c68-a6df-e25a9f3d4e5b" name="Default Changelist" comment="New figures again" />
+    <list default="true" id="fbbfd18b-7a08-4c68-a6df-e25a9f3d4e5b" name="Default Changelist" comment="colour changes">
+      <change beforePath="$PROJECT_DIR$/.idea/ClueModel.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ClueModel.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Implementation/Code/clue_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/Implementation/Code/clue_agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Implementation/Code/clue_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/Implementation/Code/clue_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Implementation/Code/mlsolver/formula.py" beforeDir="false" afterPath="$PROJECT_DIR$/Implementation/Code/mlsolver/formula.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Implementation/Code/mlsolver/kripke.py" beforeDir="false" afterPath="$PROJECT_DIR$/Implementation/Code/mlsolver/kripke.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_layouts/dinky.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_layouts/dinky.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -25,6 +33,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/AppData/Local/Packages/PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0/LocalCache/local-packages/Python39/site-packages/mesa/time.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$USER_HOME$/AppData/Local/Packages/PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0/LocalCache/local-packages/Python39/site-packages/mesa/agent.py" root0="SKIP_INSPECTION" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -35,6 +47,9 @@
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
@@ -191,6 +206,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
@@ -207,17 +223,7 @@
     <MESSAGE value="New figures again" />
     <option name="LAST_COMMIT_MESSAGE" value="New figures again" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Implementation/Code/clue_model.py</url>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ClueModel$main.coverage" NAME="main Coverage Results" MODIFIED="1655889741960" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Implementation/Code" />
+    <SUITE FILE_PATH="coverage/ClueModel$main.coverage" NAME="main Coverage Results" MODIFIED="1655987785267" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Implementation/Code" />
   </component>
 </project>

@@ -1,6 +1,7 @@
 import random
 import mesa
 
+
 class ClueAgent(mesa.Agent):
     """An agent who plays the game of Clue."""
 
@@ -41,7 +42,7 @@ class ClueAgent(mesa.Agent):
         print("With cards " + str(self.agent_cards) + ".")
         # Let the current agent make a suggestion
         # TODO Current implementation: pick suggestion at random
-        suggestion = [self.cards.get_random_weapon()] + [self.cards.get_random_suspect()]
+        suggestion = sorted([self.cards.get_random_weapon()] + [self.cards.get_random_suspect()],key=str.lower)
         print("They suggest " + str(suggestion) + ".")
         print("The agent they suggest to is agent " + str(self.next_agent.get_unique_id()) + ".")
         # Get a response from the next agent with whether or not they have any of the cards
