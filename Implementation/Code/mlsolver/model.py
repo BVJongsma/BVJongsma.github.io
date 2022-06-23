@@ -97,6 +97,13 @@ class Clue:
 
         self.ks = KripkeStructure(self.worlds, self.relations)
 
+        # TODO add rules
+        # If player 1 has card Scarlet themselves, and player 3 says they have one of
+        # [Scarlet, wrench], then player 1 knows player 3 has wrench
+        # t
+        # Delete all where none of them are the case
+        # Delete all with reasoning
+
     # Get the Kripke structure
     def get_kripke_structure(self):
         return self.ks
@@ -126,11 +133,11 @@ class Clue:
     def initialise_relations(self):
         relations = {}
         for agent in range(1, self.num_agents + 1):
-            relations[str(agent)] = []
+            relations[str(agent)] = set()
             for i in range(len(self.worlds)):
                 for j in range(i, len(self.worlds)):
                     if list(self.worlds[i].assignment.keys())[agent] == list(self.worlds[j].assignment.keys())[agent]:
-                        relations[str(agent)].append((self.worlds[i].name, self.worlds[j].name))
+                        relations[str(agent)].add((self.worlds[i].name, self.worlds[j].name))
         return relations
 
     # TODO make more general by replacing 2, range(4) and item[0], item[1] references.
@@ -179,6 +186,31 @@ class Clue:
             new_world.append(card_set)
         return new_world
 
+    # Find a winner amongst the agents by checking the knowledge of the agents
+    def find_winner(self):
+        winner = None
+        guess = None
+        # Go through all agents
+        for agent in range(1, self.num_agents + 1):
+            old_envelope = None
+            cnt = 0
+            goal_cnt = len(self.relations[str(agent)])
+            # For each agent, find out if every relation has a world that has the same guess for the envelope
+            for relation in self.relations[str(agent)]:
+                cnt += 1
+                relation_world = self.worlds[int(relation[1])]
+                envelope = list(relation_world.assignment.keys())[0]
+                if old_envelope is None:
+                    old_envelope = envelope
+                elif envelope != old_envelope:
+                    break
+            if cnt == goal_cnt:
+                winner = agent
+                guess = envelope
+                break
+
+        return winner, guess
+
 def add_symmetric_edges(relations):
     """Routine adds symmetric edges to Kripke frame
     """
@@ -187,6 +219,6 @@ def add_symmetric_edges(relations):
         result_agents = agents_relations.copy()
         for r in agents_relations:
             x, y = r[1], r[0]
-            result_agents.append((x, y))
+            result_agents.add((x, y))
         result[agent] = result_agents
     return result

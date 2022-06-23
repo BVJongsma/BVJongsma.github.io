@@ -1,6 +1,6 @@
 import random
 import mesa
-
+from Implementation.Code.mlsolver.formula import Atom, And, Not, Or, Box_a, Box_star
 
 class ClueAgent(mesa.Agent):
     """An agent who plays the game of Clue."""
@@ -12,7 +12,10 @@ class ClueAgent(mesa.Agent):
         self.agent_cards = agent_cards
         self.model = model
         self.next_agent = None
-        # TODO remove relations based on agent's cards
+
+    def update_kripke_initial_cards(self):
+        announcement = Atom(str(self.get_unique_id()) + ":" + str(self.agent_cards))
+        self.model.get_kripke_model().get_kripke_structure().relation_solve(self, announcement)
 
     # Set the agent that is next in turn and that a suggestion is made to
     def initialise_next_agent(self):
@@ -36,7 +39,6 @@ class ClueAgent(mesa.Agent):
         return response_card
 
     # Take a turn
-    # TODO what does an agent do during a step
     def step(self):
         print("This is agent " + str(self.unique_id) + ".")
         print("With cards " + str(self.agent_cards) + ".")
@@ -63,3 +65,17 @@ class ClueAgent(mesa.Agent):
             # Publicly announce that next agent does have one
             self.model.publicly_announce(self.next_agent, suggestion, True)
             # Privately announce the card of next agent to this self agent
+            self.next_agent.privately_announce(self, response)
+
+    # Announce privately to the suggesting agents that this agent has a certain card
+    def privately_announce(self, suggesting_agent, response):
+        # Delete all relations where this agent does not have that card
+        for card_1 in self.model.get_cards().get_all_cards():
+            if (card_1 == response):
+                break
+            for card_2 in self.model.get_cards().get_all_cards():
+                if (card_2 == response):
+                    break
+                # For the suggesting agent, remove the relations
+                announcement = Not(Atom(str(self.unique_id) + ":" + str(sorted([card_1, card_2], key=str.lower))))
+                self.model.get_kripke_model().get_kripke_structure().relation_solve(suggesting_agent, announcement)

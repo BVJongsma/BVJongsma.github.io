@@ -4,5 +4,6 @@ if __name__ == "__main__":
     # Create a Clue model with three players
     model = ClueModel(3, 10, 10)
     # Let the players take turns in a game of Clue
-    model.step()
+    for i in range(5):
+        model.step()
 
