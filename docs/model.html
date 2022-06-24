@@ -167,7 +167,8 @@ layout: dinky
 
         <p>
             Now consider figure 1 and the relations that are shown there.
-            Agent 1 can reach all states shown in the figure. In our model, we decided to only
+            Agent 1 can reach state 1 and 3. Agent 2 can only reach state 1. Lastly, agent 3
+            can reach state 1 and 2. In our model, we decided to only
             keep reflexive relations if the agent considers that state possible, since this
             reduces the amount of relations. A state is considered possible by an agent if
             the cards of that agent in the state correspond to the cards the agent actually has.
@@ -196,16 +197,23 @@ layout: dinky
             If this player has one of those cards,
             this card will be shown only to the player who asked for the card.
             This is a private announcement and action models can be used to show the update of the Kripke model after showing a card.
+            We will now consider two examples of what happens when agent 2 shows a card to agent 1.
+            The difference between these two scenarios is the amount of knowledge agent 3 has.
         </p>
-        <strong>[TODO: see if the figure works or not.]<br></strong>
+
+        <p>
+            In both examples, player 1 asks player 2: {candlestick, Scarlet}. Player 2 has Scarlet, and thus shows this card.
+            Figure 2 shows the scenario where agent 3 already knows that agent 1 has the candlestick.
+            Figure 3 shows the scenario where agent 3 does not know that agent 1 has the candlestick.
+        </p>
         <figure>
             <img src="figures/kripke_show_card_3_knows2.png" alt="kripke_example" style="width:100%">
-            <figcaption>Fig.2 - Kripke model showing updates of the model after player 2 shows a cards and player can
+            <figcaption>Fig.2 - Kripke model showing updates of the model after player 2 shows a cards and player 3 can
                 determine the card.</figcaption>
         </figure>
         <figure>
             <img src="figures/kripke_show_card_3_does_not_know.png" alt="kripke_example" style="width:100%">
-            <figcaption>Fig.3 - Kripke model showing updates of the model after player 2 shows a cards and player can
+            <figcaption>Fig.3 - Kripke model showing updates of the model after player 2 shows a cards and player 3 can
                 not determine the card.</figcaption>
         </figure>
     </div>
