@@ -2,6 +2,16 @@ import random
 import mesa
 from Implementation.Code.mlsolver.formula import Atom, And, Not, Or, Box_a, Box_star
 
+# Strategy
+# Suggest randomly
+RANDOM = False
+# Use neither of your own cards in suggestion
+NOT_OWN = False
+# Use one of your own cards in suggestion
+ONE_OWN = True
+# TODO
+ELIMINATING = False
+
 class ClueAgent(mesa.Agent):
     """An agent who plays the game of Clue."""
 
@@ -44,7 +54,7 @@ class ClueAgent(mesa.Agent):
         print("With cards " + str(self.agent_cards) + ".")
         # Let the current agent make a suggestion
         # TODO Current implementation: pick suggestion at random
-        suggestion = sorted([self.cards.get_random_weapon()] + [self.cards.get_random_suspect()],key=str.lower)
+        suggestion = self.pick_suggestion()
         print("They suggest " + str(suggestion) + ".")
         print("The agent they suggest to is agent " + str(self.next_agent.get_unique_id()) + ".")
         # Get a response from the next agent with whether or not they have any of the cards
@@ -54,6 +64,35 @@ class ClueAgent(mesa.Agent):
         self.update_knowledge(suggestion, response)
         # Check if there is a winner
         self.model.check_end_state()
+
+    def pick_suggestion(self):
+        if RANDOM:
+            suggestion = sorted([self.cards.get_random_weapon()] + [self.cards.get_random_suspect()], key=str.lower)
+        elif NOT_OWN:
+            suggestion = self.pick_other_cards()
+        elif ONE_OWN:
+            suggestion = self.pick_one_other_card()
+        elif ELIMINATING:
+            suggestion = self.pick_eliminating_suggestion()
+        return suggestion
+
+    def pick_other_cards(self):
+        possible_weapon = [weapon for weapon in self.cards.get_all_weapon_cards() if weapon not in self.agent_cards]
+        possible_suspect = [suspect for suspect in self.cards.get_all_suspect_cards() if suspect not in self.agent_cards]
+        suggestion = sorted([random.choice(possible_weapon)] + [random.choice(possible_suspect)], key=str.lower)
+        return suggestion
+
+    def pick_one_other_card(self):
+        own_card = random.choice(self.agent_cards)
+        if own_card in self.cards.get_all_weapon_cards():
+            other_card = random.choice(self.cards.get_all_suspect_cards())
+        elif own_card in self.cards.get_all_suspect_cards():
+            other_card = random.choice(self.cards.get_all_weapon_cards())
+        return sorted([own_card, other_card], key = str.lower)
+
+    # TODO implement (now random)
+    def pick_eliminating_suggestion(self):
+        return sorted([self.cards.get_random_weapon()] + [self.cards.get_random_suspect()], key=str.lower)
 
     # Update the knowledge of all agents via a public or private announcement
     # TODO move to clue_model?
