@@ -1,6 +1,9 @@
 from clue_model import ClueModel
 
 if __name__ == "__main__":
+    # Create a Clue model with three players
     model = ClueModel(3, 10, 10)
-    model.step()
+    # Let the players take turns in a game of Clue
+    for i in range(5):
+        model.step()
 
