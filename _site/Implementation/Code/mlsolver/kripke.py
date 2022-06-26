@@ -35,6 +35,30 @@ class KripkeStructure:
             if ks.nodes_not_follow_formula(formula) == []:
                 return ks
 
+    # Solve a kripke model and only delete relations instead of worlds
+    # Taken from https://github.com/JohnRoyale/MAS2018/blob/master/mlsolver/kripke.py#L36
+    def relation_solve(self, agent, formula):
+        #print(str(formula))
+        nodes_to_remove = self.nodes_not_follow_formula(formula)
+
+        if len(nodes_to_remove) == 0:
+            print("zero nodes to remove")
+            return self
+
+        relations_to_remove = []
+
+        for relation in self.relations[str(agent.get_unique_id())]:
+            for node in nodes_to_remove:
+                if node in relation:
+                    relations_to_remove.append(relation)
+                    break
+
+        print("Relations previously: " + str(len(self.relations[str(agent.get_unique_id())])))
+        print("Relations to remove: " + str(len(relations_to_remove)))
+        self.relations[str(agent.get_unique_id())] = set(self.relations[str(agent.get_unique_id())]).difference(set(relations_to_remove))
+        print("Relations now: " + str(len(self.relations[str(agent.get_unique_id())])))
+        return self
+
     def remove_node_by_name(self, node_name):
         """Removes ONE node of Kripke frame, therefore we can make knowledge
         base consistent with announcement.
