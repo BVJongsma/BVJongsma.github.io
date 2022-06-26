@@ -31,7 +31,7 @@ class ClueAgent(mesa.Agent):
     # Set the agent that is next in turn and that a suggestion is made to
     def initialise_next_agent(self):
         next_agent_id = self.unique_id + 1
-        if (next_agent_id > self.model.get_num_agents()):
+        if next_agent_id > self.model.get_num_agents():
             next_agent_id = 1
         self.next_agent = self.model.get_agent_from_id(next_agent_id)
 

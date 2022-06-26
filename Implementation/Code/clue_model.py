@@ -87,7 +87,7 @@ class ClueModel(mesa.Model):
             # Delete the possibilities where neither of the suggested cards are present
             for card_1 in self.cards.get_all_cards():
                 for card_2 in self.cards.get_all_cards():
-                    if (card_1 not in suggestion and card_2 not in suggestion):
+                    if card_1 not in suggestion and card_2 not in suggestion:
                         for a in self.agents:
                             announcement = Not(Atom(str(agent.get_unique_id()) + ":" + str(sorted([card_1, card_2], key = str.lower))))
                             self.kripke_model.get_kripke_structure().relation_solve(a, announcement)
