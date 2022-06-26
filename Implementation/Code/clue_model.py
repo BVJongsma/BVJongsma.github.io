@@ -8,7 +8,6 @@ from Implementation.Code.cards import Cards
 from Implementation.Code.mlsolver.model import Clue
 from Implementation.Code.mlsolver.formula import Atom, And, Not, Or, Box, Box_a, Box_star
 
-
 class ClueModel(mesa.Model):
     """A model with some number of agents."""
 
@@ -50,7 +49,10 @@ class ClueModel(mesa.Model):
         for i in range(self.num_agents):
             # Get the agent's cards
             agent_cards = self.cards.get_agent_cards()
-            a = ClueAgent(i+1, self.cards, agent_cards, self)
+            if i == 0:
+                a = ClueAgent(i+1, self.cards, agent_cards, "UNKNOWN", self)
+            else:
+                a = ClueAgent(i+1, self.cards, agent_cards, "RANDOM", self)
             # Add the agent to the MESA schedule, so it can take a turn
             self.schedule.add(a)
             agents.append(a)
@@ -104,7 +106,7 @@ class ClueModel(mesa.Model):
     # TODO what if there are multiple agents that win at the same time?
     def check_end_state(self):
         winner, guess = self.kripke_model.find_winner()
-        if winner is None:
+        if winner == []:
             return
         else:
             print("GAME FINISHED")

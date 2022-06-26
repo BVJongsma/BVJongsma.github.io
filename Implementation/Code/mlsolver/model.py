@@ -5,10 +5,12 @@
 Module contains data model for three wise men puzzle as Kripke strukture and agents announcements as modal logic
 formulas
 """
+import ast
 import copy
 import itertools
 
 import numpy as np
+import re
 
 from Implementation.Code.mlsolver.kripke import KripkeStructure, World
 from Implementation.Code.mlsolver.formula import Atom, And, Not, Or, Box_a, Box_star
@@ -188,8 +190,8 @@ class Clue:
 
     # Find a winner amongst the agents by checking the knowledge of the agents
     def find_winner(self):
-        winner = None
-        guess = None
+        winner = []
+        guess = []
         # Go through all agents
         for agent in range(1, self.num_agents + 1):
             old_envelope = None
@@ -205,11 +207,44 @@ class Clue:
                 elif envelope != old_envelope:
                     break
             if cnt == goal_cnt:
-                winner = agent
-                guess = envelope
+                winner.append(agent)
+                guess.append(envelope)
                 break
 
         return winner, guess
+
+    # Get cards that are unknown for an agent (i.e. could be in the hands of various players/the envelope)
+    def get_unknown_cards(self, cards, agent_id):
+        unknown_cards = []
+        # Go through all cards
+        for card in cards:
+            old_i = None
+            unknown = False
+            # For each card, keep track of where they belong according to the worlds
+            for relation in self.relations[str(agent_id)]:
+                relation_world = self.worlds[int(relation[1])]
+                # i is the envelope (0), or one of the agents (1, 2 or 3)
+                for i in range(self.num_agents):
+                    # Turn the strings in a world assignment to a list
+                    i_cards = re.findall(r'\:(.*)', str(list(relation_world.assignment.keys())[i]))[0]
+                    i_cards_list = ast.literal_eval(i_cards)
+                    i_cards_list = [i_card.strip() for i_card in i_cards_list]
+                    if card in i_cards_list:
+                        new_i = i
+                        if old_i == None:
+                            old_i = new_i
+                        elif new_i != old_i:
+                            print(new_i)
+                            print(old_i)
+                            unknown_cards.append(card)
+                            unknown = True
+                            break
+                        else:
+                            old_i = new_i
+                if unknown:
+                    break
+        return unknown_cards
+
 
 def add_symmetric_edges(relations):
     """Routine adds symmetric edges to Kripke frame

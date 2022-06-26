@@ -42,7 +42,7 @@ class KripkeStructure:
         nodes_to_remove = self.nodes_not_follow_formula(formula)
 
         if len(nodes_to_remove) == 0:
-            print("zero nodes to remove")
+            # print("zero nodes to remove")
             return self
 
         relations_to_remove = []
@@ -53,10 +53,10 @@ class KripkeStructure:
                     relations_to_remove.append(relation)
                     break
 
-        print("Relations previously: " + str(len(self.relations[str(agent.get_unique_id())])))
-        print("Relations to remove: " + str(len(relations_to_remove)))
+        # print("Relations previously: " + str(len(self.relations[str(agent.get_unique_id())])))
+        # print("Relations to remove: " + str(len(relations_to_remove)))
         self.relations[str(agent.get_unique_id())] = set(self.relations[str(agent.get_unique_id())]).difference(set(relations_to_remove))
-        print("Relations now: " + str(len(self.relations[str(agent.get_unique_id())])))
+        # print("Relations now: " + str(len(self.relations[str(agent.get_unique_id())])))
         return self
 
     def remove_node_by_name(self, node_name):

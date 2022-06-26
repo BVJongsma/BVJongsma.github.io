@@ -9,8 +9,11 @@
     <list default="true" id="fbbfd18b-7a08-4c68-a6df-e25a9f3d4e5b" name="Default Changelist" comment="Trying to get the website working again">
       <change beforePath="$PROJECT_DIR$/.idea/ClueModel.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ClueModel.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/model.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/model.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Implementation/Code/clue_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/Implementation/Code/clue_agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Implementation/Code/clue_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/Implementation/Code/clue_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Implementation/Code/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Implementation/Code/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Implementation/Code/mlsolver/kripke.py" beforeDir="false" afterPath="$PROJECT_DIR$/Implementation/Code/mlsolver/kripke.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Implementation/Code/mlsolver/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/Implementation/Code/mlsolver/model.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,13 +44,6 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false"
-  }
-}]]></component>
   <component name="RunManager">
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
@@ -222,6 +218,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="New figures again" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ClueModel$main.coverage" NAME="main Coverage Results" MODIFIED="1655889741960" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Implementation/Code" />
+    <SUITE FILE_PATH="coverage/ClueModel$main.coverage" NAME="main Coverage Results" MODIFIED="1656249660996" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Implementation/Code" />
   </component>
 </project>

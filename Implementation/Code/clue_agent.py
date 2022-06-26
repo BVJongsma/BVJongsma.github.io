@@ -2,26 +2,27 @@ import random
 import mesa
 from Implementation.Code.mlsolver.formula import Atom, And, Not, Or, Box_a, Box_star
 
-# Strategy
-# Suggest randomly
-RANDOM = False
-# Use neither of your own cards in suggestion
-NOT_OWN = False
-# Use one of your own cards in suggestion
-ONE_OWN = True
-# TODO
-ELIMINATING = False
+# # Strategy
+# # Suggest randomly
+# RANDOM = False
+# # Use neither of your own cards in suggestion
+# NOT_OWN = False
+# # Use one of your own cards in suggestion
+# ONE_OWN = True
+# # TODO
+# ELIMINATING = False
 
 class ClueAgent(mesa.Agent):
     """An agent who plays the game of Clue."""
 
-    def __init__(self, unique_id, cards, agent_cards, model):
+    def __init__(self, unique_id, cards, agent_cards, strategy, model):
         super().__init__(unique_id, model)
         self.unique_id = unique_id
         self.cards = cards
         self.agent_cards = agent_cards
         self.model = model
         self.next_agent = None
+        self.strategy = strategy
 
     def update_kripke_initial_cards(self):
         announcement = Atom(str(self.get_unique_id()) + ":" + str(self.agent_cards))
@@ -66,14 +67,25 @@ class ClueAgent(mesa.Agent):
         self.model.check_end_state()
 
     def pick_suggestion(self):
-        if RANDOM:
+        # Pick random suggestion
+        if self.strategy == "RANDOM":
             suggestion = sorted([self.cards.get_random_weapon()] + [self.cards.get_random_suspect()], key=str.lower)
-        elif NOT_OWN:
+        # Pick two cards that the agent does not have themselves
+        elif self.strategy == "NOT_OWN":
             suggestion = self.pick_other_cards()
-        elif ONE_OWN:
+        # Pick one card that the agent has themselves and another that the agent does not have themselves
+        elif self.strategy == "ONE_OWN":
             suggestion = self.pick_one_other_card()
-        elif ELIMINATING:
-            suggestion = self.pick_eliminating_suggestion()
+        # Pick two cards for which the agent does not know to whom they belong
+        elif self.strategy == "UNKNOWN":
+            suggestion = self.pick_unknown_cards()
+        # Pick one card that the agent knows about and isn't of the next agent, and one unknown card
+        elif self.strategy == "ONE_UNKNOWN":
+            suggestion = self.pick_one_unknown_card()
+        # Pick one card that the agent knows about and isn't of the next agent, and one card that might be of the next
+        # agent or in the envelope (or if there are none such cards: that might be of the next agent)
+        elif self.strategy == "REASONING":
+            suggestion = self.pick_reasoning_suggestion()
         return suggestion
 
     def pick_other_cards(self):
@@ -90,8 +102,23 @@ class ClueAgent(mesa.Agent):
             other_card = random.choice(self.cards.get_all_weapon_cards())
         return sorted([own_card, other_card], key = str.lower)
 
+    def pick_unknown_cards(self):
+        unknown_weapons = self.model.get_kripke_model().get_unknown_cards(self.cards.get_all_weapon_cards(), self.unique_id)
+        if unknown_weapons == []:
+            unknown_weapons.append(random.choice(self.cards.get_all_weapon_cards()))
+        print(unknown_weapons)
+        unknown_suspects = self.model.get_kripke_model().get_unknown_cards(self.cards.get_all_suspect_cards(), self.unique_id)
+        if unknown_suspects == []:
+            unknown_suspects.append(random.choice(self.cards.get_all_suspect_cards()))
+        print(unknown_suspects)
+        return sorted([random.choice(unknown_weapons), random.choice(unknown_suspects)], key = str.lower)
+
     # TODO implement (now random)
-    def pick_eliminating_suggestion(self):
+    def pick_one_unknown_card(self):
+        return sorted([self.cards.get_random_weapon()] + [self.cards.get_random_suspect()], key=str.lower)
+
+    # TODO implement (now random)
+    def pick_reasoning_suggestion(self):
         return sorted([self.cards.get_random_weapon()] + [self.cards.get_random_suspect()], key=str.lower)
 
     # Update the knowledge of all agents via a public or private announcement
