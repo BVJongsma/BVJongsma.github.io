@@ -201,31 +201,49 @@ layout: dinky
             The difference between these two scenarios is the amount of knowledge agent 3 has.
         </p>
 
-        <p>
-            In both examples, player 1 asks player 2: {dagger, Scarlet}. Player 2 has Scarlet, and thus shows this card.
-            Figure 2 shows the scenario where agent 3 already knows that agent 1 has the dagger.
-            Figure 3 shows the scenario where agent 3 does not know that agent 1 has the dagger.
-        </p>
         <figure>
             <img src="figures/kripke_show_card_3_knows2.png" alt="kripke_example" style="width:100%">
             <figcaption>Fig.2 - Kripke model showing updates of the model after player 2 shows a cards and player 3 can
                 determine the card.</figcaption>
         </figure>
-        <p> Consider figure 2. Step 1 shows the original model. Step 2 shows the model after agent 1 has updates its relations.
-        Agent 2 has shown agent 1 the Scarlet card, so agent 1 removes all relations to states where player 2 does not have
-        Scarlet, since those states are no longer possible. As can be seen in figure 2, this corresponds to agent 1
-        removing the relation from state 1 to state 3 and the reflexive relation of state 3. In step 3, player 3 updates
-        its relations. This figure considers the scenario where agent 3 already knows that agent 1 has the dagger.
-        Since agent 1 asked for {dagger, Scarlet} and was shown a card, it must be the case that agent 2 has Scarlet.
-        So, agent 3 removes all relations to states where player 2 does not have Scarlet. In the last step, we remove
-        one-sided relations, since those start from a state that is impossible for the respective agent and therefore
-        are not relevant for finding the content of the envelope. Moreover, states without relations are removed
-        to clarify which potential states are still possible.
+        <p>
+            Consider figure 2 and the following scenario: Player 1 asks player 2: {dagger, Scarlet}.
+            Player 2 has Scarlet, and thus shows this card. Agent 3 already knows that agent 1 has the dagger.
+        </p>
+        <p>
+            Step 1 shows the original model. Step 2 shows the model after agent 1 has updates its
+            relations. Agent 2 has shown agent 1 the Scarlet card, so agent 1 removes all relations to states where
+            player 2 does not have Scarlet, since those states are no longer possible. As can be seen in figure 2,
+            this corresponds to agent 1 removing the relation from state 1 to state 3 and the reflexive relation of
+            state 3. In step 3, player 3 updates its relations. This figure considers the scenario where agent 3 already
+            knows that agent 1 has the dagger. Since agent 1 asked for {dagger, Scarlet} and was shown a card, it must
+            be the case that agent 2 has Scarlet. So, agent 3 removes all relations to states where player 2 does not
+            have Scarlet. In the last step, we remove one-sided relations, since those start from a state that is
+            impossible for the respective agent and therefore are not relevant for finding the content of the envelope.
+            Moreover, states without relations are removed to clarify which potential states are still possible.
+            In this small example, only the actual state remains after all agents have updated their relations.
+        </p>
         <figure>
             <img src="figures/kripke_show_card_3_does_not_know.png" alt="kripke_example" style="width:100%">
-            <figcaption>Fig.3 - Kripke model showing updates of the model after player 2 shows a cards and player 3 can
-                not determine the card.</figcaption>
+            <figcaption>Fig.3 - Kripke model showing updates of the model after player 2 shows a cards and player 3
+                cannot determine the card.</figcaption>
         </figure>
+        <p>
+            For figure 3, player 1 asks player 2: {candlestick, Scarlet}. Player 2 has Scarlet, and thus shows this card.
+            Agent 3 does not know that agent 1 has the candlestick. More specifically, agent 3 considers state 2 as
+            a possibility and here agent 2 has the candlestick.
+        </p>
+        <p>
+            Step 1 and 2 are the same as for the scenario in figure 2, because agent 1 still sees the same card and updates
+            the same relations. During step 3, agent 3 updates its relations while knowing
+            less information than in the previous scenario. Agent 3 does not know that agent 1 has the candlestick, but
+            can still gather some information from agent 2 showing a card to agent 1. More precisely, agent 3 knows
+            that agent 2 has either the candlestick or Scarlet card or both. So, agent 3 can remove relations to all states
+            where player 2 does not have the candlestick and does not have Scarlet. In this example, this corresponds
+            to keeping all existing relations, since all relations of agent 3 point to states where player 2 has either
+            the candlestick or Scarlet. For step 4, irrelevant relations and states are removed again. Here, more
+            potential states are still considered possible by agent 3 than only the actual state.
+        </p>
     </div>
     <!-- 6.2 Asking for cards: not showing a card -->
     <div id="dont-show-a-card"> <!-- 6.2 Asking for cards: not showing a card -->
