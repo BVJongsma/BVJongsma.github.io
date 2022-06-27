@@ -24,9 +24,9 @@ class ClueAgent(mesa.Agent):
         self.next_agent = None
         self.strategy = strategy
 
-    def update_kripke_initial_cards(self):
-        announcement = Atom(str(self.get_unique_id()) + ":" + str(self.agent_cards))
-        self.model.get_kripke_model().get_kripke_structure().relation_solve(self, announcement)
+    # def update_kripke_initial_cards(self):
+    #     announcement = Atom(str(self.get_unique_id()) + ":" + str(self.agent_cards))
+    #     self.model.get_kripke_model().get_kripke_structure().relation_solve(self, announcement)
 
     # Set the agent that is next in turn and that a suggestion is made to
     def initialise_next_agent(self):
@@ -128,6 +128,7 @@ class ClueAgent(mesa.Agent):
             # Publicly announce that next agent does not have any
             self.model.publicly_announce(self.next_agent, suggestion, False)
         else: # Next agent does have one of the cards
+            # TODO make sure public announcement only for the player who does not see the card, so it is faster.
             # Publicly announce that next agent does have one
             self.model.publicly_announce(self.next_agent, suggestion, True)
             # Privately announce the card of next agent to this self agent

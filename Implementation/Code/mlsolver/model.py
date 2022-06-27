@@ -69,8 +69,9 @@ class Clue:
 
     knowledge_base = []
 
-    def __init__(self, cards, num_agents):
+    def __init__(self, cards, num_agents, model):
         self.num_agents = num_agents
+        self.model = model
         self.worlds = self.initialise_worlds(cards)
 
         print("NUMBER OF WORLDS:")
@@ -135,14 +136,36 @@ class Clue:
         return worlds
 
     # Initialise the relations between the worlds
+    # OLD VERSION, first adds everything, then removes relations.
+    # def initialise_relations(self):
+    #     relations = {}
+    #     for agent in range(1, self.num_agents + 1):
+    #         relations[str(agent)] = set()
+    #         for i in range(len(self.worlds)):
+    #             for j in range(i, len(self.worlds)):
+    #                 if list(self.worlds[i].assignment.keys())[agent] == list(self.worlds[j].assignment.keys())[agent]:
+    #                     relations[str(agent)].add((self.worlds[i].name, self.worlds[j].name))
+    #     return relations
+
+    # Initialise the relations between the worlds
     def initialise_relations(self):
         relations = {}
+        # Loop over the agents
         for agent in range(1, self.num_agents + 1):
             relations[str(agent)] = set()
+            all_related = []
+            # Determine the cards this agent actually has
+            actual_assignment = str(agent) + ":" + str(self.model.get_agent_from_id(agent).agent_cards)
+            # Loop over all worlds
             for i in range(len(self.worlds)):
-                for j in range(i, len(self.worlds)):
-                    if list(self.worlds[i].assignment.keys())[agent] == list(self.worlds[j].assignment.keys())[agent]:
-                        relations[str(agent)].add((self.worlds[i].name, self.worlds[j].name))
+                # If that world has the correct relations, add it to a list of all related worlds.
+                if list(self.worlds[i].assignment.keys())[agent] == actual_assignment:
+                    all_related.append(self.worlds[i])
+
+            # Loop over all related worlds and make relations between all of them.
+            for i in range(len(all_related)):
+                for j in range(i, len(all_related)):
+                    relations[str(agent)].add((all_related[i].name, all_related[j].name))
         return relations
 
     # After adding cards to the envelope, create all possible combinations of dividing the cards among the players.

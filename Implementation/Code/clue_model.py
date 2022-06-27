@@ -21,13 +21,13 @@ class ClueModel(mesa.Model):
         self.running = True
         self.envelope = self.initialise_envelope()
         self.agents = self.initialise_agents()
-        self.kripke_model = Clue(self.cards, self.num_agents)
+        self.kripke_model = Clue(self.cards, self.num_agents, self)
 
-        # TODO Does this go here?
         # For each agent, determine the next agent in turn, which is also the agent they suggest to
         for agent in self.agents:
             agent.initialise_next_agent()
-            agent.update_kripke_initial_cards()
+            # agent.update_kripke_initial_cards()
+
 
         # TODO: way to collect data, and easily print things. This is from introduction to MESA example.
         # self.datacollector = mesa.datacollection.DataCollector(
@@ -89,7 +89,8 @@ class ClueModel(mesa.Model):
                 for card_2 in self.cards.get_all_cards():
                     if card_1 not in suggestion and card_2 not in suggestion:
                         for a in self.agents:
-                            announcement = Not(Atom(str(agent.get_unique_id()) + ":" + str(sorted([card_1, card_2], key = str.lower))))
+                            announcement = Not(Atom(str(agent.get_unique_id()) + ":" + str(sorted([card_1, card_2],
+                                                                                                  key = str.lower))))
                             self.kripke_model.get_kripke_structure().relation_solve(a, announcement)
 
         else: # agent has none of the suggested cards (affirmed = False)
