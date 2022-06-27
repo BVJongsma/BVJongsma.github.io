@@ -128,7 +128,10 @@ class Clue:
                 remaining_cards_list.remove(weapon)
                 remaining_cards_list.remove(suspect)
                 # For this combination of cards in the envelope, create all possible worlds.
-                worlds, cnt = self.make_kripke_states_players(range(6), remaining_cards_list, worlds, envelope, cnt)
+                range_cards = range(len(remaining_cards_list))
+                cards_per_player = int(len(remaining_cards_list) / 3)
+                worlds, cnt = self.make_kripke_states_players(range_cards, remaining_cards_list, worlds, envelope, cnt,
+                                                              cards_per_player)
         return worlds
 
     # Initialise the relations between the worlds
@@ -142,29 +145,39 @@ class Clue:
                         relations[str(agent)].add((self.worlds[i].name, self.worlds[j].name))
         return relations
 
-    # TODO make more general by replacing 2, range(4) and item[0], item[1] references.
-
     # After adding cards to the envelope, create all possible combinations of dividing the cards among the players.
-    def make_kripke_states_players(self, indices, cards, worlds, envelope, cnt):
+    def make_kripke_states_players(self, indices, cards, worlds, envelope, cnt, cards_per_player):
         # Loop over all possible combinations of two cards out of all remaining cards using their indices.
-        for item in list(itertools.combinations(indices, 2)):
+        for item in list(itertools.combinations(indices, cards_per_player)):
             # Add those cards to a temporary world variable, as cards for player 1.
             world_temp = copy.deepcopy(envelope)
-            world_temp.append([cards[item[0]], cards[item[1]]])
+            cards_1 = []
+            delete_indices = []
+            for index in range(cards_per_player):
+                cards_1.append(cards[item[index]])
+                delete_indices.append(item[index])
+            world_temp.append(cards_1)
             # Remove the cards that player 1 has from the remaining cards.
-            delete_indices = [item[0], item[1]]
             remaining_cards = cards
             remaining_cards = np.delete(remaining_cards, delete_indices)
             # Loop over all possible combinations of two cards out of all remaining cards using their indices.
-            for second_item in list(itertools.combinations(range(4), 2)):
+            range_cards = range(len(remaining_cards))
+            for second_player in list(itertools.combinations(range_cards, cards_per_player)):
                 world_cards = {}
                 # Add those cards as cards for player 2.
                 world = copy.deepcopy(world_temp)
-                world.append([remaining_cards[second_item[0]], remaining_cards[second_item[1]]])
-                delete_indices = [second_item[0], second_item[1]]
+                cards_2 = []
+                delete_indices = []
+                for index in range(cards_per_player):
+                    cards_2.append(remaining_cards[second_player[index]])
+                    delete_indices.append(second_player[index])
+                world.append(cards_2)
                 # Add the remaining cards as cards for player 3.
-                remaining_indices = np.delete(range(4), delete_indices)
-                world.append([remaining_cards[remaining_indices[0]], remaining_cards[remaining_indices[1]]])
+                remaining_indices = np.delete(range_cards, delete_indices)
+                cards_3 = []
+                for index in range(cards_per_player):
+                    cards_3.append(remaining_cards[remaining_indices[index]])
+                world.append(cards_3)
                 # Sort the cards per envelope or player alphabetically
                 world = self.sort_world(world)
                 # Make a dictionary for the cards per envelope or player
@@ -184,7 +197,7 @@ class Clue:
     def sort_world(self, world):
         new_world = []
         for card_set in world:
-            card_set = sorted(card_set, key = str.lower)
+            card_set = sorted(card_set, key=str.lower)
             new_world.append(card_set)
         return new_world
 
