@@ -259,6 +259,15 @@ layout: dinky
             <img src="figures/kripke_do_not_show_card_option2.png" alt="kripke_example" style="width:100%">
             <figcaption>Fig.4 - Kripke model showing updates of the model after player 2 does not show a card.</figcaption>
         </figure>
+        <p>
+            Consider figure 4 and the scenario: player 1 asks player 2 {candlestick, Green}. Player 2 does not have
+            these cards and hence cannot show any cards. Step 1 shows the original model. Step 2 and 3 show respectively
+            agent 1 and 3 updating their relations. Both of them know that agent 2 does not have the candlestick and
+            does not have Green, so they can remove any states where agent 2 has the candlestick and any state where
+            agent 2 has Green. For agent 1 this corresponds to removing relations to state 3, because here agent 2 has
+            Green. For agent 3, relations to state 2 are removed, since here agent 2 has the candlestick. In step 4
+            all irrelevant relations and states are removed, leaving only the actual state.
+        </p>
     </div>
     <!--6.3 6.3 ‘Guessing’ the content of the envelope-->
     <div id="guess-envelope-content"> <!--6.3 ‘Guessing’ the content of the envelope-->
