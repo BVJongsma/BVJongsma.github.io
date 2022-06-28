@@ -294,9 +294,6 @@ class Clue:
             # For each unknown agent, keep a list of possible known cards
             possible_known_cards = [[] for i in range(max(unknown_agents) + 1)]
 
-            print(unknown_agents)
-            print(possible_known_cards)
-
             for relation in self.relations[str(agent_id)]:
                 relation_world = self.worlds[int(relation[1])]
                 for unknown_agent in unknown_agents:
@@ -318,7 +315,6 @@ class Clue:
                 for card in possible_known_cards[unknown_agent]:
                     knowledge_dict[agent_id - 1][card] = unknown_agent
                     if card in unknown_cards[agent_id - 1]:
-                        print("hey")
                         unknown_cards[agent_id - 1].remove(card)
                     # All cards except for the ones in the dictionary are the unknown cards
 

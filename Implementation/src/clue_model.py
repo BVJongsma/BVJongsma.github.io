@@ -83,6 +83,9 @@ class ClueModel(mesa.Model):
     def get_knowledge_dict(self):
         return self.knowledge_dict
 
+    def get_unknown_cards(self, agent_id):
+        return self.unknown_cards[agent_id]
+
     #
     # # Make a public announcement
     # # type Agent: 'Implementation.src.clue_agent.ClueAgent'

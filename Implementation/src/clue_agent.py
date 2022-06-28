@@ -111,11 +111,11 @@ class ClueAgent(mesa.Agent):
         return sorted([own_card, other_card], key = str.lower)
 
     def pick_unknown_cards(self):
-        unknown_weapons = self.model.get_kripke_model().get_unknown_cards(self.cards.get_all_weapon_cards(), self.unique_id)
+        unknown_weapons = list(set(self.model.get_unknown_cards(self.unique_id)).intersection(self.cards.get_all_weapon_cards()))
         if unknown_weapons == []:
             unknown_weapons.append(random.choice(self.cards.get_all_weapon_cards()))
         print(unknown_weapons)
-        unknown_suspects = self.model.get_kripke_model().get_unknown_cards(self.cards.get_all_suspect_cards(), self.unique_id)
+        unknown_suspects = list(set(self.model.get_unknown_cards(self.unique_id)).intersection(self.cards.get_all_suspect_cards()))
         if unknown_suspects == []:
             unknown_suspects.append(random.choice(self.cards.get_all_suspect_cards()))
         print(unknown_suspects)
