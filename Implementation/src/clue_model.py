@@ -106,7 +106,7 @@ class ClueModel(mesa.Model):
     # type Agent: 'Implementation.src.clue_agent.ClueAgent'
     # type suggestion"list of strings
     # New implementation
-    def publicly_announce(self, agent, suggestion, affirmed):
+    def publicly_announce(self, asking_agent, agent, suggestion, affirmed):
         if affirmed:  # agent did have one or more of the suggested cards
             # TODO implementation for suggesting 3 cards instead of 2
             announcement = Or(Atom(suggestion[0]), Atom(suggestion[1]))
@@ -120,6 +120,9 @@ class ClueModel(mesa.Model):
             print("announcement", announcement)
             updating_agent = agent.next_agent
             asked_agent_id = agent.get_unique_id()
+            # Update the relations for the agent that asked for the cards.
+            self.kripke_model.get_kripke_structure().relation_solve(asking_agent, announcement, asked_agent_id)
+            # Update the relations for the agent that did not ask for the cards.
             self.kripke_model.get_kripke_structure().relation_solve(updating_agent, announcement, asked_agent_id)
 
     # Check if there is a winner of the game
