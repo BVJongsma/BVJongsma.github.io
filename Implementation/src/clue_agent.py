@@ -132,17 +132,17 @@ class ClueAgent(mesa.Agent):
             # Publicly announce that next agent does have one
             self.model.publicly_announce(self.next_agent, suggestion, True)
             # Privately announce the card of next agent to this self agent
-            self.next_agent.privately_announce(self, response)
+            self.next_agent.privately_announce(response)
 
     # Announce privately to the suggesting agents that this agent has a certain card
-    def privately_announce(self, suggesting_agent, response):
+    def privately_announce(self, response):
         # Delete all relations where this agent does not have that card
         for card_1 in self.model.get_cards().get_all_cards():
             if (card_1 == response):
-                break
+                continue
             for card_2 in self.model.get_cards().get_all_cards():
                 if (card_2 == response):
-                    break
+                    continue
                 # For the suggesting agent, remove the relations
-                announcement = Not(Atom(str(self.unique_id) + ":" + str(sorted([card_1, card_2], key=str.lower))))
-                self.model.get_kripke_model().get_kripke_structure().relation_solve(suggesting_agent, announcement)
+                announcement = Not(Atom(str(self.next_agent.get_unique_id()) + ":" + str(sorted([card_1, card_2], key=str.lower))))
+                self.model.get_kripke_model().get_kripke_structure().relation_solve(self, announcement)
