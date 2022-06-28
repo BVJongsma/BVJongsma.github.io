@@ -115,10 +115,10 @@ class ClueAgent(mesa.Agent):
 
     # TODO implement (now random)
     def pick_one_unknown_card(self):
-        unknown_cards = self.model.get_kripke_model().get_unknown_cards(self.cards.get_all_cards(), self.unique_id)
-        unknown_card = random.choice(unknown_cards)
-        all_known_cards = self.model.get_kripke_model().get_known_cards_agent()
-        known_cards = self.model.get_kripke_model().get_known_cards_agent(all_known_cards, self, self.next_agent)
+        # unknown_cards = self.model.get_kripke_model().get_unknown_cards(self.cards.get_all_cards(), self.unique_id)
+        # unknown_card = random.choice(unknown_cards)
+        # all_known_cards = self.model.get_kripke_model().get_known_cards_agent()
+        # known_cards = self.model.get_kripke_model().get_known_cards_agent(all_known_cards, self, self.next_agent)
         return sorted([self.cards.get_random_weapon()] + [self.cards.get_random_suspect()], key=str.lower)
 
     # TODO implement (now random)
