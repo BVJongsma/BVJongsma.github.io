@@ -104,11 +104,14 @@ class GameInterface:
     """
     def init_KB(self):
         empty_dict = {i: [] for i in self.model.cards.get_all_cards()}
-        KB = []
+        KB = [empty_dict.copy()]
+        for a in self.model.envelope.get_envelope_cards():
+            KB[0][a] = 'env'
         for a in self.model.agents:
             KB.append(empty_dict.copy())
             for i in a.get_agent_cards():
-                KB[a.get_unique_id() - 1][i] = a.get_unique_id()
+                KB[a.get_unique_id()][i] = a.get_unique_id()
+        print(KB)
         return KB
 
     # TODO: implement this
@@ -167,7 +170,7 @@ class GameInterface:
 
         # insert info in the table
         for agent in agents:
-            for card_info in self.KB[agent - 1]:
+            for card_info in self.KB[agent]:
                 for c in cards[agent - 1]:
                     if c == card_info:
                         new_tuple = self.tree.item(c)['values']
