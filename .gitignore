@@ -3,3 +3,4 @@
 /Implementation/src/__pycache__
 /Implementation/.idea
 /.idea/workspace.xml
+*.pyc
