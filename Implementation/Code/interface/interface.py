@@ -1,38 +1,41 @@
 import tkinter as tk
 from tkinter import ttk
+import Implementation.Code.cards as c
 
 
-def init_table():
+def init_table(num_agents, num_cards):
     win = tk.Tk()
     # title
     win.title('A model of Clue')
     # dimensions
-    win.geometry("650x250")
+    dim = str(num_agents*150+150)+ "x" + str(num_cards*25+25)
+    win.geometry(dim)
     # background color
     win['bg'] = '#d61e1e'
-    # s = ttk.Style()
-    # s.theme_use('clam')
-
     return win
 
 
 class GameInterface:
-    def __init__(self):
-        self.win = init_table()
+    def __init__(self, num_agents, num_cards):
+        self.num_agents = num_agents
+        self.num_cards = num_cards
+        self.win = init_table(num_agents, num_cards)
         # start tree
-        columns = ('items', 'agent1', 'agent2', 'agent3')
-        self.tree = ttk.Treeview(self.win, column=columns, show='headings')
+        columns = ('items',)
+        for i in range(1, num_agents+1):
+            columns += ('agent' + str(i),)
+        self.tree = ttk.Treeview(self.win, column=columns, show='headings', height=num_cards)
         self.tree.pack()
         self.init_table_information()
         self.win.mainloop()
         self.insert_player_cards()
 
     def update_table(self):
-        selected = self.tree.focus()
-        self.tree.insert(selected, tk.END, values=(
+        # temporary update function
+        self.tree.insert('', tk.END, values=(
             'extra info', '?', '?', '?'))  # if '' is replaced by selected, only adds this column once
 
-    def insert_button(self):
+    def refresh_button(self):
         refresh_button = tk.Button(self.win, text="Refresh Table", command=self.update_table)
         refresh_button.pack()
 
@@ -42,26 +45,26 @@ class GameInterface:
         self.tree.heading("#0", text="", anchor=tk.CENTER)
         self.tree.column('items', anchor=tk.CENTER, width=150)
         self.tree.heading('items', text='Items')
-        self.tree.column('agent1', anchor=tk.CENTER, width=150)
-        self.tree.heading('agent1', text='Agent 1')
-        self.tree.column('agent2', anchor=tk.CENTER, width=150)
-        self.tree.heading('agent2', text='Agent 2')
-        self.tree.column('agent3', anchor=tk.CENTER, width=150)
-        self.tree.heading('agent3', text='Agent 3')
+        # make the agent columns & headings
+        for i in range(1, self.num_agents+1):
+            self.tree.column('agent' + str(i), anchor=tk.CENTER, width=150)
+            self.tree.heading('agent' + str(i), text='Agent ' + str(i))
 
         # generate list of data to put in the table
-        suspects = ['Scarlet', 'Mustard', 'Green', 'Plum']
-        weapons = ['candlestick', 'dagger', 'rope', 'wrench']
-        cards = suspects + weapons
-        data = [(x, '?', '?', '?') for x in cards]
+        card = c.Cards(3)
+        cards = card.get_all_cards()
+        question = tuple()
+        for i in range(self.num_agents):
+            question += ('?',)
+        data = [(x,) + question for x in cards]
 
         # put data in the table
         for d in data:
             self.tree.insert('', tk.END,
                              values=d)  # tk.END means add at the end of the list, '0' means add at the beginning
 
-        self.insert_button()
-
+        # add an update button
+        self.refresh_button()
         self.tree.pack()
 
         return
@@ -71,11 +74,4 @@ class GameInterface:
 
 
 if __name__ == "__main__":
-    interface = GameInterface()
-
-# Insert the data in Treeview widget
-# tree.insert('', 'end', text="1", values=('1', 'Joe', 'Nash'))
-# tree.insert('', 'end', text="2", values=('2', 'Emily', 'Mackmohan'))
-# tree.insert('', 'end', text="3", values=('3', 'Estilla', 'Roffe'))
-# tree.insert('', 'end', text="4", values=('4', 'Percy', 'Andrews'))
-# tree.insert('', 'end', text="5", values=('5', 'Stephan', 'Heyward'))
+    interface = GameInterface(3, 8)
