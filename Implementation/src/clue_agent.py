@@ -132,7 +132,7 @@ class ClueAgent(mesa.Agent):
             # Publicly announce that next agent does have one
             self.model.publicly_announce(self.next_agent, suggestion, True)
             # Privately announce the card of next agent to this self agent
-            self.next_agent.privately_announce(response)
+            self.privately_announce(response)
 
     # Announce privately to the suggesting agents that this agent has a certain card
     def privately_announce(self, response):

@@ -260,7 +260,7 @@ class Clue:
             for relation in self.relations[str(agent_id)]:
                 relation_world = self.worlds[int(relation[1])]
                 # i is the envelope (0), or one of the agents (1, 2 or 3)
-                for i in range(self.num_agents):
+                for i in range(self.num_agents + 1):
                     # Turn the strings in a world assignment to a list
                     i_cards = re.findall(r'\:(.*)', str(list(relation_world.assignment.keys())[i]))[0]
                     i_cards_list = ast.literal_eval(i_cards)
@@ -270,8 +270,8 @@ class Clue:
                         if old_i == None:
                             old_i = new_i
                         elif new_i != old_i:
-                            print(new_i)
-                            print(old_i)
+                            # print(new_i)
+                            # print(old_i)
                             unknown_cards.append(card)
                             unknown = True
                             break
