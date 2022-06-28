@@ -39,6 +39,9 @@ class ClueAgent(mesa.Agent):
     def get_unique_id(self):
         return self.unique_id
 
+    def get_agent_cards(self):
+        return self.agent_cards
+
     # Get a response of the current agent based on the suggestion that is made
     # TODO Current implementation: show any of the suggested cards at random
     def get_response(self, suggestion):
