@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import Implementation.src.cards as ca
+import Implementation.src.clue_agent
 import Implementation.src.clue_model as cm
 
 """"
@@ -72,21 +73,21 @@ class GameInterface:
         self.tree = ttk.Treeview(self.win, column=columns, show='headings', height=self.num_cards)
         self.tree.pack()
         self.init_table_information()
-        #self.insert_player_cards()
+        self.insert_player_cards()
         self.win.mainloop()
 
     def update_table(self):
-        # get a list of cards that an agent knows is for an agent
-        # TODO: make this more general, currently only for putting agents own cards in
-        agents, cards, unknown_cards, dictionary = fake_data()
-        for agent in agents:
-            for card_info in dictionary[agent]:
-                for c in cards[agent]:
-                    if c == card_info:
-                        new_tuple = self.tree.item(c)['values']
-                        new_tuple[agent] = 'Agent '+ str(agent)
-                        new_tuple = tuple(new_tuple)
-                        self.tree.item(c, values=new_tuple)
+        # # get a list of cards that an agent knows is for an agent
+        # # TODO: make this more general, currently only for putting agents own cards in
+        # agents, cards, unknown_cards, dictionary = fake_data()
+        # for agent in agents:
+        #     for card_info in dictionary[agent-1]:
+        #         for c in cards[agent-1]:
+        #             if c == card_info:
+        #                 new_tuple = self.tree.item(c)['values']
+        #                 new_tuple[agent] = 'Agent '+ str(agent)
+        #                 new_tuple = tuple(new_tuple)
+        #                 self.tree.item(c, values=new_tuple)
 
         # tree.item(iid)['values'] -> returns a list of the values, where iid are the cards
         # tree.item('third', values=('dagger', 1, '?', '?'))
@@ -134,9 +135,33 @@ class GameInterface:
         return
 
     def insert_player_cards(self):
-        for i in range(1, self.num_agents + 1):
-            agent = self.model.get_agent_from_id(i)
-            self.update_table(agent)
+        # list of agents
+        agents = self.model.agents
+
+        #list of cards per agents, cards[x] -> the list of cards of agent x
+        cards = []
+        for i in range(len(agents)):
+            cards.append(agents[i].get_agent_cards())
+
+        agents = [a.get_unique_id() for a in self.model.agents]
+
+        # make knowledge base
+        empty_dict = {i: [] for i in self.model.cards.get_all_cards()}
+        KB = []
+        for a in agents:
+            KB.append(empty_dict.copy())
+            for i in KB[a-1]:
+                KB[a-1][i] = a
+
+        #insert info in the table
+        for agent in agents:
+            for card_info in KB[agent-1]:
+                for c in cards[agent-1]:
+                    if c == card_info:
+                        new_tuple = self.tree.item(c)['values']
+                        new_tuple[agent] = 'Agent ' + str(agent)
+                        new_tuple = tuple(new_tuple)
+                        self.tree.item(c, values=new_tuple)
         return
 
     def get_model(self):
@@ -151,10 +176,9 @@ class GameInterface:
     def get_tree(self):
         return self.tree
 
-# agents, cards, unknown_cards, dictionary = fake_data()
-# print("agents: ", agents)
-# print("cards: ", cards)
-# print("unknown_cards: ", unknown_cards)
-# print("dict: ", dictionary)
-
 GameInterface(3)
+
+# agents, cards, unknown, dict = fake_data()
+# print(dict)
+
+
