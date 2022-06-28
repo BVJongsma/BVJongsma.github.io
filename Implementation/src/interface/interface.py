@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-import Implementation.src.cards as c
+import Implementation.src.cards as ca
+import Implementation.src.clue_model as cm
 
 
 def init_table(num_agents, num_cards):
@@ -16,24 +17,27 @@ def init_table(num_agents, num_cards):
 
 
 class GameInterface:
-    def __init__(self, num_agents, num_cards):
+    def __init__(self, num_agents):
+        self.model = cm.ClueModel(num_agents, 10, 10)
+        cards_set = ca.Cards(num_agents)
         self.num_agents = num_agents
-        self.num_cards = num_cards
-        self.win = init_table(num_agents, num_cards)
+        self.num_cards = len(cards_set.get_all_cards())
+        self.win = init_table(self.num_agents, self.num_cards)
         # start tree
         columns = ('items',)
         for i in range(1, num_agents+1):
             columns += ('agent' + str(i),)
-        self.tree = ttk.Treeview(self.win, column=columns, show='headings', height=num_cards)
+        self.tree = ttk.Treeview(self.win, column=columns, show='headings', height=self.num_cards)
         self.tree.pack()
         self.init_table_information()
-        self.win.mainloop()
         self.insert_player_cards()
+        self.win.mainloop()
 
-    def update_table(self):
+    def update_table(self, agent, cards):
+        return
         # temporary update function
-        self.tree.insert('', tk.END, values=(
-            'extra info', '?', '?', '?'))  # if '' is replaced by selected, only adds this column once
+        # self.tree.insert('', tk.END, values=(
+        #     'extra info', '?', '?', '?'))  # if '' is replaced by selected, only adds this column once
 
     def refresh_button(self):
         refresh_button = tk.Button(self.win, text="Refresh Table", command=self.update_table)
@@ -51,7 +55,7 @@ class GameInterface:
             self.tree.heading('agent' + str(i), text='Agent ' + str(i))
 
         # generate list of data to put in the table
-        card = c.Cards(3)
+        card = ca.Cards(3)
         cards = card.get_all_cards()
         question = tuple()
         for i in range(self.num_agents):
@@ -70,8 +74,19 @@ class GameInterface:
         return
 
     def insert_player_cards(self):
+        for i in range(1,self.num_agents+1):
+            agent = self.model.get_agent_from_id(i)
+            self.update_table(agent, agent.agent_cards)
         return
 
+    def get_model(self):
+        return self.model
 
-if __name__ == "__main__":
-    interface = GameInterface(3, 8)
+    def get_num_agents(self):
+        return self.num_agents
+
+    def get_win(self):
+        return self.win
+
+    def get_tree(self):
+        return self.tree
