@@ -19,13 +19,16 @@ class Atom:
     def semantic(self, ks, world_to_test, asked_agent):
         """Function returns assignment of variable in Kripke's world.
         """
-        for world in ks.worlds:
-            if world.name == world_to_test:
-                cards = re.findall(r'\:(.*)', str(list(world.assignment.keys())[asked_agent]))[0]
-                cards_list = ast.literal_eval(cards)
-                cards_list = [card.strip() for card in cards_list]
-                if self.name in cards_list:
-                    return True
+        world = ks.worlds[world_to_test]
+        # for world in ks.worlds:
+        #     if world.name == world_to_test:
+        cards = re.findall(r'\:(.*)', str(list(world.assignment.keys())[asked_agent]))[0]
+        cards_list = ast.literal_eval(cards)
+        cards_list = [card.strip() for card in cards_list]
+        if self.name in cards_list:
+            return True
+        else:
+            return False
 
     def __eq__(self, other):
         return isinstance(other, Atom) and other.name == self.name

@@ -97,9 +97,11 @@ class KripkeStructure:
          is not satisfiable
         """
         nodes_not_follow_formula = []
+        cnt = 0
         for nodes in self.worlds:
-            if not formula.semantic(self, nodes.name, asked_agent):
+            if not formula.semantic(self, cnt, asked_agent):
                 nodes_not_follow_formula.append(nodes.name)
+            cnt = cnt + 1
         return nodes_not_follow_formula
 
     def __eq__(self, other):
