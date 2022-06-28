@@ -37,8 +37,7 @@ class ClueModel(mesa.Model):
     # Initialise the case file envelope
     def initialise_envelope(self):
         # Get the envelope's cards, which consist of a weapon card and a suspect card
-        envelope_cards = [self.cards.get_envelope_weapon()]
-        envelope_cards.append(self.cards.get_envelope_suspect())
+        envelope_cards = [self.cards.get_envelope_weapon(), self.cards.get_envelope_suspect()]
         # Sort the cards alphabetically
         envelope_cards = sorted(envelope_cards, key = str.lower)
         return EnvelopeAgent(0, envelope_cards, self)
