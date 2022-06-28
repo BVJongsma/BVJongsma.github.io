@@ -36,10 +36,10 @@ class KripkeStructure:
                 return ks
 
     # Solve a kripke model and only delete relations instead of worlds
-    # Taken from https://github.com/JohnRoyale/MAS2018/blob/master/mlsolver/kripke.py#L36
-    def relation_solve(self, agent, formula):
+    # Updated from https://github.com/JohnRoyale/MAS2018/blob/master/mlsolver/kripke.py#L36
+    def relation_solve(self, agent, formula, asked_agent):
         #print(str(formula))
-        nodes_to_remove = self.nodes_not_follow_formula(formula)
+        nodes_to_remove = self.nodes_not_follow_formula(formula, asked_agent)
 
         if len(nodes_to_remove) == 0:
             # print("zero nodes to remove")
@@ -53,10 +53,10 @@ class KripkeStructure:
                     relations_to_remove.append(relation)
                     break
 
-        # print("Relations previously: " + str(len(self.relations[str(agent.get_unique_id())])))
-        # print("Relations to remove: " + str(len(relations_to_remove)))
+        print("Relations previously: " + str(len(self.relations[str(agent.get_unique_id())])))
+        print("Relations to remove: " + str(len(relations_to_remove)))
         self.relations[str(agent.get_unique_id())] = set(self.relations[str(agent.get_unique_id())]).difference(set(relations_to_remove))
-        # print("Relations now: " + str(len(self.relations[str(agent.get_unique_id())])))
+        print("Relations now: " + str(len(self.relations[str(agent.get_unique_id())])))
         return self
 
     def remove_node_by_name(self, node_name):
@@ -92,13 +92,13 @@ class KripkeStructure:
             sub_set.append(set(z))
         return sub_set
 
-    def nodes_not_follow_formula(self, formula):
+    def nodes_not_follow_formula(self, formula, asked_agent):
         """Returns a list with all worlds of Kripke structure, where formula
          is not satisfiable
         """
         nodes_not_follow_formula = []
         for nodes in self.worlds:
-            if not formula.semantic(self, nodes.name):
+            if not formula.semantic(self, nodes.name, asked_agent):
                 nodes_not_follow_formula.append(nodes.name)
         return nodes_not_follow_formula
 
