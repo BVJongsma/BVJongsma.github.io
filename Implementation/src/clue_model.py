@@ -76,31 +76,51 @@ class ClueModel(mesa.Model):
     # Get the Kripke Model that contains the knowledge present in the model
     def get_kripke_model(self):
         return self.kripke_model
+    #
+    # # Make a public announcement
+    # # type Agent: 'Implementation.src.clue_agent.ClueAgent'
+    # # type suggestion"list of strings
+    # def publicly_announce(self, agent, suggestion, affirmed):
+    #     if affirmed: # agent did have one or more of the suggested cards
+    #         # Go through all card possibilities
+    #         # Delete the possibilities where neither of the suggested cards are present
+    #         for card_1 in self.cards.get_all_cards():
+    #             for card_2 in self.cards.get_all_cards():
+    #                 if card_1 not in suggestion and card_2 not in suggestion:
+    #                     for a in self.agents:
+    #                         announcement = Not(Atom(str(agent.get_unique_id()) + ":" + str(sorted([card_1, card_2],
+    #                                                                                               key = str.lower))))
+    #                         self.kripke_model.get_kripke_structure().relation_solve(a, announcement)
+    #
+    #     else: # agent has none of the suggested cards (affirmed = False)
+    #         # Go through the two suggested cards (agent has neither of these)
+    #         for suggested_card in suggestion:
+    #             # Make pairs with this suggested card and any other card
+    #             for other_card in self.cards.get_all_cards():
+    #                 # For each agent, make + solve announcement
+    #                 for a in self.agents:
+    #                     announcement = Not(Atom(str(agent.get_unique_id()) + ":" + str(sorted([suggested_card, other_card], key = str.lower))))
+    #                     self.kripke_model.get_kripke_structure().relation_solve(a, announcement)
 
     # Make a public announcement
     # type Agent: 'Implementation.src.clue_agent.ClueAgent'
     # type suggestion"list of strings
+    # New implementation
     def publicly_announce(self, agent, suggestion, affirmed):
-        if affirmed: # agent did have one or more of the suggested cards
-            # Go through all card possibilities
-            # Delete the possibilities where neither of the suggested cards are present
-            for card_1 in self.cards.get_all_cards():
-                for card_2 in self.cards.get_all_cards():
-                    if card_1 not in suggestion and card_2 not in suggestion:
-                        for a in self.agents:
-                            announcement = Not(Atom(str(agent.get_unique_id()) + ":" + str(sorted([card_1, card_2],
-                                                                                                  key = str.lower))))
-                            self.kripke_model.get_kripke_structure().relation_solve(a, announcement)
+        if affirmed:  # agent did have one or more of the suggested cards
+            # TODO implementation for suggesting 3 cards instead of 2
+            announcement = Or(Atom(suggestion[0]), Atom(suggestion[1]))
+            print("announcement", announcement)
+            updating_agent = agent.next_agent
+            asked_agent_id = agent.get_unique_id()
+            self.kripke_model.get_kripke_structure().relation_solve(updating_agent, announcement, asked_agent_id)
 
-        else: # agent has none of the suggested cards (affirmed = False)
-            # Go through the two suggested cards (agent has neither of these)
-            for suggested_card in suggestion:
-                # Make pairs with this suggested card and any other card
-                for other_card in self.cards.get_all_cards():
-                    # For each agent, make + solve announcement
-                    for a in self.agents:
-                        announcement = Not(Atom(str(agent.get_unique_id()) + ":" + str(sorted([suggested_card, other_card], key = str.lower))))
-                        self.kripke_model.get_kripke_structure().relation_solve(a, announcement)
+        else:  # agent has none of the suggested cards (affirmed = False)
+            announcement = And(Not(Atom(suggestion[0])), Not(Atom(suggestion[1])))
+            print("announcement", announcement)
+            updating_agent = agent.next_agent
+            asked_agent_id = agent.get_unique_id()
+            self.kripke_model.get_kripke_structure().relation_solve(updating_agent, announcement, asked_agent_id)
 
     # Check if there is a winner of the game
     # TODO what if there are multiple agents that win at the same time?

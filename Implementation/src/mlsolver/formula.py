@@ -4,6 +4,8 @@
 
 This module unites all operators from propositional and modal logic.
 """
+import ast
+import re
 
 
 class Atom:
@@ -14,12 +16,16 @@ class Atom:
     def __init__(self, name):
         self.name = name
 
-    def semantic(self, ks, world_to_test):
+    def semantic(self, ks, world_to_test, asked_agent):
         """Function returns assignment of variable in Kripke's world.
         """
         for world in ks.worlds:
             if world.name == world_to_test:
-                return world.assignment.get(self.name, False)
+                cards = re.findall(r'\:(.*)', str(list(world.assignment.keys())[asked_agent]))[0]
+                cards_list = ast.literal_eval(cards)
+                cards_list = [card.strip() for card in cards_list]
+                if self.name in cards_list:
+                    return True
 
     def __eq__(self, other):
         return isinstance(other, Atom) and other.name == self.name
@@ -181,8 +187,8 @@ class Not:
     def __init__(self, inner):
         self.inner = inner
 
-    def semantic(self, ks, world_to_test):
-        return not self.inner.semantic(ks, world_to_test)
+    def semantic(self, ks, world_to_test, asked_agent):
+        return not self.inner.semantic(ks, world_to_test, asked_agent)
 
     def __eq__(self, other):
         return self.inner == other.inner
@@ -200,8 +206,8 @@ class And:
         self.left = left
         self.right = right
 
-    def semantic(self, ks, world_to_test):
-        return self.left.semantic(ks, world_to_test) and self.right.semantic(ks, world_to_test)
+    def semantic(self, ks, world_to_test, asked_agent):
+        return self.left.semantic(ks, world_to_test, asked_agent) and self.right.semantic(ks, world_to_test, asked_agent)
 
     def __eq__(self, other):
         return self.left == other.left and self.right == other.right
@@ -219,8 +225,8 @@ class Or:
         self.left = left
         self.right = right
 
-    def semantic(self, ks, world_to_test):
-        return self.left.semantic(ks, world_to_test) or self.right.semantic(ks, world_to_test)
+    def semantic(self, ks, world_to_test, asked_agent):
+        return self.left.semantic(ks, world_to_test, asked_agent) or self.right.semantic(ks, world_to_test, asked_agent)
 
     def __eq__(self, other):
         return self.left == other.left and self.right == other.right
