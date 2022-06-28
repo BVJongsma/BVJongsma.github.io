@@ -144,6 +144,8 @@ class ClueAgent(mesa.Agent):
             self.model.publicly_announce(self, self.next_agent, suggestion, True)
             # Privately announce the card of next agent to this self agent
             self.privately_announce(response)
+        # TODO Where does this go?
+        self.model.update_knowledge_dict()
 
     # TODO implement private announcement
     # Announce privately to the suggesting agents that this agent has a certain card

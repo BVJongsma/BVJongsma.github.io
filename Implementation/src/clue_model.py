@@ -28,6 +28,9 @@ class ClueModel(mesa.Model):
             agent.initialise_next_agent()
             # agent.update_kripke_initial_cards()
 
+        self.knowledge_dict, self.unknown_cards = self.kripke_model.initialise_known_dictionary(self.agents)
+        print(self.unknown_cards)
+        print(self.knowledge_dict)
 
         # TODO: way to collect data, and easily print things. This is from introduction to MESA example.
         # self.datacollector = mesa.datacollection.DataCollector(
@@ -76,6 +79,10 @@ class ClueModel(mesa.Model):
     # Get the Kripke Model that contains the knowledge present in the model
     def get_kripke_model(self):
         return self.kripke_model
+
+    def get_knowledge_dict(self):
+        return self.knowledge_dict
+
     #
     # # Make a public announcement
     # # type Agent: 'Implementation.src.clue_agent.ClueAgent'
@@ -124,6 +131,13 @@ class ClueModel(mesa.Model):
             self.kripke_model.get_kripke_structure().relation_solve(asking_agent, announcement, asked_agent_id)
             # Update the relations for the agent that did not ask for the cards.
             self.kripke_model.get_kripke_structure().relation_solve(updating_agent, announcement, asked_agent_id)
+
+    # TODO does this go here?
+    def update_knowledge_dict(self):
+        self.knowledge_dict, self.unknown_cards = self.kripke_model.update_knowledge_dictionary(self.knowledge_dict, self.unknown_cards)
+        print(self.knowledge_dict)
+        print(self.unknown_cards)
+        return
 
     # Check if there is a winner of the game
     # TODO what if there are multiple agents that win at the same time?

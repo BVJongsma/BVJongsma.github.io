@@ -5,7 +5,7 @@ class Cards():
 
     def __init__(self, num_agents):
         self.num_agents = num_agents
-        self.weapons = ["candle", "dagger", "rope", "wrench", "a", "b", "c"]
+        self.weapons = ["candle", "dagger", "rope", "wrench"] #, "a", "b", "c"]
         self.suspects = ["Green", "Mustard", "Plum", "Scarlet"]
         self.all_cards = self.weapons + self.suspects
         self.available_cards = self.weapons + self.suspects
