@@ -128,21 +128,22 @@ class ClueAgent(mesa.Agent):
             # Publicly announce that next agent does not have any
             self.model.publicly_announce(self.next_agent, suggestion, False)
         else: # Next agent does have one of the cards
-            # TODO make sure public announcement only for the player who does not see the card, so it is faster.
             # Publicly announce that next agent does have one
             self.model.publicly_announce(self.next_agent, suggestion, True)
             # Privately announce the card of next agent to this self agent
             self.privately_announce(response)
 
+    # TODO implement private announcement
     # Announce privately to the suggesting agents that this agent has a certain card
     def privately_announce(self, response):
-        # Delete all relations where this agent does not have that card
-        for card_1 in self.model.get_cards().get_all_cards():
-            if (card_1 == response):
-                continue
-            for card_2 in self.model.get_cards().get_all_cards():
-                if (card_2 == response):
-                    continue
-                # For the suggesting agent, remove the relations
-                announcement = Not(Atom(str(self.next_agent.get_unique_id()) + ":" + str(sorted([card_1, card_2], key=str.lower))))
-                self.model.get_kripke_model().get_kripke_structure().relation_solve(self, announcement)
+        pass
+        # # Delete all relations where this agent does not have that card
+        # for card_1 in self.model.get_cards().get_all_cards():
+        #     if (card_1 == response):
+        #         continue
+        #     for card_2 in self.model.get_cards().get_all_cards():
+        #         if (card_2 == response):
+        #             continue
+        #         # For the suggesting agent, remove the relations
+        #         announcement = Not(Atom(str(self.next_agent.get_unique_id()) + ":" + str(sorted([card_1, card_2], key=str.lower))))
+        #         self.model.get_kripke_model().get_kripke_structure().relation_solve(self, announcement)
