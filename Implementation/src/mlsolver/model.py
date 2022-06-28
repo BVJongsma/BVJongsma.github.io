@@ -317,8 +317,9 @@ class Clue:
             for unknown_agent in unknown_agents:
                 for card in possible_known_cards[unknown_agent]:
                     knowledge_dict[agent_id - 1][card] = unknown_agent
-                    if card in unknown_cards:
-                        unknown_cards.remove(card)
+                    if card in unknown_cards[agent_id - 1]:
+                        print("hey")
+                        unknown_cards[agent_id - 1].remove(card)
                     # All cards except for the ones in the dictionary are the unknown cards
 
         return knowledge_dict, unknown_cards
