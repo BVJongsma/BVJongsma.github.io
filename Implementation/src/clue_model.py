@@ -110,14 +110,14 @@ class ClueModel(mesa.Model):
         if affirmed:  # agent did have one or more of the suggested cards
             # TODO implementation for suggesting 3 cards instead of 2
             announcement = Or(Atom(suggestion[0]), Atom(suggestion[1]))
-            print("announcement", announcement)
+            print("public announcement", announcement)
             updating_agent = agent.next_agent
             asked_agent_id = agent.get_unique_id()
             self.kripke_model.get_kripke_structure().relation_solve(updating_agent, announcement, asked_agent_id)
 
         else:  # agent has none of the suggested cards (affirmed = False)
             announcement = And(Not(Atom(suggestion[0])), Not(Atom(suggestion[1])))
-            print("announcement", announcement)
+            print("public announcement", announcement)
             updating_agent = agent.next_agent
             asked_agent_id = agent.get_unique_id()
             # Update the relations for the agent that asked for the cards.
@@ -138,7 +138,9 @@ class ClueModel(mesa.Model):
             print("The envelope consists of: " + str(self.envelope.get_envelope_cards()))
             exit()
 
+    def get_agents(self):
+        return self.agents
+
     # Let the agents take turns
     def step(self):
-        # self.datacollector.collect(self)
         self.schedule.step()

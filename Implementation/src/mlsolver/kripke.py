@@ -52,7 +52,7 @@ class KripkeStructure:
                 if node in relation:
                     relations_to_remove.append(relation)
                     break
-
+        print("The relations of agent ", agent.get_unique_id(), "are changed as following:")
         print("Relations previously: " + str(len(self.relations[str(agent.get_unique_id())])))
         print("Relations to remove: " + str(len(relations_to_remove)))
         self.relations[str(agent.get_unique_id())] = set(self.relations[str(agent.get_unique_id())]).difference(set(relations_to_remove))
