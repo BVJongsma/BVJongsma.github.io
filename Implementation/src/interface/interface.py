@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-import Implementation.Code.cards as c
+import Implementation.src.cards as c
 
 
 def init_table(num_agents, num_cards):
@@ -8,7 +8,7 @@ def init_table(num_agents, num_cards):
     # title
     win.title('A model of Clue')
     # dimensions
-    dim = str(num_agents*150+150)+ "x" + str(num_cards*25+25)
+    dim = str(num_agents*150+150) + "x" + str(num_cards*25+25)
     win.geometry(dim)
     # background color
     win['bg'] = '#d61e1e'

@@ -17,12 +17,11 @@ lsi: false
 safe: true
 incremental: false
 title: ClueModel
-email: your-email@example.com
+email: b.v.jongsma@student.rug.nl
 description: >- # this means to ignore newlines until "baseurl:"
   ClueModel is our project
 baseurl: "/ClueModel" # the subpath of your site, e.g. /blog
 url: "https://bvjongsma.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
 github_username:  bvjongsma
 
 # Build settings
