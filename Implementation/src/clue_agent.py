@@ -52,8 +52,13 @@ class ClueAgent(mesa.Agent):
             response_card = random.choice(possible_response_cards)
         return response_card
 
+    def wait_a_second(self):
+        input("press enter to continue")
+        return
+
     # Take a turn
     def step(self):
+        self.wait_a_second()
         print("This is agent " + str(self.unique_id) + ".")
         print("With cards " + str(self.agent_cards) + ".")
         # Let the current agent make a suggestion
