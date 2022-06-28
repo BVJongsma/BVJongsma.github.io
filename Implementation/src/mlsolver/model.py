@@ -283,7 +283,7 @@ class Clue:
 
     def get_known_cards_agent(self, cards, self_agent, other_agent):
         for relation in self.relations[str(self_agent.get_uni)]:
-            
+
 
 def add_symmetric_edges(relations):
     """Routine adds symmetric edges to Kripke frame
