@@ -13,9 +13,9 @@ class ClueModel(mesa.Model):
     """A model with some number of agents."""
 
     # TODO do we want width and height, currently not used.
-    def __init__(self, N, width, height): #, num_weapons, num_suspects):
+    def __init__(self, N, width, height):  # , num_weapons, num_suspects):
         self.num_agents = N
-        self.cards = Cards(self.num_agents) #, num_weapons, num_suspects)
+        self.cards = Cards(self.num_agents)  # , num_weapons, num_suspects)
         self.grid = mesa.space.MultiGrid(width, height, True)
         # The agents activate one at a time, in the order they were added.
         self.schedule = mesa.time.BaseScheduler(self)
@@ -43,7 +43,7 @@ class ClueModel(mesa.Model):
         # Get the envelope's cards, which consist of a weapon card and a suspect card
         envelope_cards = [self.cards.get_envelope_weapon(), self.cards.get_envelope_suspect()]
         # Sort the cards alphabetically
-        envelope_cards = sorted(envelope_cards, key = str.lower)
+        envelope_cards = sorted(envelope_cards, key=str.lower)
         return EnvelopeAgent(0, envelope_cards, self)
 
     # Initialise the players (agents)
@@ -53,9 +53,9 @@ class ClueModel(mesa.Model):
             # Get the agent's cards
             agent_cards = self.cards.get_agent_cards()
             if i == 0:
-                a = ClueAgent(i+1, self.cards, agent_cards, "ONE_UNKNOWN", self)
+                a = ClueAgent(i + 1, self.cards, agent_cards, "ONE_UNKNOWN", self, "SHOWN")
             else:
-                a = ClueAgent(i + 1, self.cards, agent_cards, "ONE_UNKNOWN", self)
+                a = ClueAgent(i + 1, self.cards, agent_cards, "ONE_UNKNOWN", self, "RANDOM")
             # Add the agent to the MESA schedule, so it can take a turn
             self.schedule.add(a)
             agents.append(a)
@@ -119,7 +119,6 @@ class ClueModel(mesa.Model):
     # New implementation
     def publicly_announce(self, asking_agent, agent, suggestion, affirmed):
         if affirmed:  # agent did have one or more of the suggested cards
-            # TODO implementation for suggesting 3 cards instead of 2
             announcement = Or(Atom(suggestion[0]), Atom(suggestion[1]))
             print("public announcement", announcement)
             updating_agent = agent.next_agent
