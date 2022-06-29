@@ -146,16 +146,9 @@ class ClueAgent(mesa.Agent):
             known_card = random.choice(known_suspects)
         return sorted([unknown_card, known_card], key=str.lower)
 
-    def pick_cards_reasoning_suggestion(self, known_cards, unknown_cards):
+    def pick_cards_reasoning_suggestion(self, possible_cards, known_cards):
         unknown_weapons = list(set(self.cards.get_all_weapon_cards()).intersection(possible_cards))
         unknown_suspects = list(set(self.cards.get_all_suspect_cards()).intersection(possible_cards))
-
-        # if there are none such cards: that might be of the next agent
-
-        # Pick one card that the agent knows about and isn't of the next agent
-        known_cards = set(self.cards.get_all_cards()).difference(set(unknown_cards))
-        known_cards = [known_card for known_card in known_cards if
-                       (agent_knowledge_dict[known_card] != self.next_agent.get_unique_id())]
 
         known_weapons = list(set(self.cards.get_all_weapon_cards()).intersection(known_cards))
         known_suspects = list(set(self.cards.get_all_suspect_cards()).intersection(known_cards))
@@ -173,10 +166,13 @@ class ClueAgent(mesa.Agent):
             known_card = random.choice(known_suspects)
             unknown_card = random.choice(unknown_weapons)
         else:
+            known_card = None
+            unknown_card = None
+
+        return known_card, unknown_card
 
     # TODO implement (now random)
     def pick_reasoning_suggestion(self):
-        agent_knowledge_dict = self.model.get_knowledge_dict()[self.unique_id - 1]
         # Pick one card that might be of the next agent or in the envelope
         unknown_cards = self.model.get_unknown_cards(self.unique_id - 1)
         print("Hallo")
@@ -188,10 +184,24 @@ class ClueAgent(mesa.Agent):
 
         possible_cards = list(set(possible_envelope_cards).intersection(set(possible_next_agent_cards)))
 
+        # Pick one card that the agent knows about and isn't of the next agent
+        known_cards = set(self.cards.get_all_cards()).difference(set(unknown_cards))
+        agent_knowledge_dict = self.model.get_knowledge_dict()[self.unique_id - 1]
+        known_cards = [known_card for known_card in known_cards if
+                       (agent_knowledge_dict[known_card] != self.next_agent.get_unique_id())]
 
+        if not possible_cards:
+            known_card, unknown_card = self.pick_cards_reasoning_suggestion(possible_next_agent_cards, known_cards)
+        else:
+            known_card, unknown_card = self.pick_cards_reasoning_suggestion(possible_cards, known_cards)
+            if known_card == None:
+                known_card, unknown_card = self.pick_cards_reasoning_suggestion(possible_next_agent_cards, known_cards)
 
+        if known_card == None:
+            known_card = self.cards.get_random_weapon()
+            unknown_card = self.cards.get_random_suspect()
 
-        return sorted([self.cards.get_random_weapon()] + [self.cards.get_random_suspect()], key=str.lower)
+        return sorted([known_card, unknown_card], key=str.lower)
 
     # Update the knowledge of all agents via a public or private announcement
     # TODO move to clue_model?
