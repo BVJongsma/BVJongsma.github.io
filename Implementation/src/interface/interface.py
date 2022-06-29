@@ -65,7 +65,7 @@ class GameInterface:
     def __init__(self, model):
         self.model = model
         self.num_agents = model.num_agents
-        cards_set = ca.Cards(self.num_agents)
+        cards_set = ca.Cards(self.num_agents, self.model.num_weapons, self.model.num_suspects)
         self.num_cards = len(cards_set.get_all_cards())
         self.win = init_table(self.num_agents, self.num_cards)
         self.last_agent = -1
@@ -128,7 +128,7 @@ class GameInterface:
             self.tree.heading('agent' + str(i), text='Agent ' + str(i))
 
         # generate list of data to put in the table
-        card = ca.Cards(3)
+        card = ca.Cards(3, self.model.num_weapons, self.model.num_suspects)
         cards = card.get_all_cards()
         question = tuple()
         for i in range(self.num_agents):

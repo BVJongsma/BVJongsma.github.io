@@ -66,26 +66,25 @@ class ClueAgent(mesa.Agent):
                     self.cards_shown.append(response_card)
         return response_card
 
-    # TODO: delete this if it isn't used
-    def wait_a_second(self):
-        input("press enter to continue")
-        return
+    # # TODO: delete this if it isn't used
+    # def wait_a_second(self):
+    #     input("press enter to continue")
+    #     return
 
     # Take a turn
     def step(self):
-        print("This is agent " + str(self.unique_id) + ".")
-        print("With cards " + str(self.agent_cards) + ".")
-        # Let the current agent make a suggestion
-        suggestion = self.pick_suggestion()
-        print("They suggest " + str(suggestion) + ".")
-        print("The agent they suggest to is agent " + str(self.next_agent.get_unique_id()) + ".")
-        # Get a response from the next agent with whether or not they have any of the cards
-        response = self.next_agent.get_response(suggestion)
-        print("Their response is " + str(self.next_agent.get_response(suggestion)) + ".")
-        # Update the knowledge of the agents based on the suggestion and response
-        self.update_knowledge(suggestion, response)
-        # Check if there is a winner
-        self.model.check_end_state()
+        if not self.model.check_end_state():
+            print("This is agent " + str(self.unique_id) + ".")
+            print("With cards " + str(self.agent_cards) + ".")
+            # Let the current agent make a suggestion
+            suggestion = self.pick_suggestion()
+            print("They suggest " + str(suggestion) + ".")
+            print("The agent they suggest to is agent " + str(self.next_agent.get_unique_id()) + ".")
+            # Get a response from the next agent with whether or not they have any of the cards
+            response = self.next_agent.get_response(suggestion)
+            print("Their response is " + str(self.next_agent.get_response(suggestion)) + ".")
+            # Update the knowledge of the agents based on the suggestion and response
+            self.update_knowledge(suggestion, response)
 
     def pick_suggestion(self):
         # Pick random suggestion
@@ -127,10 +126,10 @@ class ClueAgent(mesa.Agent):
 
     # TODO comment
     def pick_unknown_cards(self):
-        unknown_weapons = list(set(self.model.get_unknown_cards(self.unique_id)).intersection(self.cards.get_all_weapon_cards()))
+        unknown_weapons = list(set(self.model.get_unknown_cards(self.unique_id - 1)).intersection(self.cards.get_all_weapon_cards()))
         if not unknown_weapons:
             unknown_weapons.append(random.choice(self.cards.get_all_weapon_cards()))
-        unknown_suspects = list(set(self.model.get_unknown_cards(self.unique_id)).intersection(self.cards.get_all_suspect_cards()))
+        unknown_suspects = list(set(self.model.get_unknown_cards(self.unique_id - 1)).intersection(self.cards.get_all_suspect_cards()))
         if not unknown_suspects:
             unknown_suspects.append(random.choice(self.cards.get_all_suspect_cards()))
         return sorted([random.choice(unknown_weapons), random.choice(unknown_suspects)], key = str.lower)

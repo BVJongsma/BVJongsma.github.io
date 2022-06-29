@@ -1,5 +1,4 @@
 import mesa
-from mesa import space
 from mesa import time
 
 from Implementation.src.clue_agent import ClueAgent
@@ -13,15 +12,16 @@ class ClueModel(mesa.Model):
     """A model with some number of agents."""
 
     # TODO do we want width and height, currently not used.
-    def __init__(self, N, width, height):  # , num_weapons, num_suspects):
+    def __init__(self, N, num_weapons, num_suspects, strat_agent1, strat_other_agents):
         self.num_agents = N
-        self.cards = Cards(self.num_agents)  # , num_weapons, num_suspects)
-        self.grid = mesa.space.MultiGrid(width, height, True)
+        self.num_weapons = num_weapons
+        self.num_suspects = num_suspects
+        self.cards = Cards(self.num_agents, num_weapons, num_suspects)
         # The agents activate one at a time, in the order they were added.
         self.schedule = mesa.time.BaseScheduler(self)
         self.running = True
         self.envelope = self.initialise_envelope()
-        self.agents = self.initialise_agents()
+        self.agents = self.initialise_agents(strat_agent1, strat_other_agents)
         self.kripke_model = Clue(self.cards, self.num_agents, self)
 
         # For each agent, determine the next agent in turn, which is also the agent they suggest to
@@ -47,23 +47,18 @@ class ClueModel(mesa.Model):
         return EnvelopeAgent(0, envelope_cards, self)
 
     # Initialise the players (agents)
-    def initialise_agents(self):
+    def initialise_agents(self, strat_agent1, strat_other_agents):
         agents = []
         for i in range(self.num_agents):
             # Get the agent's cards
             agent_cards = self.cards.get_agent_cards()
             if i == 0:
-                a = ClueAgent(i + 1, self.cards, agent_cards, "ONE_UNKNOWN", self, "SHOWN")
+                a = ClueAgent(i + 1, self.cards, agent_cards, strat_agent1, self, "SHOWN")
             else:
-                a = ClueAgent(i + 1, self.cards, agent_cards, "ONE_UNKNOWN", self, "RANDOM")
+                a = ClueAgent(i + 1, self.cards, agent_cards, strat_other_agents, self, "RANDOM")
             # Add the agent to the MESA schedule, so it can take a turn
             self.schedule.add(a)
             agents.append(a)
-            # TODO do we want to add the agents to a grid?
-            # Add the agent to a random grid cell
-            x = self.random.randrange(self.grid.width)
-            y = self.random.randrange(self.grid.height)
-            self.grid.place_agent(a, (x, y))
         return agents
 
     # Get the number of players (agents) in the game
@@ -86,32 +81,6 @@ class ClueModel(mesa.Model):
 
     def get_unknown_cards(self, agent_id):
         return self.unknown_cards[agent_id]
-
-    #
-    # # Make a public announcement
-    # # type Agent: 'Implementation.src.clue_agent.ClueAgent'
-    # # type suggestion"list of strings
-    # def publicly_announce(self, agent, suggestion, affirmed):
-    #     if affirmed: # agent did have one or more of the suggested cards
-    #         # Go through all card possibilities
-    #         # Delete the possibilities where neither of the suggested cards are present
-    #         for card_1 in self.cards.get_all_cards():
-    #             for card_2 in self.cards.get_all_cards():
-    #                 if card_1 not in suggestion and card_2 not in suggestion:
-    #                     for a in self.agents:
-    #                         announcement = Not(Atom(str(agent.get_unique_id()) + ":" + str(sorted([card_1, card_2],
-    #                                                                                               key = str.lower))))
-    #                         self.kripke_model.get_kripke_structure().relation_solve(a, announcement)
-    #
-    #     else: # agent has none of the suggested cards (affirmed = False)
-    #         # Go through the two suggested cards (agent has neither of these)
-    #         for suggested_card in suggestion:
-    #             # Make pairs with this suggested card and any other card
-    #             for other_card in self.cards.get_all_cards():
-    #                 # For each agent, make + solve announcement
-    #                 for a in self.agents:
-    #                     announcement = Not(Atom(str(agent.get_unique_id()) + ":" + str(sorted([suggested_card, other_card], key = str.lower))))
-    #                     self.kripke_model.get_kripke_structure().relation_solve(a, announcement)
 
     # Make a public announcement
     # type Agent: 'Implementation.src.clue_agent.ClueAgent'
@@ -147,18 +116,19 @@ class ClueModel(mesa.Model):
     # TODO what if there are multiple agents that win at the same time?
     def check_end_state(self):
         winner, guess = self.kripke_model.find_winner()
-        if winner == []:
-            return
+        if not winner:
+            return False
         else:
             print("GAME FINISHED")
             print("Winner is player " + str(winner))
             print("According to this player, the envelope consists of: " + str(guess))
             print("The envelope consists of: " + str(self.envelope.get_envelope_cards()))
-            quit()
+            return True
 
     def get_agents(self):
         return self.agents
 
     # Let the agents take turns
     def step(self):
-        self.schedule.step()
+        if not self.check_end_state():
+            self.schedule.step()

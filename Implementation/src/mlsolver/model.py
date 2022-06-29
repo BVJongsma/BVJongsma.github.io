@@ -88,24 +88,7 @@ class Clue:
         print(len(self.relations['3']))
         print("//////////////////////////////")
 
-        # print(len(set(self.relations['2'])))
-        # for relation in self.relations:
-        #     for connection in self.relations[relation]:
-        #         print("\n\n")
-        #         print(relation)
-        #         print(str(connection[0]))
-        #         print("and")
-        #         print(str(connection[1]))
-        #         print("\n\n")
-
         self.ks = KripkeStructure(self.worlds, self.relations)
-
-        # TODO add rules
-        # If player 1 has card Scarlet themselves, and player 3 says they have one of
-        # [Scarlet, wrench], then player 1 knows player 3 has wrench
-        # t
-        # Delete all where none of them are the case
-        # Delete all with reasoning
 
     # Get the Kripke structure
     def get_kripke_structure(self):
@@ -134,18 +117,6 @@ class Clue:
                 worlds, cnt = self.make_kripke_states_players(range_cards, remaining_cards_list, worlds, envelope, cnt,
                                                               cards_per_player)
         return worlds
-
-    # Initialise the relations between the worlds
-    # OLD VERSION, first adds everything, then removes relations.
-    # def initialise_relations(self):
-    #     relations = {}
-    #     for agent in range(1, self.num_agents + 1):
-    #         relations[str(agent)] = set()
-    #         for i in range(len(self.worlds)):
-    #             for j in range(i, len(self.worlds)):
-    #                 if list(self.worlds[i].assignment.keys())[agent] == list(self.worlds[j].assignment.keys())[agent]:
-    #                     relations[str(agent)].add((self.worlds[i].name, self.worlds[j].name))
-    #     return relations
 
     # Initialise the relations between the worlds
     def initialise_relations(self):
@@ -209,7 +180,8 @@ class Clue:
                 world_cards['2:' + str(world[2])] = True
                 world_cards['3:' + str(world[3])] = True
                 # Make sure the world is given in the correct format:
-                # World(name, {'env:['card1', 'card2']', '1:['card3', 'card4']', '2:['card5', 'card6']', '3:['card7', 'card8']'})
+                # World(name, {'env:['card1', 'card2', ..]', '1:['card3', 'card4', ..]', '2:['card5', 'card6', ..]',
+                # '3:['card7', 'card8', ..]'})
                 world_correct_format = World(str(cnt), world_cards)
                 # Add the world to the list of all worlds
                 worlds.append(world_correct_format)
@@ -246,7 +218,6 @@ class Clue:
                 winner.append(agent)
                 guess.append(envelope)
                 break
-
         return winner, guess
 
     # def get_known_dictionary(self, old_known_dict, unknown_list):
