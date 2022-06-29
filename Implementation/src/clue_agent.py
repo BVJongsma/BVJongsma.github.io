@@ -9,13 +9,13 @@ from Implementation.src.mlsolver.formula import Atom, And, Not, Or, Box_a, Box_s
 # NOT_OWN = False
 # # Use one of your own cards in suggestion
 # ONE_OWN = True
-# # TODO
 # ELIMINATING = False
+
 
 class ClueAgent(mesa.Agent):
     """An agent who plays the game of Clue."""
 
-    def __init__(self, unique_id, cards, agent_cards, strategy, model):
+    def __init__(self, unique_id, cards, agent_cards, strategy, model, response_strategy):
         super().__init__(unique_id, model)
         self.unique_id = unique_id
         self.cards = cards
@@ -23,6 +23,8 @@ class ClueAgent(mesa.Agent):
         self.model = model
         self.next_agent = None
         self.strategy = strategy
+        self.cards_shown = []
+        self.response_strategy = response_strategy
 
     # def update_kripke_initial_cards(self):
     #     announcement = Atom(str(self.get_unique_id()) + ":" + str(self.agent_cards))
@@ -43,13 +45,25 @@ class ClueAgent(mesa.Agent):
         return self.agent_cards
 
     # Get a response of the current agent based on the suggestion that is made
-    # TODO Current implementation: show any of the suggested cards at random
     def get_response(self, suggestion):
         possible_response_cards = list(set(self.agent_cards).intersection(suggestion))
+        # If the agent has none of the cards asked, respond with None.
         if (len(possible_response_cards) < 1):
             response_card = None
         else:
-            response_card = random.choice(possible_response_cards)
+            # Randomly select one of the possible cards to respond.
+            if self.response_strategy == "RANDOM":
+                response_card = random.choice(possible_response_cards)
+                self.cards_shown.append(response_card)
+            else: # response_strategy == "SHOWN"
+                response_card = random.choice(possible_response_cards)
+                # If a card is in the list of cards shown, select that card and show it.
+                for card in possible_response_cards:
+                    if card in self.cards_shown:
+                        response_card = card
+                # If none of the cards were shown yet, add the response card to the list of shown cards.
+                if response_card not in self.cards_shown:
+                    self.cards_shown.append(response_card)
         return response_card
 
     # TODO: delete this if it isn't used
@@ -62,7 +76,6 @@ class ClueAgent(mesa.Agent):
         print("This is agent " + str(self.unique_id) + ".")
         print("With cards " + str(self.agent_cards) + ".")
         # Let the current agent make a suggestion
-        # TODO Current implementation: pick suggestion at random
         suggestion = self.pick_suggestion()
         print("They suggest " + str(suggestion) + ".")
         print("The agent they suggest to is agent " + str(self.next_agent.get_unique_id()) + ".")
@@ -96,12 +109,14 @@ class ClueAgent(mesa.Agent):
             suggestion = self.pick_reasoning_suggestion()
         return suggestion
 
+    # TODO comment
     def pick_other_cards(self):
         possible_weapon = [weapon for weapon in self.cards.get_all_weapon_cards() if weapon not in self.agent_cards]
         possible_suspect = [suspect for suspect in self.cards.get_all_suspect_cards() if suspect not in self.agent_cards]
         suggestion = sorted([random.choice(possible_weapon)] + [random.choice(possible_suspect)], key=str.lower)
         return suggestion
 
+    # TODO comment
     def pick_one_other_card(self):
         own_card = random.choice(self.agent_cards)
         if own_card in self.cards.get_all_weapon_cards():
@@ -110,28 +125,27 @@ class ClueAgent(mesa.Agent):
             other_card = random.choice(self.cards.get_all_weapon_cards())
         return sorted([own_card, other_card], key = str.lower)
 
+    # TODO comment
     def pick_unknown_cards(self):
         unknown_weapons = list(set(self.model.get_unknown_cards(self.unique_id)).intersection(self.cards.get_all_weapon_cards()))
-        if unknown_weapons == []:
+        if not unknown_weapons:
             unknown_weapons.append(random.choice(self.cards.get_all_weapon_cards()))
-        print(unknown_weapons)
         unknown_suspects = list(set(self.model.get_unknown_cards(self.unique_id)).intersection(self.cards.get_all_suspect_cards()))
-        if unknown_suspects == []:
+        if not unknown_suspects:
             unknown_suspects.append(random.choice(self.cards.get_all_suspect_cards()))
-        print(unknown_suspects)
         return sorted([random.choice(unknown_weapons), random.choice(unknown_suspects)], key = str.lower)
 
-    # TODO implement (now random)
+    # TODO comment
     def pick_one_unknown_card(self):
         # First, pick an unknown card
         unknown_cards = self.model.get_unknown_cards(self.unique_id - 1)
         unknown_weapons = list(set(self.cards.get_all_weapon_cards()).intersection(unknown_cards))
         unknown_suspects = list(set(self.cards.get_all_suspect_cards()).intersection(unknown_cards))
         # No known cards that are weapons
-        if (len(unknown_weapons) == len(self.cards.get_all_weapon_cards())):
+        if len(unknown_weapons) == len(self.cards.get_all_weapon_cards()):
             unknown_card = random.choice(unknown_weapons)
         # No known cards that are suspects
-        elif (len(unknown_suspects) == len(self.cards.get_all_suspect_cards())):
+        elif len(unknown_suspects) == len(self.cards.get_all_suspect_cards()):
             unknown_card = random.choice(unknown_suspects)
         else:
             unknown_card = random.choice(unknown_cards)
@@ -145,6 +159,7 @@ class ClueAgent(mesa.Agent):
             known_card = random.choice(known_weapons)
         return sorted([unknown_card, known_card], key=str.lower)
 
+    # TODO comment
     def pick_cards_reasoning_suggestion(self, possible_cards, known_cards):
         unknown_weapons = list(set(self.cards.get_all_weapon_cards()).intersection(possible_cards))
         unknown_suspects = list(set(self.cards.get_all_suspect_cards()).intersection(possible_cards))
@@ -170,16 +185,11 @@ class ClueAgent(mesa.Agent):
 
         return known_card, unknown_card
 
-    # TODO implement (now random)
+    # TODO comment
     def pick_reasoning_suggestion(self):
         # Pick one card that might be of the next agent or in the envelope
         unknown_cards = self.model.get_unknown_cards(self.unique_id - 1)
-        print("Hallo")
-        print(unknown_cards)
         possible_envelope_cards, possible_next_agent_cards = self.model.get_kripke_model().find_possible_cards(unknown_cards, self.unique_id, self.next_agent.get_unique_id())
-        print("hoi")
-        print(possible_envelope_cards)
-        print(possible_next_agent_cards)
 
         possible_cards = list(set(possible_envelope_cards).intersection(set(possible_next_agent_cards)))
 
@@ -216,7 +226,6 @@ class ClueAgent(mesa.Agent):
         # TODO Where does this go?
         self.model.update_knowledge_dict()
 
-    # TODO implement private announcement
     # Announce privately to the suggesting agents that this agent has a certain card
     def privately_announce(self, response):
         announcement = Atom(response)
@@ -224,15 +233,3 @@ class ClueAgent(mesa.Agent):
         asked_agent_id = self.next_agent.get_unique_id()
         # Update the relations for the agent that asked for the cards.
         self.model.kripke_model.get_kripke_structure().relation_solve(self, announcement, asked_agent_id)
-
-        # Previous approach
-        # # Delete all relations where this agent does not have that card
-        # for card_1 in self.model.get_cards().get_all_cards():
-        #     if (card_1 == response):
-        #         continue
-        #     for card_2 in self.model.get_cards().get_all_cards():
-        #         if (card_2 == response):
-        #             continue
-        #         # For the suggesting agent, remove the relations
-        #         announcement = Not(Atom(str(self.next_agent.get_unique_id()) + ":" + str(sorted([card_1, card_2], key=str.lower))))
-        #         self.model.get_kripke_model().get_kripke_structure().relation_solve(self, announcement)
