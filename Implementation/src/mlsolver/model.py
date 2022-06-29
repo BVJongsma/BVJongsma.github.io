@@ -256,7 +256,6 @@ class Clue:
     #         for relation in self.relations[str(agent)]:
 
     def initialise_known_dictionary(self, agents):
-
         # list of cards per agents, cards[x] -> the list of cards of agent x
         cards = []
         for agent in agents:
@@ -343,11 +342,37 @@ class Clue:
         #                 break
         # return unknown_cards
 
+    def find_card_in_world(self, unknown_cards, relation_world, index):
+        # Check the envelope cards and agent cards for this world
+        cards = re.findall(r'\:(.*)', str(list(relation_world.assignment.keys())[index]))[0]
+        cards_list = ast.literal_eval(cards)
+        cards_list = [card.strip() for card in cards_list]
+        # If there is a card in cards in this envelope/agent, remove from list
+        for card in unknown_cards:
+            if (card in cards_list):
+                unknown_cards.remove(card)
+        return unknown_cards
+
+    def find_possible_cards(self, unknown_cards, self_agent_id, next_agent_id):
+        unknown_envelope_cards = copy.deepcopy(unknown_cards)
+        unknown_next_agent_cards = copy.deepcopy(unknown_cards)
+        # Go through all relations/worlds
+        for relation in self.relations[str(self_agent_id)]:
+            relation_world = self.worlds[int(relation[1])]
+            unknown_envelope_cards = self.find_card_in_world(unknown_envelope_cards, relation_world, 0)
+            unknown_next_agent_cards = self.find_card_in_world(unknown_next_agent_cards, relation_world, next_agent_id)
+            if ((not unknown_envelope_cards) and (not unknown_next_agent_cards)):
+                break
+
+        possible_envelope_cards = list(set(unknown_cards).difference(unknown_envelope_cards))
+        possible_next_agent_cards = list(set(unknown_cards).difference(unknown_next_agent_cards))
+
+        return sorted(possible_envelope_cards, key = str.lower), sorted(possible_next_agent_cards, key = str.lower)
 
     # TODO maybe useful for private announcements
     # def add_known_card(self, knowledge_dict, known_card):
 
-
+    # TODO Remove
     # Get cards that are unknown for an agent (i.e. could be in the hands of various players/the envelope)
     def get_unknown_cards(self, cards, agent_id):
         unknown_cards = []

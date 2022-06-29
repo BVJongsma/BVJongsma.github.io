@@ -55,7 +55,7 @@ class ClueModel(mesa.Model):
             if i == 0:
                 a = ClueAgent(i+1, self.cards, agent_cards, "ONE_UNKNOWN", self)
             else:
-                a = ClueAgent(i + 1, self.cards, agent_cards, "RANDOM", self)
+                a = ClueAgent(i + 1, self.cards, agent_cards, "ONE_UNKNOWN", self)
             # Add the agent to the MESA schedule, so it can take a turn
             self.schedule.add(a)
             agents.append(a)
