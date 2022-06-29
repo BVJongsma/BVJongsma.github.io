@@ -146,8 +146,51 @@ class ClueAgent(mesa.Agent):
             known_card = random.choice(known_suspects)
         return sorted([unknown_card, known_card], key=str.lower)
 
+    def pick_cards_reasoning_suggestion(self, known_cards, unknown_cards):
+        unknown_weapons = list(set(self.cards.get_all_weapon_cards()).intersection(possible_cards))
+        unknown_suspects = list(set(self.cards.get_all_suspect_cards()).intersection(possible_cards))
+
+        # if there are none such cards: that might be of the next agent
+
+        # Pick one card that the agent knows about and isn't of the next agent
+        known_cards = set(self.cards.get_all_cards()).difference(set(unknown_cards))
+        known_cards = [known_card for known_card in known_cards if
+                       (agent_knowledge_dict[known_card] != self.next_agent.get_unique_id())]
+
+        known_weapons = list(set(self.cards.get_all_weapon_cards()).intersection(known_cards))
+        known_suspects = list(set(self.cards.get_all_suspect_cards()).intersection(known_cards))
+
+        if known_weapons and known_suspects and unknown_weapons and unknown_suspects:
+            unknown_card = random.choice(possible_cards)
+            if unknown_card in unknown_weapons:
+                known_card = random.choice(known_suspects)
+            else:
+                known_card = random.choice(known_weapons)
+        elif known_weapons and unknown_suspects:
+            known_card = random.choice(known_weapons)
+            unknown_card = random.choice(unknown_suspects)
+        elif known_suspects and unknown_weapons:
+            known_card = random.choice(known_suspects)
+            unknown_card = random.choice(unknown_weapons)
+        else:
+
     # TODO implement (now random)
     def pick_reasoning_suggestion(self):
+        agent_knowledge_dict = self.model.get_knowledge_dict()[self.unique_id - 1]
+        # Pick one card that might be of the next agent or in the envelope
+        unknown_cards = self.model.get_unknown_cards(self.unique_id - 1)
+        print("Hallo")
+        print(unknown_cards)
+        possible_envelope_cards, possible_next_agent_cards = self.model.get_kripke_model().find_possible_cards(unknown_cards, self.unique_id, self.next_agent.get_unique_id())
+        print("hoi")
+        print(possible_envelope_cards)
+        print(possible_next_agent_cards)
+
+        possible_cards = list(set(possible_envelope_cards).intersection(set(possible_next_agent_cards)))
+
+
+
+
         return sorted([self.cards.get_random_weapon()] + [self.cards.get_random_suspect()], key=str.lower)
 
     # Update the knowledge of all agents via a public or private announcement
