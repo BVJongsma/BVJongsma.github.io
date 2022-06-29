@@ -1,12 +1,21 @@
 import random
 
-class Cards():
+
+class Cards:
     """The cards that are present in the game"""
 
-    def __init__(self, num_agents):
+    def __init__(self, num_agents): #, num_weapons, num_suspects):
         self.num_agents = num_agents
-        self.weapons = ["candle", "dagger", "rope", "wrench"] #, "a", "b", "c"]
-        self.suspects = ["Green", "Mustard", "Plum", "Scarlet"]
+        num_weapons = 4
+        num_suspects = 4
+        if num_weapons == 4:
+            self.weapons = ["candle", "dagger", "rope", "wrench"]
+        if num_weapons == 7:
+            self.weapons = ["candle", "dagger", "rope", "wrench", "revolver", "lead pipe", "ax"]
+        if num_suspects == 4:
+            self.suspects = ["Green", "Mustard", "Plum", "Scarlet"]
+        if num_suspects == 7:
+            self.suspects = ["Green", "Mustard", "Plum", "Scarlet", "White", "Peacock", "Rose"]
         self.all_cards = self.weapons + self.suspects
         self.available_cards = self.weapons + self.suspects
 

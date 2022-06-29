@@ -52,13 +52,13 @@ class ClueAgent(mesa.Agent):
             response_card = random.choice(possible_response_cards)
         return response_card
 
+    # TODO: delete this if it isn't used
     def wait_a_second(self):
         input("press enter to continue")
         return
 
     # Take a turn
     def step(self):
-        self.wait_a_second()
         print("This is agent " + str(self.unique_id) + ".")
         print("With cards " + str(self.agent_cards) + ".")
         # Let the current agent make a suggestion
@@ -168,7 +168,7 @@ class ClueAgent(mesa.Agent):
     # Announce privately to the suggesting agents that this agent has a certain card
     def privately_announce(self, response):
         announcement = Atom(response)
-        print("announcement", announcement)
+        print("private announcement", announcement)
         asked_agent_id = self.next_agent.get_unique_id()
         # Update the relations for the agent that asked for the cards.
         self.model.kripke_model.get_kripke_structure().relation_solve(self, announcement, asked_agent_id)

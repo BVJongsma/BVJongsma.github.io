@@ -8,13 +8,14 @@ from Implementation.src.cards import Cards
 from Implementation.src.mlsolver.model import Clue
 from Implementation.src.mlsolver.formula import Atom, And, Not, Or, Box, Box_a, Box_star
 
+
 class ClueModel(mesa.Model):
     """A model with some number of agents."""
 
     # TODO do we want width and height, currently not used.
-    def __init__(self, N, width, height):
+    def __init__(self, N, width, height): #, num_weapons, num_suspects):
         self.num_agents = N
-        self.cards = Cards(self.num_agents)
+        self.cards = Cards(self.num_agents) #, num_weapons, num_suspects)
         self.grid = mesa.space.MultiGrid(width, height, True)
         # The agents activate one at a time, in the order they were added.
         self.schedule = mesa.time.BaseScheduler(self)
@@ -54,7 +55,7 @@ class ClueModel(mesa.Model):
             if i == 0:
                 a = ClueAgent(i+1, self.cards, agent_cards, "ONE_UNKNOWN", self)
             else:
-                a = ClueAgent(i+1, self.cards, agent_cards, "RANDOM", self)
+                a = ClueAgent(i + 1, self.cards, agent_cards, "RANDOM", self)
             # Add the agent to the MESA schedule, so it can take a turn
             self.schedule.add(a)
             agents.append(a)
@@ -120,14 +121,14 @@ class ClueModel(mesa.Model):
         if affirmed:  # agent did have one or more of the suggested cards
             # TODO implementation for suggesting 3 cards instead of 2
             announcement = Or(Atom(suggestion[0]), Atom(suggestion[1]))
-            print("announcement", announcement)
+            print("public announcement", announcement)
             updating_agent = agent.next_agent
             asked_agent_id = agent.get_unique_id()
             self.kripke_model.get_kripke_structure().relation_solve(updating_agent, announcement, asked_agent_id)
 
         else:  # agent has none of the suggested cards (affirmed = False)
             announcement = And(Not(Atom(suggestion[0])), Not(Atom(suggestion[1])))
-            print("announcement", announcement)
+            print("public announcement", announcement)
             updating_agent = agent.next_agent
             asked_agent_id = agent.get_unique_id()
             # Update the relations for the agent that asked for the cards.
@@ -137,7 +138,8 @@ class ClueModel(mesa.Model):
 
     # TODO does this go here?
     def update_knowledge_dict(self):
-        self.knowledge_dict, self.unknown_cards = self.kripke_model.update_knowledge_dictionary(self.knowledge_dict, self.unknown_cards)
+        self.knowledge_dict, self.unknown_cards = self.kripke_model.update_knowledge_dictionary(self.knowledge_dict,
+                                                                                                self.unknown_cards)
         print(self.knowledge_dict)
         print(self.unknown_cards)
         return
@@ -155,7 +157,9 @@ class ClueModel(mesa.Model):
             print("The envelope consists of: " + str(self.envelope.get_envelope_cards()))
             exit()
 
+    def get_agents(self):
+        return self.agents
+
     # Let the agents take turns
     def step(self):
-        # self.datacollector.collect(self)
         self.schedule.step()
