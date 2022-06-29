@@ -18,9 +18,10 @@ safe: true
 incremental: false
 title: "ClueModel"
 email: b.v.jongsma@student.rug.nl
-description: "Modelling and Analysing \"Clue\" \n
-  Logical Aspects of Multi-Agent Systems 2022 \n
-  Naomï Broersma (s3493849), Bonne Jongsma (s3501647) and Iris Kamsteeg (s3828115)"
+description: |-
+  Modelling and Analysing \"Clue\" 
+  Logical Aspects of Multi-Agent Systems 2022 
+  Naomï Broersma (s3493849), Bonne Jongsma (s3501647) and Iris Kamsteeg (s3828115)
 baseurl: "/ClueModel" # the subpath of your site, e.g. /blog
 url: "https://bvjongsma.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  bvjongsma
