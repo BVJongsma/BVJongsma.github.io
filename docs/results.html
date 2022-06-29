@@ -1,9 +1,36 @@
 ---
 layout: dinky
 ---
+<!-- experiment -->
+<div id="experiment">
+    <h1>Experiment</h1>
+    <p>
+        As explained in the Model section, an implementation of Clue in Python was created.
+        This program makes use of a Kripke model and public and private announcements are used to update this
+        model, so agents can eventually determine the cards in the envelope.
+        We will now consider various strategies that can be used to determine the cards in the envelope and discuss
+        their performance.
+    </p>
+    <div id="strategies">
+    <h2>The strategies</h2>
+    <!-- TODO: determine which strategies to use, explain more -->
+    <ul>
+        <li>Random cards</li>
+        <li>Pick two cards that the agent does not have themselves</li>
+        <li>Pick one card that the agent has themselves and another that the agent does not have themselves</li>
+        <li>Pick two cards for which the agent does not know to whom they belong</li>
+        <li>Pick one card that the agent knows about and isn't of the next agent, and one unknown card</li>
+        <li>Pick one card that the agent knows about and isn't of the next agent, and one card that might be of the next
+         agent or in the envelope (or if there are none such cards: that might be of the next agent)</li>
+    </ul>
+    </div>
+
+    <div id="experimental-setup">
+    <h2>The experimental setup</h2>
+    </div>
+</div>
 
 <!-- results -->
-
 <div id="results">
     <h1>Results</h1>
 </div>

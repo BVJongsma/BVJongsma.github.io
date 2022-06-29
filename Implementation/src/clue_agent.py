@@ -123,11 +123,28 @@ class ClueAgent(mesa.Agent):
 
     # TODO implement (now random)
     def pick_one_unknown_card(self):
-        # unknown_cards = self.model.get_kripke_model().get_unknown_cards(self.cards.get_all_cards(), self.unique_id)
-        # unknown_card = random.choice(unknown_cards)
-        # all_known_cards = self.model.get_kripke_model().get_known_cards_agent()
-        # known_cards = self.model.get_kripke_model().get_known_cards_agent(all_known_cards, self, self.next_agent)
-        return sorted([self.cards.get_random_weapon()] + [self.cards.get_random_suspect()], key=str.lower)
+        # First, pick an unknown card
+        unknown_cards = self.model.get_unknown_cards(self.unique_id)
+        # No known cards that are weapons
+        unknown_weapons = list(set(self.cards.get_all_weapon_cards()).intersection(unknown_cards))
+        unknown_suspects = list(set(self.cards.get_all_suspect_cards()).intersection(unknown_cards))
+        # No known cards that are weapons
+        if ((len(unknown_weapons) == len(self.cards.get_all_weapon_cards()))):
+            unknown_card = random.choice(unknown_weapons)
+        # No known cards that are suspects
+        elif (set(self.cards.get_all_suspect_cards()).difference(set(unknown_cards)) == []):
+            unknown_card = random.choice(unknown_suspects)
+        else:
+            unknown_card = random.choice(unknown_cards)
+        # Second, pick a known card
+        known_cards = set(self.cards.get_all_cards()).difference(set(unknown_cards))
+        known_weapons = list(set(self.cards.get_all_weapon_cards()).intersection(known_cards))
+        known_suspects = list(set(self.cards.get_all_suspect_cards()).intersection(known_cards))
+        if unknown_card in self.cards.get_all_weapon_cards():
+            known_card = random.choice(known_weapons)
+        else:
+            known_card = random.choice(known_suspects)
+        return sorted([unknown_card, known_card], key=str.lower)
 
     # TODO implement (now random)
     def pick_reasoning_suggestion(self):

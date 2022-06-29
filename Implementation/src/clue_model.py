@@ -8,13 +8,14 @@ from Implementation.src.cards import Cards
 from Implementation.src.mlsolver.model import Clue
 from Implementation.src.mlsolver.formula import Atom, And, Not, Or, Box, Box_a, Box_star
 
+
 class ClueModel(mesa.Model):
     """A model with some number of agents."""
 
     # TODO do we want width and height, currently not used.
-    def __init__(self, N, width, height):
+    def __init__(self, N, width, height): #, num_weapons, num_suspects):
         self.num_agents = N
-        self.cards = Cards(self.num_agents)
+        self.cards = Cards(self.num_agents) #, num_weapons, num_suspects)
         self.grid = mesa.space.MultiGrid(width, height, True)
         # The agents activate one at a time, in the order they were added.
         self.schedule = mesa.time.BaseScheduler(self)
@@ -52,9 +53,9 @@ class ClueModel(mesa.Model):
             # Get the agent's cards
             agent_cards = self.cards.get_agent_cards()
             if i == 0:
-                a = ClueAgent(i+1, self.cards, agent_cards, "UNKNOWN", self)
+                a = ClueAgent(i+1, self.cards, agent_cards, "ONE_UNKNOWN", self)
             else:
-                a = ClueAgent(i+1, self.cards, agent_cards, "RANDOM", self)
+                a = ClueAgent(i + 1, self.cards, agent_cards, "RANDOM", self)
             # Add the agent to the MESA schedule, so it can take a turn
             self.schedule.add(a)
             agents.append(a)
@@ -137,7 +138,8 @@ class ClueModel(mesa.Model):
 
     # TODO does this go here?
     def update_knowledge_dict(self):
-        self.knowledge_dict, self.unknown_cards = self.kripke_model.update_knowledge_dictionary(self.knowledge_dict, self.unknown_cards)
+        self.knowledge_dict, self.unknown_cards = self.kripke_model.update_knowledge_dictionary(self.knowledge_dict,
+                                                                                                self.unknown_cards)
         print(self.knowledge_dict)
         print(self.unknown_cards)
         return
