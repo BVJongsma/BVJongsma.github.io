@@ -74,10 +74,10 @@ class GameInterface:
         for i in range(1, self.num_agents + 1):
             columns += ('agent' + str(i),)
         self.tree = ttk.Treeview(self.win, column=columns, show='headings', height=self.num_cards)
-        self.KB = self.init_KB()
+        self.KB, self.unknown_cards = self.model.kripke_model.initialise_known_dictionary(self.model.agents)
         self.tree.pack()
         self.init_table_information()
-        self.input_KB_table()
+        self.input_KB_table(True)
         self.win.mainloop()
 
     def update_table(self):
@@ -90,8 +90,9 @@ class GameInterface:
         #TODO: fix this
 
         #KB is updated and then put in the table
-        self.update_KB()
-        self.input_KB_table()
+        #unknown_cards = self.model.cards.get_all_cards() #TODO: change this? ask Iris
+        self.model.kripke_model.update_knowledge_dictionary(self.KB, self.unknown_cards)
+        self.input_KB_table(False)
 
 
 
@@ -102,6 +103,7 @@ class GameInterface:
         KB[id] -> a dictionary, this is the knowledge base of agent x.
         KB[id][card] -> a list of integers, containing the id's of the agents that agent id believes own the card.
     """
+    #TODO: this copies initialise_known_dictionary from model.py, check if this is unnecessary and possibly replace.
     def init_KB(self):
         empty_dict = {i: [] for i in self.model.cards.get_all_cards()}
         KB = [empty_dict.copy()]
@@ -157,7 +159,7 @@ class GameInterface:
 
         return
 
-    def input_KB_table(self):
+    def input_KB_table(self, init):
         # list of agents
         agents = self.model.agents
 
@@ -169,14 +171,19 @@ class GameInterface:
         agents = [a.get_unique_id() for a in self.model.agents]
 
         # insert info in the table
+        #TODO: fix this kinda? it now only puts in agent own cards and not updating the actual table
         for agent in agents:
-            for card_info in self.KB[agent]:
+            for card_info in self.KB[agent-1]:
                 for c in cards[agent - 1]:
-                    if c == card_info:
-                        new_tuple = self.tree.item(c)['values']
-                        new_tuple[agent] = 'Agent ' + str(agent)
-                        new_tuple = tuple(new_tuple)
-                        self.tree.item(c, values=new_tuple)
+                    if init:
+                        if c == card_info:
+                            new_tuple = self.tree.item(c)['values']
+                            new_tuple[agent] = 'Agent ' + str(agent)
+                            new_tuple = tuple(new_tuple)
+                            self.tree.item(c, values=new_tuple)
+                    if not init:
+                        return
+
         return
 
     def get_model(self):
