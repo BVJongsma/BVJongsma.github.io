@@ -4,20 +4,20 @@ import Implementation.src.cards as ca
 import Implementation.src.clue_agent
 import Implementation.src.clue_model as cm
 
-""""
-:returns
-    agents: a list of int, where the int are the agent id's
-    cards: a list of lists of cards. cards[id] returns the list of cards that agent 'id' owns.
-    unknown_cards: a list of list of cards. unknown_cards[id] returns a list of cards that agent 'id' still
-            doesn't know where they are yet.
-    dictionary: a list of dictionary summarising what all the agents know. dictionary[id] returns a dictionary of agent 'id'.
-            dictionary[x][y] = list shows what agent x knows about card y.
-            e.g. dictionary[1] = {'candle': [], ....}-> a dictionary showing where each card is in knowledge of agent 1 
-            e.g. dictionary[1]['dagger'] = 2 -> agent 1 knows that agent 2 has the dagger.        
-"""
-
 
 def fake_data():
+    """
+    :returns
+        agents: a list of int, where the int are the agent id's
+        cards: a list of lists of cards. cards[id] returns the list of cards that agent 'id' owns.
+        unknown_cards: a list of list of cards. unknown_cards[id] returns a list of cards that agent 'id' still
+                doesn't know where they are yet.
+        dictionary: a list of dictionary summarising what all the agents know. dictionary[id] returns a dictionary of agent 'id'.
+                dictionary[x][y] = list shows what agent x knows about card y.
+                e.g. dictionary[1] = {'candle': [], ....}-> a dictionary showing where each card is in knowledge of agent 1
+                e.g. dictionary[1]['dagger'] = 2 -> agent 1 knows that agent 2 has the dagger.
+    """
+
     agents = [1, 2, 3]
     all_cards = ['candle', 'dagger', 'rope', 'wrench'] + ["Green", "Mustard", "Plum", "Scarlet"]
     empty_dict = {i: [] for i in all_cards}
@@ -54,7 +54,7 @@ def init_table(num_agents, num_cards):
     # title
     win.title('A model of Clue')
     # dimensions
-    dim = str(num_agents * 150 + 150) + "x" + str(num_cards * 25 + 25)
+    dim = str(num_agents * 150 + 150) + "x" + str(num_cards * 25 + 50)
     win.geometry(dim)
     # background color
     win['bg'] = '#d61e1e'
@@ -73,7 +73,7 @@ class GameInterface:
         columns = ('items',)
         for i in range(1, self.num_agents + 1):
             columns += ('agent' + str(i),)
-        self.tree = ttk.Treeview(self.win, column=columns, show='headings', height=self.num_cards)
+        self.tree = ttk.Treeview(self.win, column=columns, show='headings', height=(self.num_cards + 1))
         self.KB, self.unknown_cards = self.model.kripke_model.initialise_known_dictionary(self.model.agents)
         self.tree.pack()
         self.init_table_information()
@@ -85,16 +85,9 @@ class GameInterface:
         self.last_agent += 1
         self.last_agent %= len(self.model.agents)
         x = self.model.get_agents()[self.last_agent]
-        x.step()
-        #if you first do this using the interface and then escape and do it using pressing enter, you potentially skip an agent
-        #TODO: fix this
-
-        #KB is updated and then put in the table
-        #unknown_cards = self.model.cards.get_all_cards() #TODO: change this? ask Iris
-        self.model.kripke_model.update_knowledge_dictionary(self.KB, self.unknown_cards)
-        self.input_KB_table(False)
-
-
+        x.step()  # KB is updated during the step
+        self.KB, self.unknown_cards = self.model.knowledge_dict, self.model.unknown_cards
+        self.input_KB_table(False)  # put KB knowledge in the table
 
     """
     initialise the knowledge base. This includes all the agents own cards.
@@ -103,7 +96,8 @@ class GameInterface:
         KB[id] -> a dictionary, this is the knowledge base of agent x.
         KB[id][card] -> a list of integers, containing the id's of the agents that agent id believes own the card.
     """
-    #TODO: this copies initialise_known_dictionary from model.py, check if this is unnecessary and possibly replace.
+
+    # TODO: this copies initialise_known_dictionary from model.py, check if this is unnecessary and possibly replace.
     def init_KB(self):
         empty_dict = {i: [] for i in self.model.cards.get_all_cards()}
         KB = [empty_dict.copy()]
@@ -113,20 +107,14 @@ class GameInterface:
             KB.append(empty_dict.copy())
             for i in a.get_agent_cards():
                 KB[a.get_unique_id()][i] = a.get_unique_id()
-        print(KB)
+        print("init_KB:", KB)
         return KB
-
-    # TODO: implement this
-    def update_KB(self):
-
-        #unknown_cards -= new_known_cards
-        return
 
     def refresh_button(self):
         refresh_button = tk.Button(self.win, text="Next Agent's turn", command=self.update_table)
         refresh_button.pack()
 
-    #TODO: put in extra row with amount of relations?
+    # TODO: put in extra row with amount of relations?
 
     def init_table_information(self):
         # define columns and headings
@@ -146,12 +134,15 @@ class GameInterface:
         for i in range(self.num_agents):
             question += ('?',)
         data = [(x,) + question for x in cards]
+        #including relations
+        values = self.get_new_relations()
 
-        # put data in the table
+        # put relations in the table
+        self.tree.insert('', tk.END, values=values, iid='relations')
+        #put card data in the table
         for d, c in zip(data, cards):
             # for access, use tree.item(iid)['values']
-            self.tree.insert('', tk.END, values=d,
-                             iid=c)  # tk.END means add at the end of the list, '0' means add at the beginning
+            self.tree.insert('', tk.END, values=d, iid=c)
 
         # add an update button
         self.refresh_button()
@@ -159,32 +150,53 @@ class GameInterface:
 
         return
 
+    #   TODO: make this prettier
     def input_KB_table(self, init):
-        # list of agents
-        agents = self.model.agents
 
-        # list of cards per agents, cards[x] -> the list of cards of agent x
-        cards = []
-        for i in range(len(agents)):
-            cards.append(agents[i].get_agent_cards())
+        if init:
+            # list of agents
+            agents = self.model.agents
 
-        agents = [a.get_unique_id() for a in self.model.agents]
+            # list of cards per agents, cards[x] -> the list of cards of agent x
+            cards = []
+            for i in range(len(agents)):
+                cards.append(agents[i].get_agent_cards())
 
-        # insert info in the table
-        #TODO: fix this kinda? it now only puts in agent own cards and not updating the actual table
-        for agent in agents:
-            for card_info in self.KB[agent-1]:
-                for c in cards[agent - 1]:
-                    if init:
-                        if c == card_info:
-                            new_tuple = self.tree.item(c)['values']
+            agents = [a.get_unique_id() for a in self.model.agents]
+
+            # insert info in the table
+            # TODO: fix this kinda? it now only puts in agent own cards and not updating the actual table
+            for agent in agents:
+                for card_name in self.KB[agent - 1]:
+                    for c in cards[agent - 1]:
+                        if c == card_name:
+                            new_tuple = self.tree.item(card_name)['values']
                             new_tuple[agent] = 'Agent ' + str(agent)
                             new_tuple = tuple(new_tuple)
-                            self.tree.item(c, values=new_tuple)
-                    if not init:
-                        return
+                            self.tree.item(card_name, values=new_tuple)
+        elif not init:
+            for agent in [a.get_unique_id() for a in self.model.agents]:
+                self.tree.item('relations', values=self.get_new_relations())
+                for card_name in self.KB[agent - 1]:
+                    new_tuple = self.tree.item(card_name)['values']
+                    a = self.KB[agent - 1][card_name]
+                    if a is None:
+                        new_tuple[agent] = '?'
+                    elif a == 0:
+                        new_tuple[agent] = 'Envelope'
+                    elif a >= 1:
+                        new_tuple[agent] = 'Agent ' + str(a)
+                    new_tuple = tuple(new_tuple)
+                    self.tree.item(card_name, values=new_tuple)
 
         return
+
+    def get_new_relations(self):
+        x = self.model.kripke_model.relations
+        values = ('relations',)
+        for a in self.model.agents:
+            values += (str(len(x[str(a.get_unique_id())])),)
+        return values
 
     def get_model(self):
         return self.model

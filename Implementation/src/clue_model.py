@@ -140,9 +140,9 @@ class ClueModel(mesa.Model):
     def update_knowledge_dict(self):
         self.knowledge_dict, self.unknown_cards = self.kripke_model.update_knowledge_dictionary(self.knowledge_dict,
                                                                                                 self.unknown_cards)
-        print(self.knowledge_dict)
+        print("update_knowledge_dict: ", self.knowledge_dict)
         print(self.unknown_cards)
-        return
+        #return self.knowledge_dict, self.unknown_cards
 
     # Check if there is a winner of the game
     # TODO what if there are multiple agents that win at the same time?
@@ -155,7 +155,7 @@ class ClueModel(mesa.Model):
             print("Winner is player " + str(winner))
             print("According to this player, the envelope consists of: " + str(guess))
             print("The envelope consists of: " + str(self.envelope.get_envelope_cards()))
-            exit()
+            quit()
 
     def get_agents(self):
         return self.agents
