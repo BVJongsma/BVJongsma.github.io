@@ -1,8 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
 import Implementation.src.cards as ca
+import Implementation.src.main
 import Implementation.src.clue_agent
 import Implementation.src.clue_model as cm
+import main
 
 
 def fake_data():
@@ -69,6 +71,7 @@ class GameInterface:
         self.num_cards = len(cards_set.get_all_cards())
         self.win = init_table(self.num_agents, self.num_cards)
         self.last_agent = -1
+        self.finished = False
         # start tree
         columns = ('items',)
         for i in range(1, self.num_agents + 1):
@@ -81,6 +84,9 @@ class GameInterface:
         self.win.mainloop()
 
     def update_table(self):
+        if self.finished is True:
+            print("the winner is already known!")
+            return
         # the model takes one agent's turn
         self.last_agent += 1
         self.last_agent %= len(self.model.agents)
@@ -88,6 +94,8 @@ class GameInterface:
         x.step()  # KB is updated during the step
         self.KB, self.unknown_cards = self.model.knowledge_dict, self.model.unknown_cards
         self.input_KB_table(False)  # put KB knowledge in the table
+        if self.finished is True:
+            main.next_to_interface()
 
     """
     initialise the knowledge base. This includes all the agents own cards.
@@ -195,7 +203,10 @@ class GameInterface:
         x = self.model.kripke_model.relations
         values = ('relations',)
         for a in self.model.agents:
-            values += (str(len(x[str(a.get_unique_id())])),)
+            v = str(len(x[str(a.get_unique_id())]))
+            if v == '1':
+                self.finished = True
+            values += (v,)
         return values
 
     def get_model(self):
