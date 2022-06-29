@@ -6,7 +6,7 @@ class Cards:
 
     def __init__(self, num_agents): #, num_weapons, num_suspects):
         self.num_agents = num_agents
-        num_weapons = 7
+        num_weapons = 4
         num_suspects = 4
         if num_weapons == 4:
             self.weapons = ["candle", "dagger", "rope", "wrench"]
