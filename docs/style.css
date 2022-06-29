@@ -37,7 +37,7 @@ nav li a:hover {
   background-color: #555;
 }
 
-.page-header { color: #fff; text-align: center; background-color: #e01414; background-image: linear-gradient(120deg, #781515, #f5e6e6); }
+.page-header { color: #fff; text-align: center; background-color: #e01414; background-image: url(figures/cluedo_banner.jpg); }
 
 .main-content h1, .main-content h2, .main-content h3, .main-content h4, .main-content h5, .main-content h6 { margin-top: 2rem; margin-bottom: 1rem; font-weight: normal; color: #d61e1e; }
 
