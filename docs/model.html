@@ -280,12 +280,23 @@ layout: dinky
     </div>
     <!--6.4 After a turn: updating the model -->
     <div id="model-update">
-        <h2>After the turn: updating the model using the Clue rules</h2>
-        After showing/not showing any cards, the turn of that player ends.
-        However, more knowledge might be part of the system,
-        so an extra step will be used to update the Kripke model using all rules from the rules section above.
-        <br><strong>[TODO: we are not sure about the implementation yet,
-        so this is something we will need to focus on next.]</strong>
+        <h2>Updating the model using the Clue rules</h2>
+        <p>
+            After showing/not showing any cards, the Kripke model of players is updated and the turn of that player ends.
+            More knowledge might be part of the system than you might initially think.
+            As explained in the formal rules section above, a player might determine which card was shown using logic.
+            However, in our Kripke model this is already implemented without adding extra rules.
+        </p>
+        <p>
+            Consider for example the rule: if one player has a certain card, then another player cannot have that card.
+            In the Kripke model, if a player knows that some player has a card, then all states will be removed where
+            that player does not have the card. Hence, all states where another player has the card are removed, so
+            another player cannot have the card in question.
+        </p>
+        <p>
+            The rules can be worked out and after checking all of them, we came to the conclusion that our Kripke
+            model with public and private announcements already handle all rules discussed.
+        </p>
     </div> <!--6.4 After a turn: updating the model-->
 </div>
 <!-- download the implementation here-->
