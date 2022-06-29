@@ -124,15 +124,14 @@ class ClueAgent(mesa.Agent):
     # TODO implement (now random)
     def pick_one_unknown_card(self):
         # First, pick an unknown card
-        unknown_cards = self.model.get_unknown_cards(self.unique_id)
-        # No known cards that are weapons
+        unknown_cards = self.model.get_unknown_cards(self.unique_id - 1)
         unknown_weapons = list(set(self.cards.get_all_weapon_cards()).intersection(unknown_cards))
         unknown_suspects = list(set(self.cards.get_all_suspect_cards()).intersection(unknown_cards))
         # No known cards that are weapons
-        if ((len(unknown_weapons) == len(self.cards.get_all_weapon_cards()))):
+        if (len(unknown_weapons) == len(self.cards.get_all_weapon_cards())):
             unknown_card = random.choice(unknown_weapons)
         # No known cards that are suspects
-        elif (set(self.cards.get_all_suspect_cards()).difference(set(unknown_cards)) == []):
+        elif (len(unknown_suspects) == len(self.cards.get_all_suspect_cards())):
             unknown_card = random.choice(unknown_suspects)
         else:
             unknown_card = random.choice(unknown_cards)
@@ -141,9 +140,9 @@ class ClueAgent(mesa.Agent):
         known_weapons = list(set(self.cards.get_all_weapon_cards()).intersection(known_cards))
         known_suspects = list(set(self.cards.get_all_suspect_cards()).intersection(known_cards))
         if unknown_card in self.cards.get_all_weapon_cards():
-            known_card = random.choice(known_weapons)
-        else:
             known_card = random.choice(known_suspects)
+        else:
+            known_card = random.choice(known_weapons)
         return sorted([unknown_card, known_card], key=str.lower)
 
     def pick_cards_reasoning_suggestion(self, possible_cards, known_cards):
