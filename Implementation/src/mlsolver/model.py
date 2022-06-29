@@ -249,6 +249,105 @@ class Clue:
 
         return winner, guess
 
+    # def get_known_dictionary(self, old_known_dict, unknown_list):
+    #     dict_list = []
+    #     for agent in range(1, self.num_agents + 1):
+    #         agent_dict = {}
+    #         for relation in self.relations[str(agent)]:
+
+    def initialise_known_dictionary(self, agents):
+
+        # list of cards per agents, cards[x] -> the list of cards of agent x
+        cards = []
+        for agent in agents:
+            cards.append(agent.get_agent_cards())
+
+        agent_ids = [agent for agent in range(1, self.num_agents + 1)]
+
+        # make knowledge base
+        empty_dict = {i: None for i in self.model.cards.get_all_cards()}
+        KB = []
+        unknown_cards = []
+        for a in agent_ids:
+            KB.append(empty_dict.copy())
+            unknown_cards.append([])
+
+        #insert initial info in the table
+        for agent in agent_ids:
+            for card_info in KB[agent-1]:
+                known = False
+                for c in cards[agent-1]:
+                    if c == card_info:
+                        KB[agent - 1][c] = agent
+                        known = True
+                        break
+                if known is False:
+                    unknown_cards[agent - 1].append(card_info)
+        return KB, unknown_cards
+
+    # TODO make prettier
+    def update_knowledge_dictionary(self, knowledge_dict, unknown_cards):
+        for agent_id in range(1, self.num_agents + 1):
+            # Get the agents for which the agent_id does not know all the cards (unknown agents)
+            values = list(knowledge_dict[agent_id - 1].values())
+            unknown_agents = list(set([agent for agent in range(self.num_agents + 1) if values.count(agent) < int(len(values) / ((self.num_agents) + 1))]))
+            # For each unknown agent, keep a list of possible known cards
+            possible_known_cards = [[] for i in range(max(unknown_agents) + 1)]
+
+            for relation in self.relations[str(agent_id)]:
+                relation_world = self.worlds[int(relation[1])]
+                for unknown_agent in unknown_agents:
+                    cards = re.findall(r'\:(.*)', str(list(relation_world.assignment.keys())[unknown_agent]))[0]
+                    cards_list = ast.literal_eval(cards)
+                    cards_list = [card.strip() for card in cards_list]
+                    # first world
+                    if possible_known_cards[unknown_agent] == []:
+                        possible_known_cards[unknown_agent] = cards_list
+                    # Remove from this list if the card isn't there in this world compared to the last
+                    possible_known_cards[unknown_agent] = list(set(possible_known_cards[unknown_agent]).intersection(cards_list))
+                    # If the list is now empty, remove from the unknown agents
+                    if possible_known_cards[unknown_agent] == []:
+                        unknown_agents.remove(unknown_agent)
+
+
+            # The agents that remain in the unknown_agents are the agents that now have these/this card
+            for unknown_agent in unknown_agents:
+                for card in possible_known_cards[unknown_agent]:
+                    knowledge_dict[agent_id - 1][card] = unknown_agent
+                    if card in unknown_cards[agent_id - 1]:
+                        unknown_cards[agent_id - 1].remove(card)
+                    # All cards except for the ones in the dictionary are the unknown cards
+
+        return knowledge_dict, unknown_cards
+
+        #     for unknown_card in unknown_cards[agent_id - 1]:
+        #         print(unknown_card)
+        #         old_i = None
+        #         unknown = False
+        #         for relation in self.relations[str(agent_id)]:
+        #             relation_world = self.worlds[int(relation[1])]
+        #             for unknown_agent in unknown_agents:
+        #                 cards = re.findall(r'\:(.*)', str(list(relation_world.assignment.keys())[unknown_agent]))[0]
+        #                 cards_list = ast.literal_eval(cards)
+        #                 cards_list = [card.strip() for card in cards_list]
+        #                 if unknown_card in cards_list:
+        #                     if old_i == None:
+        #                         old_i = unknown_agent
+        #                     elif unknown_agent != old_i:
+        #                         unknown_cards[agent_id - 1].append(unknown_card)
+        #                         unknown = True
+        #                         break
+        #                 if unknown:
+        #                     break
+        #             if unknown:
+        #                 break
+        # return unknown_cards
+
+
+    # TODO maybe useful for private announcements
+    # def add_known_card(self, knowledge_dict, known_card):
+
+
     # Get cards that are unknown for an agent (i.e. could be in the hands of various players/the envelope)
     def get_unknown_cards(self, cards, agent_id):
         unknown_cards = []
