@@ -1,65 +1,13 @@
-# From https://github.com/erohkohl/mlsolver
+# Updated from https://github.com/erohkohl/mlsolver
 
-""" Three wise men puzzle
-
-Module contains data model for three wise men puzzle as Kripke strukture and agents announcements as modal logic
-formulas
-"""
 import ast
 import copy
 import itertools
-
 import numpy as np
 import re
-
 from Implementation.src.mlsolver.kripke import KripkeStructure, World
-from Implementation.src.mlsolver.formula import Atom, And, Not, Or, Box_a, Box_star
-from Implementation.src.cards import Cards
 
 PRINT = False
-#
-# class WiseMenWithHat:
-#     """
-#     Class models the Kripke structure of the "Three wise men example.
-#     """
-#
-#     knowledge_base = []
-#
-#     def __init__(self):
-#         worlds = [
-#             World('RWW', {'1:R': True, '2:W': True, '3:W': True}),
-#             World('RRW', {'1:R': True, '2:R': True, '3:W': True}),
-#             World('RRR', {'1:R': True, '2:R': True, '3:R': True}),
-#             World('WRR', {'1:W': True, '2:R': True, '3:R': True}),
-#
-#             World('WWR', {'1:W': True, '2:W': True, '3:R': True}),
-#             World('RWR', {'1:R': True, '2:W': True, '3:R': True}),
-#             World('WRW', {'1:W': True, '2:R': True, '3:W': True}),
-#             World('WWW', {'1:W': True, '2:W': True, '3:W': True}),
-#         ]
-#
-#         relations = {
-#             '1': {('RWW', 'WWW'), ('RRW', 'WRW'), ('RWR', 'WWR'), ('WRR', 'RRR')},
-#             '2': {('RWR', 'RRR'), ('RWW', 'RRW'), ('WRR', 'WWR'), ('WWW', 'WRW')},
-#             '3': {('WWR', 'WWW'), ('RRR', 'RRW'), ('RWW', 'RWR'), ('WRW', 'WRR')}
-#         }
-#
-#         relations.update(add_reflexive_edges(worlds, relations))
-#         relations.update(add_symmetric_edges(relations))
-#
-#         self.ks = KripkeStructure(worlds, relations)
-#
-#         # Wise man ONE does not know whether he wears a red hat or not
-#         self.knowledge_base.append(And(Not(Box_a('1', Atom('1:R'))), Not(Box_a('1', Not(Atom('1:R'))))))
-#
-#         # This announcement implies that either second or third wise man wears a red hat.
-#         self.knowledge_base.append(Box_star(Or(Atom('2:R'), Atom('3:R'))))
-#
-#         # Wise man TWO does not know whether he wears a red hat or not
-#         self.knowledge_base.append(And(Not(Box_a('2', Atom('2:R'))), Not(Box_a('2', Not(Atom('2:R'))))))
-#
-#         # This announcement implies that third men has be the one, who wears a red hat
-#         self.knowledge_base.append(Box_a('3', Atom('3:R')))
 
 
 class Clue:
@@ -67,8 +15,7 @@ class Clue:
     Class models the Kripke structure of Clue.
     """
 
-    knowledge_base = []
-
+    # Initialise the Kripke model of Clue.
     def __init__(self, cards, num_agents, model):
         self.num_agents = num_agents
         self.model = model
@@ -222,12 +169,7 @@ class Clue:
                 break
         return winner, guess
 
-    # def get_known_dictionary(self, old_known_dict, unknown_list):
-    #     dict_list = []
-    #     for agent in range(1, self.num_agents + 1):
-    #         agent_dict = {}
-    #         for relation in self.relations[str(agent)]:
-
+    # Initialise the dictionary of known cards.
     def initialise_known_dictionary(self, agents):
         # list of cards per agents, cards[x] -> the list of cards of agent x
         cards = []
@@ -244,11 +186,11 @@ class Clue:
             KB.append(empty_dict.copy())
             unknown_cards.append([])
 
-        #insert initial info in the table
+        # insert initial info in the table
         for agent in agent_ids:
-            for card_info in KB[agent-1]:
+            for card_info in KB[agent - 1]:
                 known = False
-                for c in cards[agent-1]:
+                for c in cards[agent - 1]:
                     if c == card_info:
                         KB[agent - 1][c] = agent
                         known = True
@@ -257,12 +199,14 @@ class Clue:
                     unknown_cards[agent - 1].append(card_info)
         return KB, unknown_cards
 
-    # TODO make prettier
+    # TODO make prettier + comment
+    # Update the knowledge dictionary.
     def update_knowledge_dictionary(self, knowledge_dict, unknown_cards):
         for agent_id in range(1, self.num_agents + 1):
             # Get the agents for which the agent_id does not know all the cards (unknown agents)
             values = list(knowledge_dict[agent_id - 1].values())
-            unknown_agents = list(set([agent for agent in range(self.num_agents + 1) if values.count(agent) < int(len(values) / ((self.num_agents) + 1))]))
+            unknown_agents = list(set([agent for agent in range(self.num_agents + 1) if
+                                       values.count(agent) < int(len(values) / ((self.num_agents) + 1))]))
             # For each unknown agent, keep a list of possible known cards
             possible_known_cards = [[] for i in range(max(unknown_agents) + 1)]
 
@@ -273,14 +217,14 @@ class Clue:
                     cards_list = ast.literal_eval(cards)
                     cards_list = [card.strip() for card in cards_list]
                     # first world
-                    if possible_known_cards[unknown_agent] == []:
+                    if not possible_known_cards[unknown_agent]:
                         possible_known_cards[unknown_agent] = cards_list
                     # Remove from this list if the card isn't there in this world compared to the last
-                    possible_known_cards[unknown_agent] = list(set(possible_known_cards[unknown_agent]).intersection(cards_list))
+                    possible_known_cards[unknown_agent] = list(
+                        set(possible_known_cards[unknown_agent]).intersection(cards_list))
                     # If the list is now empty, remove from the unknown agents
-                    if possible_known_cards[unknown_agent] == []:
+                    if not possible_known_cards[unknown_agent]:
                         unknown_agents.remove(unknown_agent)
-
 
             # The agents that remain in the unknown_agents are the agents that now have these/this card
             for unknown_agent in unknown_agents:
@@ -289,9 +233,9 @@ class Clue:
                     if card in unknown_cards[agent_id - 1]:
                         unknown_cards[agent_id - 1].remove(card)
                     # All cards except for the ones in the dictionary are the unknown cards
-
         return knowledge_dict, unknown_cards
 
+    # TODO comment
     def find_card_in_world(self, unknown_cards, relation_world, index):
         # Check the envelope cards and agent cards for this world
         cards = re.findall(r'\:(.*)', str(list(relation_world.assignment.keys())[index]))[0]
@@ -299,10 +243,11 @@ class Clue:
         cards_list = [card.strip() for card in cards_list]
         # If there is a card in cards in this envelope/agent, remove from list
         for card in unknown_cards:
-            if (card in cards_list):
+            if card in cards_list:
                 unknown_cards.remove(card)
         return unknown_cards
 
+    # TODO comment
     def find_possible_cards(self, unknown_cards, self_agent_id, next_agent_id):
         unknown_envelope_cards = copy.deepcopy(unknown_cards)
         unknown_next_agent_cards = copy.deepcopy(unknown_cards)
@@ -311,18 +256,15 @@ class Clue:
             relation_world = self.worlds[int(relation[1])]
             unknown_envelope_cards = self.find_card_in_world(unknown_envelope_cards, relation_world, 0)
             unknown_next_agent_cards = self.find_card_in_world(unknown_next_agent_cards, relation_world, next_agent_id)
-            if ((not unknown_envelope_cards) and (not unknown_next_agent_cards)):
+            if (not unknown_envelope_cards) and (not unknown_next_agent_cards):
                 break
 
         possible_envelope_cards = list(set(unknown_cards).difference(unknown_envelope_cards))
         possible_next_agent_cards = list(set(unknown_cards).difference(unknown_next_agent_cards))
 
-        return sorted(possible_envelope_cards, key = str.lower), sorted(possible_next_agent_cards, key = str.lower)
+        return sorted(possible_envelope_cards, key=str.lower), sorted(possible_next_agent_cards, key=str.lower)
 
-    # TODO maybe useful for private announcements
-    # def add_known_card(self, knowledge_dict, known_card):
-
-    # TODO Remove
+    # TODO Remove. Still to remove?
     # Get cards that are unknown for an agent (i.e. could be in the hands of various players/the envelope)
     def get_unknown_cards(self, cards, agent_id):
         unknown_cards = []
@@ -352,9 +294,6 @@ class Clue:
                 if unknown:
                     break
         return unknown_cards
-
-    # def get_known_cards_agent(self, cards, self_agent, other_agent):
-    #     for relation in self.relations[str(self_agent.get_uni)]:
 
 
 def add_symmetric_edges(relations):

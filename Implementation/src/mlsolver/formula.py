@@ -16,12 +16,11 @@ class Atom:
     def __init__(self, name):
         self.name = name
 
+    # Adapted this function, so it does not have to loop over all worlds.
     def semantic(self, ks, world_to_test, asked_agent):
         """Function returns assignment of variable in Kripke's world.
         """
         world = ks.worlds[world_to_test]
-        # for world in ks.worlds:
-        #     if world.name == world_to_test:
         cards = re.findall(r'\:(.*)', str(list(world.assignment.keys())[asked_agent]))[0]
         cards_list = ast.literal_eval(cards)
         cards_list = [card.strip() for card in cards_list]

@@ -12,7 +12,7 @@ PRINT = False
 class ClueModel(mesa.Model):
     """A model with some number of agents."""
 
-    # TODO do we want width and height, currently not used.
+    # Initialise the model.
     def __init__(self, N, num_weapons, num_suspects, strat_agent1, strat_other_agents):
         self.num_agents = N
         self.num_weapons = num_weapons
@@ -28,13 +28,12 @@ class ClueModel(mesa.Model):
         # For each agent, determine the next agent in turn, which is also the agent they suggest to
         for agent in self.agents:
             agent.initialise_next_agent()
-            # agent.update_kripke_initial_cards()
 
+        # Initialise the dictionary using the cards each player has.
         self.knowledge_dict, self.unknown_cards = self.kripke_model.initialise_known_dictionary(self.agents)
         if PRINT:
             print(self.unknown_cards)
             print(self.knowledge_dict)
-
 
     # Initialise the case file envelope
     def initialise_envelope(self):
@@ -63,6 +62,7 @@ class ClueModel(mesa.Model):
     def get_num_agents(self):
         return self.num_agents
 
+    # Get the cards that are in the game.
     def get_cards(self):
         return self.cards
 
@@ -74,19 +74,18 @@ class ClueModel(mesa.Model):
     def get_kripke_model(self):
         return self.kripke_model
 
+    # Get the knowledge dictionary.
     def get_knowledge_dict(self):
         return self.knowledge_dict
 
+    # Get the unknown cards for an agent.
     def get_unknown_cards(self, agent_id):
         return self.unknown_cards[agent_id]
 
     # Make a public announcement
-    # type Agent: 'Implementation.src.clue_agent.ClueAgent'
-    # type suggestion"list of strings
-    # New implementation
     def publicly_announce(self, asking_agent, agent, suggestion, affirmed):
         if affirmed:  # agent did have one or more of the suggested cards
-            announcement = Or(Atom(suggestion[0]), Atom(suggestion[1]))
+            announcement = Or(Atom(suggestion[0]), Atom(suggestion[1]))  # A \lor B
             if PRINT:
                 print("public announcement", announcement)
             updating_agent = agent.next_agent
@@ -94,7 +93,7 @@ class ClueModel(mesa.Model):
             self.kripke_model.get_kripke_structure().relation_solve(updating_agent, announcement, asked_agent_id)
 
         else:  # agent has none of the suggested cards (affirmed = False)
-            announcement = And(Not(Atom(suggestion[0])), Not(Atom(suggestion[1])))
+            announcement = And(Not(Atom(suggestion[0])), Not(Atom(suggestion[1])))  # \neg A \land \neg B
             if PRINT:
                 print("public announcement", announcement)
             updating_agent = agent.next_agent
@@ -104,7 +103,8 @@ class ClueModel(mesa.Model):
             # Update the relations for the agent that did not ask for the cards.
             self.kripke_model.get_kripke_structure().relation_solve(updating_agent, announcement, asked_agent_id)
 
-    # TODO does this go here?
+    # TODO does this go here? Do we even need it?
+    # Update the knowledge dictionary.
     def update_knowledge_dict(self):
         self.knowledge_dict, self.unknown_cards = self.kripke_model.update_knowledge_dictionary(self.knowledge_dict,
                                                                                                 self.unknown_cards)
@@ -122,6 +122,7 @@ class ClueModel(mesa.Model):
             print("The envelope consists of: " + str(self.envelope.get_envelope_cards()))
             return True
 
+    # Get the agents in the game.
     def get_agents(self):
         return self.agents
 
