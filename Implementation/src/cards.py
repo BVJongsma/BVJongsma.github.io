@@ -9,7 +9,7 @@ class Cards:
         if num_weapons == 4:
             self.weapons = ["candle", "dagger", "rope", "wrench"]
         if num_weapons == 7:
-            self.weapons = ["candle", "dagger", "rope", "wrench", "revolver", "lead pipe", "ax"]
+            self.weapons = ["candle", "dagger", "rope", "wrench", "handgun", "lead", "axe"]
         if num_suspects == 4:
             self.suspects = ["Green", "Mustard", "Plum", "Scarlet"]
         if num_suspects == 7:
