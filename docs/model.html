@@ -100,9 +100,9 @@ layout: dinky
                 </li>
                 <br>
                 <li>
-                    If for all except one weapons in \(Weapons\) or for all except one suspects in \(Suspects\), you know that they belong to any player, then the remaining weapon or suspect is in the envelope.
-                    If \(\forall card \in \textrm{Weapons} \backslash {x}, card_j\) where \(j\ \in \textrm{Players}\), then \(x_{env}\)
-                    If \(\forall card \in \textrm{Suspects} \backslash {x}, card_j\) where \(j\ \in \textrm{Players}\), then \(x_{env}\)
+                    If for all except one weapons in \(Weapons\) or for all except one suspects in \(Suspects\), you know that they belong to any player, then the remaining weapon or suspect is in the envelope. <br>
+                    If \(\forall card \in \textrm{Weapons} \backslash \{x\}\), \(card_j\) where \(j\ \in \textrm{Players}\), then \(x_{env}\) <br>
+                    If \(\forall card \in \textrm{Suspects} \backslash \{x\}, \(card_j\) where \(j\ \in \textrm{Players}\), then \(x_{env}\)
                 </li>
             </ol>
         </div>
@@ -112,28 +112,63 @@ layout: dinky
         <h2>The Kripke Model</h2>
         <strong>[TODO: add a formal definition of the Kripke model.]<br></strong>
         <p>
-            The Kripke model should represent the state combinations that include four weapons,
+            The Kripke model should represent the state combinations that include seven weapons,
             four suspects and three players.
             There is one weapon card and one suspect card in the envelope.
             This means that there are \(4 \times 4 = 16\) possibilities for the envelope.
-            For the three players, there are six cards left (weapons and suspects combined).
-            This leads to there being \(\frac{6!}{2! \times (6-2)!} = 15\) possible card combinations for player 1.
-            When two of the six cards are given to player 1, that leaves four cards for player 2.
-            In effect, there are \(\frac{4!}{2! \times (4-2)!} = 6\) possible combinations for player 2.
-            For player 3 there is only one option: they are left with the \(4 - 2 = 2\) remaining cards.
-            In total, this all results in \(16 \times 15 \times 6 \times 1 = 1440\) states.
+            For the three players, there are nine cards left (weapons and suspects combined).
+            This leads to there being \(\frac{9!}{3! \times (9-3)!} = 84\) possible card combinations for player 1.
+            When three of the nine cards are given to player 1, that leaves six cards for player 2.
+            In effect, there are \(\frac{6!}{3! \times (6-3)!} = 20\) possible combinations for player 2.
+            For player 3 there is only one option: they are left with the \(6 - 3 = 3\) remaining cards.
+            In total, this all results in \(16 \times 84 \times 20 \times 1 = 26880\) states.
         </p>
         <p>
-            Each state contains one of the possible combinations of the 8 weapon and suspect cards.
+            Each state contains one of the possible combinations of the 11 weapon and suspect cards.
             As an example, one such state is given by:
-            candlestick\(_1\), dagger\(_1\),
-            rope\(_2\), Scarlet\(_2\), Mustard\(_3\),
-            Green\(_3\), wrench\(_\textrm{env}\),
-            Plum\(_\textrm{env}\).
-            Assume that this is the real-life situation, and use the following abbreviations:
-            candlestick is c, dagger is d, rope is r, wrench is w, Scarlet is S, Mustard is M,
-            Green is G and Plum is P. Now see figure 1, which shows a Kripke model of 3 states and their relations.
-            The actual real-life state is shown in the top left.
+            axe\(_1\), candle\(_1\), dagger\(_1\),
+            lead\(_2\), handgun\(_2\), rope\(_2\), Green\(_3\),
+            Mustard\(_3\), Plum\(_3\), wrench\(_\textrm{env}\),
+            Scarlet\(_\textrm{env}\).
+            The envelope should contain one weapon and one suspect, but otherwise all cards are distributed randomly.
+        </p>
+        <p>
+            The Kripke model \(M = \langle S, \pi, R_1, R_2, R_3 \rangle\) can be defined as follows:
+            <ol>
+                <li>
+                    \(S\) is the total set of states \(s = \{s_1, s_26880} \}\).
+                    A state consists of a tuple of four sets:
+                    \(s = \langle c_1, c_2, c_3, c_4 \rangle \).
+                    The first of these sets denotes the cards in the envelope.
+                    The second, third and fourth sets denote the cards of players 1, 2 and 3 respectively.
+                    So, \(s = \langle \{card_env, card_env\}, \{card_1, card_1, card_1\}, \{card_2, card_2, card_2\}, \{card_3, card_3, card_3\}\).
+                </li>
+                <li>
+                    \(\pi : P \rightarrow (S \rightarrow \{T, F}\)\) assigns a truth value to all propositions P.
+                </li>
+                <li>
+                    \( R_1, R_2\) and \(R_3\) denote the set of relations for each player 1, 2 and 3.
+                    For each:
+                    \(R_j \subseteq S \times S\) such that \(R_j = \{(s, t) \in S \times S | c_j in s = c_j in t\}\), where \(j \in Players\).
+                    In other words, each player knows their own cards.
+                </li>
+                <li>
+                    There are some additional rules...
+                </li>
+            </ol>
+        </p>
+        <p>
+            We will now show examples of a (illustrated) Kripke model.
+            For this purpose, and to keep the explanation from being unnecessarily elaborate, we temporarily assume that there are four weapons and four suspects.
+            We remove axe, lead and handgun from the list of weapons.
+            We use the following abbreviations:
+            candle is c, dagger is d, rope is r, wrench is w, Scarlet is S, Mustard is M,
+            Green is G and Plum is P.
+        </p>
+
+        <p>
+            Now see Figure 1, which shows a Kripke model of just 3 states (the total number of states would be much greater) and their relations.
+            The true state is shown in the top left.
         </p>
         <figure>
             <img src="figures/example_kripke.png" alt="kripke_example" style="width:100%">

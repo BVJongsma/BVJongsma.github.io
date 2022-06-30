@@ -15,7 +15,7 @@ def run(strategy_agent1, strategy_other_agents):
     # Create a Clue model with three players
     clue_model = ClueModel(3, NUM_WEAPONS, NUM_SUSPECTS, strategy_agent1, strategy_other_agents)
     # Uncomment to show the interface.
-    # interface = inf.GameInterface(clue_model)
+    interface = inf.GameInterface(clue_model)
     # Let the players take turns in a game of Clue
     turn = 0
     while not clue_model.check_end_state():
