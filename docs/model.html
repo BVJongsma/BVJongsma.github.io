@@ -68,12 +68,6 @@ layout: dinky
             <h3>Rules that players can use to determine more information</h3>
             In a game of clue, some logical rules apply.
             Players can use these rules to update their knowledge on the game.
-            <strong>
-                <br>[TODO: potentially specify notation first and then just use rule + logic,
-                and not the in-between notation.
-                If there are more rules we can think of, add them to the model.
-                Also work out logically the remaining rules.]
-            </strong>
             <ol>
                 <li> If one player has a certain card, then the other player cannot have that card.
                     If \(card_i\) with \(card \in \textrm{Cards}\) and
@@ -94,39 +88,20 @@ layout: dinky
                 </li>
                 <br>
                 <li>
-                    If you have seen all the cards of a player, then they do not have any other cards.
                     If each player has \(n\) cards and player \(i\) knows that player \(j\) has the set \(Cards_j\)
                     with \(|Cards_j| = n\) (here, we use absolutes to denote the size),
                     then if \(card \notin Cards_j\): \(\neg card_j\).
-                    Thus, \((card \notin Cards_j \textrm{and} |Cards_j| = n) \rightarrow \neg card_j\).
-                </li>
-                <br>
-                <li>
-                    You know that a player has a certain amount of cards,
-                    so using the cards you have seen and the cards that you know they do not have,
-                    it might be possible to determine which cards they have.
-                    <strong> <br> [TODO: try to make this more clear and also figure out how to use logic to write this out.] <br> </strong>
-                    <!-- A player has $m$ cards, where $m$ is some real number. Let $t$ be the total number of cards in the game and $n$ corresponds to the cards that you know that the player does not have. If $t-n = m$, then the player must -->
-                    If a player does not show any cards, then they do not have any of the cards that were asked for.
+                    Thus, \((card \notin Cards_j \textrm{ and } |Cards_j| = n) \rightarrow \neg card_j\).
                 </li>
                 <br>
                 <li>
                     If all except one of \(\textrm{Players} \cup \textrm{Envelope}\) does not have a certain card, then the remaining player or envelope must have this card. <br>
-                    \(\neg card_i \textrm{and} \neg card_j \textrm{and} \neg card_k \rightarrow card_l\) with \(i, j \in \textrm{Players} \cup \textrm{Envelope}\) and \(i \neq j \neq k \neq l\).
+                    \(\neg card_i \textrm{ and } \neg card_j \textrm{ and } \neg card_k \rightarrow card_l\) with \(i, j \in \textrm{Players} \cup \textrm{Envelope}\) and \(i \neq j \neq k \neq l\).
                 </li>
                 <br>
                 <li>
-                    If a player shows a card, then that must be one of the cards that was asked for.
-                </li>
-                <li>
-                    If you know for all weapons {suspects} except for one that some player has that card,
-                    then the remaining card must be in the envelope.
-                </li>
-                <br>
-                <li>
-                    If in all possible states of the Kripke model,
-                    the cards that are in the envelope are the same for some player,
-                    then that player can win the game by stating that those cards are the murder weapon and killer.
+                    If for all except one weapons in \(Weapons\) or for all except one suspects in \(Suspects\), you know that they belong to any player, then the remaining weapon or suspect is in the envelope.
+                    \(\neg card_i \textrm{ and } \neg card_j \textrm{ and } \neg card_k \rightarrow card_l\) with \(i, j \in \textrm{Players} \cup \textrm{Envelope}\) and \(i \neq j \neq k \neq l\).
                 </li>
             </ol>
         </div>
