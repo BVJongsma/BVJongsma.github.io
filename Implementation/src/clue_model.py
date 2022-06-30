@@ -5,7 +5,7 @@ from Implementation.src.clue_agent import ClueAgent
 from Implementation.src.envelope_agent import EnvelopeAgent
 from Implementation.src.cards import Cards
 from Implementation.src.mlsolver.model import Clue
-from Implementation.src.mlsolver.formula import Atom, And, Not, Or, Box, Box_a, Box_star
+from Implementation.src.mlsolver.formula import Atom, And, Not, Or
 
 
 class ClueModel(mesa.Model):
@@ -108,9 +108,6 @@ class ClueModel(mesa.Model):
     def update_knowledge_dict(self):
         self.knowledge_dict, self.unknown_cards = self.kripke_model.update_knowledge_dictionary(self.knowledge_dict,
                                                                                                 self.unknown_cards)
-        print("update_knowledge_dict: ", self.knowledge_dict)
-        print(self.unknown_cards)
-        #return self.knowledge_dict, self.unknown_cards
 
     # Check if there is a winner of the game
     # TODO what if there are multiple agents that win at the same time?
