@@ -2,20 +2,22 @@
 layout: dinky
 ---
 
-
 <!-- section 5: implementation-->
 <div id="implementation">
+    >>>>>>>>>>>>>> TODO also show/explain interface!!!
     <h1>Model and Implementation</h1>
     <p>
         We formalise <a href="./simplifications.html">the simplified game of Clue</a> in a model.
         We implement this model digitally using Python.
+        On this page, we will describe our model and implementation.
+        The implementation itself can be found on our <a href="https://github.com/BVJongsma/ClueModel" target="_blank">GitHub</a>.
     </p>
     <!-- navigation -->
     <ul>
-            <li><a href="#card-player-representation">Card and player representation</a></li>
-            <li><a href="#formal-rules">Rules that players can use to determine more information</a></li>
+            <li><a href="#card-player-representation">Formal card and player representation</a></li>
             <li><a href="#the-kripke-model">The Kripke Model</a></li>
-            <li><a href="#download-the-model">Download our implementation</a></li>
+            <li><a href="#formal-rules">Rules for gaining information</a></li>
+            <li><a href="#formal-rules">Updating the Kripke model</a></li>
     </ul>
     <div id="card-player-representation">
         <h2>Formal card and player representation</h2>
@@ -45,8 +47,8 @@ layout: dinky
             The case file envelope is denoted by the singleton set Envelope = {\(\textrm{env}\)}
         </p>
         <p>
-            Each player or envelope might have a certain card, and therefore we will make use of the notation \(i_j\).
-            Here, \( i \in \textrm{Cards} \)
+            Each player or envelope might have a certain card, and therefore we will make use of the notation \(card_j\).
+            Here, \( card \in \textrm{Cards} \)
             and \(j \in \textrm{Players} \cup \textrm{Envelope}\). An example is \(\textrm{revolver}_2\), meaning that player 2 has the revolver.
             In the example \(\textrm{Scarlet}_{\textrm{env}}\), Scarlet is the suspect that is in the case file envelope.
         </p>
@@ -55,7 +57,6 @@ layout: dinky
     <!-- subsection 5.2: kripke model -->
     <div id="the-kripke-model">
         <h3>The Kripke Model</h3>
-        <strong>[TODO: add a formal definition of the Kripke model.]<br></strong>
         <p>
             The Kripke model should represent the state combinations that include seven weapons,
             four suspects and three players.
@@ -83,6 +84,7 @@ layout: dinky
                 <li>
                     \(S\) is the total set of states \(s = \{s_1, s_{26880}\}\).
                     A state consists of a tuple of four pairwise disjoint sets:
+                    >>>>>>>>>>>TODO change c_1 perhaps to c_env?????
                     \(s = \langle c_1, c_2, c_3, c_4 \rangle \).
                     The first of these sets denotes the cards in the envelope.
                     The second, third and fourth sets denote the cards of players 1, 2 and 3 respectively.
@@ -94,10 +96,12 @@ layout: dinky
                 <li>
                     \( R_1, R_2\) and \(R_3\) denote the set of relations for each player 1, 2 and 3.
                     For each:
-                    \(R_j \subseteq S \times S\) such that \(R_j = \{(s, t) \in S \times S | c_j \textrm{in} s = c_j \textrm{in} t\}\), where \(j \in Players\).
+                    \(R_j \subseteq S \times S\) such that \(R_j = \{(s, t) \in S \times S | c_j \textrm{ in } s = c_j \textrm{ in } t\}\), where \(j \in Players\).
                     In other words, each player knows their own cards.
                 </li>
             </ol>
+            We implement the Kripke model digitally.
+            An visual depiction of (part of) a Kripke model is given in <a href="./example.html">Example</a>.
         </p>
     </div>
 
@@ -108,7 +112,8 @@ layout: dinky
         Players can use these rules to update their knowledge on the game.
         Using (a combination of) these rules, relations in \(R\) are removed from the Kripke model.
         <ol>
-            <li> If one player has a certain card, then the other player cannot have that card.
+            <li>
+                If one player has a certain card, then the other player cannot have that card.
                 If \(card_i\) with \(card \in \textrm{Cards}\) and
                 \(i \in \textrm{Players} \cup \textrm{Envelope}\),
                 then \(\neg card_j\) with \(j \in \textrm{Players} \cup \textrm{Envelope}\) and
@@ -117,6 +122,7 @@ layout: dinky
             </li>
             <br>
             <li>
+                >>>>>>>>>>TODO IS THIS NECESSARY????
                 If you know that a player has a card, then they have that card.
                 If player \(i\) knows that player \(j\) has a card \(card\) with
                 \(i, j \in \textrm{Players} \cup \textrm{Envelope}\) and \(card \in \textrm{Cards}\),
@@ -148,31 +154,58 @@ layout: dinky
 
     <div id="Updating the Kripke model">
         <h3>Updating the Kripke model</h3>
-        As the players take turns, they gain more and more information.
-        During a turn, a player first makes a suggestion.
-        This suggestion should consist of....
+        <p>
+            As the players take turns, they gain more and more information.
+            During a turn, a player \(i \in Players\) first makes a suggestion \(sug_i\).
+            This suggestion should consist of one weapon and one suspect: \(sug_i = \{A, B\}\) such that \( A \in Weapons \) and \(B \in Suspects \).
+        </p>
+        <p>
+            The next player \(i + 1\) gives a response \(res_{i+1}\).
+            There are two options:
+            <ol>
+                <li>
+                    Player \(i + 1\) does not have any of the cards suggested.
+                    They share a public announcement:
+                    \(\not \exists card_{i + 1}(card \in sug_i)\)
+                </li>
+                <li>
+                    Player \(i + 1\) does have one or both of the cards suggested.
+                    They share a public announcement:
+                    \(\exists card_{i + 1}(card \in sug_i)\)
+                    They pick one card_{i + 1} \in sug_i and share a private announcement for player \(i\) only:
+                    \(card_{i + 1}\)
+                    (Note that here, \(card_{i + 1}\) refers to a specific card, while in the public announcements, it refers to a variable.
+                </li>
 
-        The next player, j + 1, responds by showing one in ...
-
-        If the player does not have any, this is a public announcement: ...
-        The player gives information.
-
-        If the player does have one, there is a public announcement: ...
-        There also is a private annoucement from player ... to player ...:
-
-        Using the rules in ..., players update their knowledge.
-        In our system, this occurs elegantly and implicitly by...
-        Based on their new knowledge, relations in the Kripke model are removed.
-
-        If for any player ....., then they know for sure what cards are in the envelope.
-        The system states that this player is the winner and quits.
-
+            </ol>
+        </p>
+        <p>
+            Using the public and private announcements and the rules in <a href="#formal-rules">Rules for gaining information</a>, all players update their knowledge.
+            For our model, this means that relations in the Kripke model are (potentially) removed.
+            After all, based on a player's new knowledge, this player knows that some states might not be possible anymore.
+            All relations pointing to these states are removed for the player.
+            A detailed example is given in <a href="./example.html">Example</a>.
+        <\p>
+        <p>
+            In our digital implementation, the Kripke model is indeed updated based on the players' newly gained information.
+            Relations are removed iteratively after each player's turn.
+            The rules described in <a href="#formal-rules">Rules for gaining information</a> are not explicitly stated in the implementation.
+            Instead, these rules are elegantly, implicitly applied.
+            This is because we only generate states for which the sets per agent and envelope (\(c_1, c_2, c_3 and c_4 )\) are pairwise exclusive, for which these sets are of fixed lengths (two for the envelope, three for the players) and for which the envelope set always has one weapon and one suspect card.
+            This limitation in the state generation makes it so that with little new information, a lot of relations can be directly removed.
+            >>>>>>>>>>>>TODO EXPLAIN THIS better?!
+        </p>
+        <p>
+            If for any player j, \(R_j \subseteq S \times S\) such that \(\forall R_j (R_j = \{(s, t) \in S \times S | c_1 \textrm{ in } t)\) (\(c_1\) is a constant here\), they have won the game.
+            In other words, if any player knows for sure what cards are in the envelope, they have won the game.
+            In the Kripke model, this means that for this player j, there are only relations \(R_j\) left that are all pointed towards a state with one certain envelope set (\c_1\).
+            Note that this does not have to mean that there is only one relation left for a player.
+            For instance, a player might not have yet found out whether one specific card belongs to player P or Q, but does know what cards are in the envelope.
+        </p>
+        <p>
+            In our implementation, after each player's turn, after the update of the Kripke model, the system goes through each player's relations in the Kripke model and checks, based on this, if there is a winner.
+            The system then presents this winner and stops running.
+            Notice that it might occur that there are multiple winners.
+        </p>
     </div>
 
-</div>
-<!-- download the implementation here-->
-<!-- TODO: ability to download model/remove section -->
-<br>
-<div id="download-the-model">
-    <h1> Download our implementation</h1>
-</div>
