@@ -45,8 +45,8 @@ class KripkeStructure:
             # print("zero nodes to remove")
             return self
 
+        # Remove a relation for an agent if the announcement was false in that node.
         relations_to_remove = []
-
         for relation in self.relations[str(agent.get_unique_id())]:
             for node in nodes_to_remove:
                 if node in relation:
