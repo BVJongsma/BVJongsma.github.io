@@ -4,8 +4,10 @@ import random
 class Cards:
     """The cards that are present in the game"""
 
+    # Initialise cards.
     def __init__(self, num_agents, num_weapons, num_suspects):
         self.num_agents = num_agents
+        # Select different sets of cards, based on the number of weapons and suspects.
         if num_weapons == 4:
             self.weapons = ["candle", "dagger", "rope", "wrench"]
         if num_weapons == 7:
@@ -53,7 +55,7 @@ class Cards:
         self.available_cards.remove(envelope_suspect)
         return envelope_suspect
 
-    # Get a card for an agent. Make sure this card is not available anymore fot the other agents' cards
+    # Get a card for an agent. Make sure this card is not available anymore for the other agents' cards
     def get_agent_cards(self):
         num_cards = int(len(self.all_cards) / self.num_agents)
         agent_cards = random.sample(self.available_cards, num_cards)
