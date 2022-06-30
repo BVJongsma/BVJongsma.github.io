@@ -137,7 +137,7 @@ layout: dinky
             <ol>
                 <li>
                     \(S\) is the total set of states \(s = \{s_1, s_26880} \}\).
-                    A state consists of a tuple of four sets:
+                    A state consists of a tuple of four pairwise disjoint sets:
                     \(s = \langle c_1, c_2, c_3, c_4 \rangle \).
                     The first of these sets denotes the cards in the envelope.
                     The second, third and fourth sets denote the cards of players 1, 2 and 3 respectively.
@@ -159,6 +159,9 @@ layout: dinky
         </p>
         <p>
             We will now show examples of a (illustrated) Kripke model.
+            We will see how players base their decisions on this model and how the model is updated as the game of Clue progresses.
+        </p>
+        <p>
             For this purpose, and to keep the explanation from being unnecessarily elaborate, we temporarily assume that there are four weapons and four suspects.
             We remove axe, lead and handgun from the list of weapons.
             We use the following abbreviations:
