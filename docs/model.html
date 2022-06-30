@@ -31,19 +31,25 @@ layout: dinky
         <!--5.1.1. card and player representation-->
         <div id="card-player-representation">
             <h3>Card and player representation</h3>
-
-            There are two different card categories: weapon and suspect.
-            These are represented by the following sets:
-
+            <p>
+                There are two different card categories: weapon and suspect.
+                These are represented by the following sets:
+            </p>
             <ul>
                 <li>
-                    Weapons = {candlestick, dagger, rope, wrench}
+                    Weapons = {axe, candle, dagger, handgun, lead, rope, wrench}
                 </li>
                 <li>
                     Suspects = {Scarlet, Mustard, Green, Plum}
                 </li>
             </ul>
-
+            <p>
+                Note that the cards in the weapon category are slightly different compared to the cards in the original Clue game.
+                Instead of 'spanner', 'wrench' was used because the latter is a more well-known word for the same thing.
+                'candlestick' and 'lead pining' were shortened.
+                'revolver' was altered to the synonymous 'handgun'.
+                This was done to ensure that all card names have a different first letter (which may be useful when we want to use concise notations for them).
+            </p>
             <p>
                 We will use the set \(\textrm{Cards} = \textrm{Weapons} \cup \textrm{Suspects}\) to refer to the set of all cards.
                 There are three different players. We refer to them as 1, 2 and 3.
