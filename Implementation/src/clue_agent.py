@@ -11,6 +11,7 @@ from Implementation.src.mlsolver.formula import Atom, And, Not, Or, Box_a, Box_s
 # ONE_OWN = True
 # ELIMINATING = False
 
+PRINT = False
 
 class ClueAgent(mesa.Agent):
     """An agent who plays the game of Clue."""
@@ -74,15 +75,18 @@ class ClueAgent(mesa.Agent):
     # Take a turn
     def step(self):
         if not self.model.check_end_state():
-            print("This is agent " + str(self.unique_id) + ".")
-            print("With cards " + str(self.agent_cards) + ".")
+            if PRINT:
+                print("This is agent " + str(self.unique_id) + ".")
+                print("With cards " + str(self.agent_cards) + ".")
             # Let the current agent make a suggestion
             suggestion = self.pick_suggestion()
-            print("They suggest " + str(suggestion) + ".")
-            print("The agent they suggest to is agent " + str(self.next_agent.get_unique_id()) + ".")
+            if PRINT:
+                print("They suggest " + str(suggestion) + ".")
+                print("The agent they suggest to is agent " + str(self.next_agent.get_unique_id()) + ".")
             # Get a response from the next agent with whether or not they have any of the cards
             response = self.next_agent.get_response(suggestion)
-            print("Their response is " + str(response) + ".")
+            if PRINT:
+                print("Their response is " + str(response) + ".")
             # Update the knowledge of the agents based on the suggestion and response
             self.update_knowledge(suggestion, response)
 
@@ -228,7 +232,8 @@ class ClueAgent(mesa.Agent):
     # Announce privately to the suggesting agents that this agent has a certain card
     def privately_announce(self, response):
         announcement = Atom(response)
-        print("private announcement", announcement)
+        if PRINT:
+            print("private announcement", announcement)
         asked_agent_id = self.next_agent.get_unique_id()
         # Update the relations for the agent that asked for the cards.
         self.model.kripke_model.get_kripke_structure().relation_solve(self, announcement, asked_agent_id)

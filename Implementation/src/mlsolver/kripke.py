@@ -10,6 +10,7 @@ import copy
 
 from itertools import chain, combinations
 
+PRINT = False
 
 class KripkeStructure:
     """
@@ -38,7 +39,6 @@ class KripkeStructure:
     # Solve a kripke model and only delete relations instead of worlds
     # Updated from https://github.com/JohnRoyale/MAS2018/blob/master/mlsolver/kripke.py#L36
     def relation_solve(self, agent, formula, asked_agent):
-        #print(str(formula))
         nodes_to_remove = self.nodes_not_follow_formula(formula, asked_agent)
 
         if len(nodes_to_remove) == 0:
@@ -52,11 +52,13 @@ class KripkeStructure:
                 if node in relation:
                     relations_to_remove.append(relation)
                     break
-        print("The relations of agent ", agent.get_unique_id(), "are changed as following:")
-        print("Relations previously: " + str(len(self.relations[str(agent.get_unique_id())])))
-        print("Relations to remove: " + str(len(relations_to_remove)))
+        if PRINT:
+            print("The relations of agent ", agent.get_unique_id(), "are changed as following:")
+            print("Relations previously: " + str(len(self.relations[str(agent.get_unique_id())])))
+            print("Relations to remove: " + str(len(relations_to_remove)))
         self.relations[str(agent.get_unique_id())] = set(self.relations[str(agent.get_unique_id())]).difference(set(relations_to_remove))
-        print("Relations now: " + str(len(self.relations[str(agent.get_unique_id())])))
+        if PRINT:
+            print("Relations now: " + str(len(self.relations[str(agent.get_unique_id())])))
         return self
 
     def remove_node_by_name(self, node_name):

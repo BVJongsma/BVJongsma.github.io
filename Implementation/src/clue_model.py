@@ -7,6 +7,7 @@ from Implementation.src.cards import Cards
 from Implementation.src.mlsolver.model import Clue
 from Implementation.src.mlsolver.formula import Atom, And, Not, Or
 
+PRINT = False
 
 class ClueModel(mesa.Model):
     """A model with some number of agents."""
@@ -30,13 +31,10 @@ class ClueModel(mesa.Model):
             # agent.update_kripke_initial_cards()
 
         self.knowledge_dict, self.unknown_cards = self.kripke_model.initialise_known_dictionary(self.agents)
-        print(self.unknown_cards)
-        print(self.knowledge_dict)
+        if PRINT:
+            print(self.unknown_cards)
+            print(self.knowledge_dict)
 
-        # TODO: way to collect data, and easily print things. This is from introduction to MESA example.
-        # self.datacollector = mesa.datacollection.DataCollector(
-        #     model_reporters={"Gini": compute_gini}, agent_reporters={"Wealth": "wealth"}
-        # )
 
     # Initialise the case file envelope
     def initialise_envelope(self):
@@ -89,14 +87,16 @@ class ClueModel(mesa.Model):
     def publicly_announce(self, asking_agent, agent, suggestion, affirmed):
         if affirmed:  # agent did have one or more of the suggested cards
             announcement = Or(Atom(suggestion[0]), Atom(suggestion[1]))
-            print("public announcement", announcement)
+            if PRINT:
+                print("public announcement", announcement)
             updating_agent = agent.next_agent
             asked_agent_id = agent.get_unique_id()
             self.kripke_model.get_kripke_structure().relation_solve(updating_agent, announcement, asked_agent_id)
 
         else:  # agent has none of the suggested cards (affirmed = False)
             announcement = And(Not(Atom(suggestion[0])), Not(Atom(suggestion[1])))
-            print("public announcement", announcement)
+            if PRINT:
+                print("public announcement", announcement)
             updating_agent = agent.next_agent
             asked_agent_id = agent.get_unique_id()
             # Update the relations for the agent that asked for the cards.

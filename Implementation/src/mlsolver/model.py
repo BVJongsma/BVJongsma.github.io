@@ -16,7 +16,7 @@ from Implementation.src.mlsolver.kripke import KripkeStructure, World
 from Implementation.src.mlsolver.formula import Atom, And, Not, Or, Box_a, Box_star
 from Implementation.src.cards import Cards
 
-
+PRINT = False
 #
 # class WiseMenWithHat:
 #     """
@@ -74,19 +74,21 @@ class Clue:
         self.model = model
         self.worlds = self.initialise_worlds(cards)
 
-        print("NUMBER OF WORLDS:")
-        print(len(self.worlds))
+        if PRINT:
+            print("NUMBER OF WORLDS:")
+            print(len(self.worlds))
 
         self.relations = self.initialise_relations()
 
         # Add symmetric relations
         self.relations.update(add_symmetric_edges(self.relations))
 
-        print("NUMBER OF RELATIONS PER PLAYER:")
-        print(len(self.relations['1']))
-        print(len(self.relations['2']))
-        print(len(self.relations['3']))
-        print("//////////////////////////////")
+        if PRINT:
+            print("NUMBER OF RELATIONS PER PLAYER:")
+            print(len(self.relations['1']))
+            print(len(self.relations['2']))
+            print(len(self.relations['3']))
+            print("//////////////////////////////")
 
         self.ks = KripkeStructure(self.worlds, self.relations)
 
@@ -290,29 +292,6 @@ class Clue:
 
         return knowledge_dict, unknown_cards
 
-        #     for unknown_card in unknown_cards[agent_id - 1]:
-        #         print(unknown_card)
-        #         old_i = None
-        #         unknown = False
-        #         for relation in self.relations[str(agent_id)]:
-        #             relation_world = self.worlds[int(relation[1])]
-        #             for unknown_agent in unknown_agents:
-        #                 cards = re.findall(r'\:(.*)', str(list(relation_world.assignment.keys())[unknown_agent]))[0]
-        #                 cards_list = ast.literal_eval(cards)
-        #                 cards_list = [card.strip() for card in cards_list]
-        #                 if unknown_card in cards_list:
-        #                     if old_i == None:
-        #                         old_i = unknown_agent
-        #                     elif unknown_agent != old_i:
-        #                         unknown_cards[agent_id - 1].append(unknown_card)
-        #                         unknown = True
-        #                         break
-        #                 if unknown:
-        #                     break
-        #             if unknown:
-        #                 break
-        # return unknown_cards
-
     def find_card_in_world(self, unknown_cards, relation_world, index):
         # Check the envelope cards and agent cards for this world
         cards = re.findall(r'\:(.*)', str(list(relation_world.assignment.keys())[index]))[0]
@@ -365,8 +344,6 @@ class Clue:
                         if old_i == None:
                             old_i = new_i
                         elif new_i != old_i:
-                            # print(new_i)
-                            # print(old_i)
                             unknown_cards.append(card)
                             unknown = True
                             break
