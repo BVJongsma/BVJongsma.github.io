@@ -185,20 +185,20 @@ layout: dinky
             After all, based on a player's new knowledge, this player knows that some states might not be possible anymore.
             All relations pointing to these states are removed for the player.
             A detailed example is given in <a href="./example.html">Example</a>.
-        <\p>
+        </p>
         <p>
             In our digital implementation, the Kripke model is indeed updated based on the players' newly gained information.
             Relations are removed iteratively after each player's turn.
             The rules described in <a href="#formal-rules">Rules for gaining information</a> are not explicitly stated in the implementation.
             Instead, these rules are elegantly, implicitly applied.
-            This is because we only generate states for which the sets per agent and envelope (\(c_1, c_2, c_3 and c_4 )\) are pairwise exclusive, for which these sets are of fixed lengths (two for the envelope, three for the players) and for which the envelope set always has one weapon and one suspect card.
+            This is because we only generate states for which the sets per agent and envelope (\(c_1, c_2, c_3 \textrm( and ) c_4 )\) are pairwise exclusive, for which these sets are of fixed lengths (two for the envelope, three for the players) and for which the envelope set always has one weapon and one suspect card.
             This limitation in the state generation makes it so that with little new information, a lot of relations can be directly removed.
             >>>>>>>>>>>>TODO EXPLAIN THIS better?!
         </p>
         <p>
-            If for any player j, \(R_j \subseteq S \times S\) such that \(\forall R_j (R_j = \{(s, t) \in S \times S | c_1 \textrm{ in } t)\) (\(c_1\) is a constant here\), they have won the game.
+            If for any player j, \(R_j \subseteq S \times S\) such that \(\forall R_j (R_j = \{(s, t) \in S \times S | c_1 \textrm{ in } t)\) (\(c_1\) is a constant here), they have won the game.
             In other words, if any player knows for sure what cards are in the envelope, they have won the game.
-            In the Kripke model, this means that for this player j, there are only relations \(R_j\) left that are all pointed towards a state with one certain envelope set (\c_1\).
+            In the Kripke model, this means that for this player j, there are only relations \(R_j\) left that are all pointed towards a state with one certain envelope set \(c_1\).
             Note that this does not have to mean that there is only one relation left for a player.
             For instance, a player might not have yet found out whether one specific card belongs to player P or Q, but does know what cards are in the envelope.
         </p>
