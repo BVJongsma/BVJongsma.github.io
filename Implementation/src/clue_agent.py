@@ -82,7 +82,7 @@ class ClueAgent(mesa.Agent):
             print("The agent they suggest to is agent " + str(self.next_agent.get_unique_id()) + ".")
             # Get a response from the next agent with whether or not they have any of the cards
             response = self.next_agent.get_response(suggestion)
-            print("Their response is " + str(self.next_agent.get_response(suggestion)) + ".")
+            print("Their response is " + str(response) + ".")
             # Update the knowledge of the agents based on the suggestion and response
             self.update_knowledge(suggestion, response)
 
