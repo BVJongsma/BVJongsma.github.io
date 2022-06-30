@@ -2,71 +2,59 @@
 layout: dinky
 ---
 
-<!-- navigation at the top of the page -->
-<ul>
-    <li><a href="#implementation">Implementation</a></li>
-    <ul>
-        <li><a href="#knowledge-and-rule-representation">Knowledge and rule representation</a></li>
-        <ul>
-            <li><a href="#card-player-representation">Card and player representation</a></li>
-            <li><a href="#formal-rules">Rules that players can use to determine more information</a></li>
-        </ul>
-        <li><a href="#the-kripke-model">The Kripke Model</a></li>
-    </ul>
-    <li><a href="#taking-a-turn">Taking a Turn</a></li>
-    <ul>
-        <li><a href="#show-a-card">Asking for cards: showing a card</a></li>
-        <li><a href="#dont-show-a-card">Asking for cards: not showing a card</a></li>
-        <li><a href="#guess-envelope-content">‘Guessing’ the content of the envelope</a></li>
-        <li><a href="#model-update">After a turn: updating the model</a></li>
-    </ul>
-    <li><a href="#download-the-model">Download the model</a></li>
-</ul>
+
 <!-- section 5: implementation-->
 <div id="implementation">
-    <h1>Implementation</h1>
-    <!-- subsection 5.1: knowledge and rule representation -->
-    <div id="knowledge-and-rule-representation">
-        <h2>Knowledge and rule representation</h2>
-        <!--5.1.1. card and player representation-->
-        <div id="card-player-representation">
-            <h3>Card and player representation</h3>
-            <p>
-                There are two different card categories: weapon and suspect.
-                These are represented by the following sets:
-            </p>
-            <ul>
-                <li>
-                    Weapons = {axe, candle, dagger, handgun, lead, rope, wrench}
-                </li>
-                <li>
-                    Suspects = {Scarlet, Mustard, Green, Plum}
-                </li>
-            </ul>
-            <p>
-                Note that the cards in the weapon category are slightly different compared to the cards in the original Clue game.
-                Instead of 'spanner', 'wrench' was used because the latter is a more well-known word for the same thing.
-                'candlestick' and 'lead pining' were shortened.
-                'revolver' was altered to the synonymous 'handgun'.
-                This was done to ensure that all card names have a different first letter (which may be useful when we want to use concise notations for them).
-            </p>
-            <p>
-                We will use the set \(\textrm{Cards} = \textrm{Weapons} \cup \textrm{Suspects}\) to refer to the set of all cards.
-                There are three different players. We refer to them as 1, 2 and 3.
-                That is, Players = {1, 2, 3}.
-                The case file envelope is denoted by the singleton set Envelope = {\(\textrm{env}\)}
-            </p>
-            <p>
-                Each player or envelope might have a certain card, and therefore we will make use of the notation \(i_j\).
-                Here, \( i \in \textrm{Cards} \)
-                and \(j \in \textrm{Players} \cup \textrm{Envelope}\). An example is \(\textrm{revolver}_2\), meaning that player 2 has the revolver.
-                In the example \(\textrm{Scarlet}_{\textrm{env}}\), Scarlet is the suspect that is in the case file envelope.
-            </p>
-        </div>
+    <h1>Model and Implementation</h1>
+    <p>
+        We formalise <a href="./simplifications.html">the simplified game of Clue</a> in a model.
+        We implement this model digitally using Python.
+    </p>
+    <!-- navigation -->
+    <ul>
+            <li><a href="#card-player-representation">Card and player representation</a></li>
+            <li><a href="#formal-rules">Rules that players can use to determine more information</a></li>
+            <li><a href="#the-kripke-model">The Kripke Model</a></li>
+            <li><a href="#download-the-model">Download our implementation</a></li>
+    </ul>
+    <div id="card-player-representation">
+        <h2>Formal card and player representation</h2>
+        <p>
+            There are two different card categories: weapon and suspect.
+            These are represented by the following sets:
+        </p>
+        <ul>
+            <li>
+                Weapons = {axe, candle, dagger, handgun, lead, rope, wrench}
+            </li>
+            <li>
+                Suspects = {Scarlet, Mustard, Green, Plum}
+            </li>
+        </ul>
+        <p>
+            Note that the cards in the weapon category are slightly different compared to the cards in the original Clue game.
+            Instead of 'spanner', 'wrench' was used because the latter is a more well-known word for the same thing.
+            'candlestick' and 'lead pining' were shortened.
+            'revolver' was altered to the synonymous 'handgun'.
+            This was done to ensure that all card names have a different first letter (which may be useful when we want to use concise notations for them).
+        </p>
+        <p>
+            We will use the set \(\textrm{Cards} = \textrm{Weapons} \cup \textrm{Suspects}\) to refer to the set of all cards.
+            There are three different players. We refer to them as 1, 2 and 3.
+            That is, Players = {1, 2, 3}.
+            The case file envelope is denoted by the singleton set Envelope = {\(\textrm{env}\)}
+        </p>
+        <p>
+            Each player or envelope might have a certain card, and therefore we will make use of the notation \(i_j\).
+            Here, \( i \in \textrm{Cards} \)
+            and \(j \in \textrm{Players} \cup \textrm{Envelope}\). An example is \(\textrm{revolver}_2\), meaning that player 2 has the revolver.
+            In the example \(\textrm{Scarlet}_{\textrm{env}}\), Scarlet is the suspect that is in the case file envelope.
+        </p>
     </div>
+
     <!-- subsection 5.2: kripke model -->
     <div id="the-kripke-model">
-        <h2>The Kripke Model</h2>
+        <h3>The Kripke Model</h3>
         <strong>[TODO: add a formal definition of the Kripke model.]<br></strong>
         <p>
             The Kripke model should represent the state combinations that include seven weapons,
@@ -93,20 +81,20 @@ layout: dinky
             The Kripke model \(M = \langle S, \pi, R_1, R_2, R_3 \rangle\) can be defined as follows:
             <ol>
                 <li>
-                    \(S\) is the total set of states \(s = \{s_1, s_{26880}} \}\).
+                    \(S\) is the total set of states \(s = \{s_1, s_{26880}\}\).
                     A state consists of a tuple of four pairwise disjoint sets:
                     \(s = \langle c_1, c_2, c_3, c_4 \rangle \).
                     The first of these sets denotes the cards in the envelope.
                     The second, third and fourth sets denote the cards of players 1, 2 and 3 respectively.
-                    So, \(s = \langle \{card_{env}, card_{env}\}, \{card_1, card_1, card_1\}, \{card_2, card_2, card_2\}, \{card_3, card_3, card_3\}\).
+                    So, \(s = \langle \{card_{env}, card_{env}\}, \{card_1, card_1, card_1\}, \{card_2, card_2, card_2\}, \{card_3, card_3, card_3\} \rangle \).
                 </li>
                 <li>
-                    \(\pi : P \rightarrow (S \rightarrow \{T, F\}\) assigns a truth value to all propositions P.
+                    \(\pi : P \rightarrow (S \rightarrow \{T, F\})\) assigns a truth value to all propositions P.
                 </li>
                 <li>
                     \( R_1, R_2\) and \(R_3\) denote the set of relations for each player 1, 2 and 3.
                     For each:
-                    \(R_j \subseteq S \times S\) such that \(R_j = \{(s, t) \in S \times S | c_j in s = c_j in t\}\), where \(j \in Players\).
+                    \(R_j \subseteq S \times S\) such that \(R_j = \{(s, t) \in S \times S | c_j \textrm{in} s = c_j \textrm{in} t\}\), where \(j \in Players\).
                     In other words, each player knows their own cards.
                 </li>
             </ol>
@@ -115,7 +103,7 @@ layout: dinky
 
             <!-- 5.1.2 Rules that players can use to determine more information -->
     <div id="formal-rules">
-        <h3>Rules that players can use to gain more information</h3>
+        <h3>Rules for gaining information</h3>
         In a game of clue, some logical rules apply.
         Players can use these rules to update their knowledge on the game.
         Using (a combination of) these rules, relations in \(R\) are removed from the Kripke model.
@@ -157,8 +145,28 @@ layout: dinky
             </li>
         </ol>
     </div>
+
     <div id="Updating the Kripke model">
-        As the players take turns, they gain more and more information
+        <h3>Updating the Kripke model</h3>
+        As the players take turns, they gain more and more information.
+        During a turn, a player first makes a suggestion.
+        This suggestion should consist of....
+
+        The next player, j + 1, responds by showing one in ...
+
+        If the player does not have any, this is a public announcement: ...
+        The player gives information.
+
+        If the player does have one, there is a public announcement: ...
+        There also is a private annoucement from player ... to player ...:
+
+        Using the rules in ..., players update their knowledge.
+        In our system, this occurs elegantly and implicitly by...
+        Based on their new knowledge, relations in the Kripke model are removed.
+
+        If for any player ....., then they know for sure what cards are in the envelope.
+        The system states that this player is the winner and quits.
+
     </div>
 
 </div>
@@ -166,5 +174,5 @@ layout: dinky
 <!-- TODO: ability to download model/remove section -->
 <br>
 <div id="download-the-model">
-    <h1> Download the model here.</h1>
+    <h1> Download our implementation</h1>
 </div>
