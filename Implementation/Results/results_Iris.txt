@@ -1,0 +1,220 @@
+Agent 1: NOT_OWN, other agents: RANDOM
+0
+1
+2
+3
+4
+5
+6
+GAME FINISHED
+Winner is player [2]
+According to this player, the envelope consists of: ["env:['handgun', 'Plum']"]
+The envelope consists of: ['handgun', 'Plum']
+------------------------------------------------------------------------
+Agent 1: ONE_OWN, other agents: RANDOM
+0
+1
+2
+3
+GAME FINISHED
+Winner is player [2]
+According to this player, the envelope consists of: ["env:['candle', 'Green']"]
+The envelope consists of: ['candle', 'Green']
+------------------------------------------------------------------------
+Agent 1: UNKNOWN, other agents: RANDOM
+0
+1
+2
+3
+4
+5
+6
+GAME FINISHED
+Winner is player [1]
+According to this player, the envelope consists of: ["env:['Mustard', 'wrench']"]
+The envelope consists of: ['Mustard', 'wrench']
+GAME FINISHED
+Winner is player [1]
+According to this player, the envelope consists of: ["env:['Mustard', 'wrench']"]
+The envelope consists of: ['Mustard', 'wrench']
+------------------------------------------------------------------------
+Agent 1: ONE_UNKNOWN, other agents: RANDOM
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+GAME FINISHED
+Winner is player [1]
+According to this player, the envelope consists of: ["env:['axe', 'Green']"]
+The envelope consists of: ['axe', 'Green']
+GAME FINISHED
+Winner is player [1]
+According to this player, the envelope consists of: ["env:['axe', 'Green']"]
+The envelope consists of: ['axe', 'Green']
+------------------------------------------------------------------------
+Agent 1: REASONING, other agents: RANDOM
+0
+1
+2
+3
+4
+5
+6
+GAME FINISHED
+Winner is player [3]
+According to this player, the envelope consists of: ["env:['dagger', 'Green']"]
+The envelope consists of: ['dagger', 'Green']
+GAME FINISHED
+Winner is player [3]
+According to this player, the envelope consists of: ["env:['dagger', 'Green']"]
+The envelope consists of: ['dagger', 'Green']
+GAME FINISHED
+Winner is player [3]
+According to this player, the envelope consists of: ["env:['dagger', 'Green']"]
+The envelope consists of: ['dagger', 'Green']
+
+------------------------------------------------------------------------
+Agent 1: NOT_OWN, other agents: RANDOM
+0
+1
+2
+GAME FINISHED
+Winner is player [2]
+According to this player, the envelope consists of: ["env:['handgun', 'Scarlet']"]
+The envelope consists of: ['handgun', 'Scarlet']
+------------------------------------------------------------------------
+Agent 1: ONE_OWN, other agents: RANDOM
+0
+1
+2
+3
+4
+GAME FINISHED
+Winner is player [1]
+According to this player, the envelope consists of: ["env:['candle', 'Green']"]
+The envelope consists of: ['candle', 'Green']
+GAME FINISHED
+Winner is player [1]
+According to this player, the envelope consists of: ["env:['candle', 'Green']"]
+The envelope consists of: ['candle', 'Green']
+------------------------------------------------------------------------
+Agent 1: UNKNOWN, other agents: RANDOM
+0
+1
+2
+3
+4
+5
+6
+GAME FINISHED
+Winner is player [2]
+According to this player, the envelope consists of: ["env:['Mustard', 'wrench']"]
+The envelope consists of: ['Mustard', 'wrench']
+------------------------------------------------------------------------
+Agent 1: ONE_UNKNOWN, other agents: RANDOM
+0
+1
+2
+3
+4
+5
+6
+GAME FINISHED
+Winner is player [2]
+According to this player, the envelope consists of: ["env:['candle', 'Mustard']"]
+The envelope consists of: ['candle', 'Mustard']
+------------------------------------------------------------------------
+Agent 1: REASONING, other agents: RANDOM
+0
+1
+2
+3
+4
+5
+6
+GAME FINISHED
+Winner is player [3]
+According to this player, the envelope consists of: ["env:['candle', 'Plum']"]
+The envelope consists of: ['candle', 'Plum']
+
+Agent 1: NOT_OWN, other agents: RANDOM
+0
+1
+2
+3
+4
+5
+GAME FINISHED
+Winner is player [1]
+According to this player, the envelope consists of: ["env:['Green', 'wrench']"]
+The envelope consists of: ['Green', 'wrench']
+GAME FINISHED
+Winner is player [1]
+According to this player, the envelope consists of: ["env:['Green', 'wrench']"]
+The envelope consists of: ['Green', 'wrench']
+------------------------------------------------------------------------
+Agent 1: ONE_OWN, other agents: RANDOM
+0
+1
+2
+3
+4
+GAME FINISHED
+Winner is player [3]
+According to this player, the envelope consists of: ["env:['Plum', 'wrench']"]
+The envelope consists of: ['Plum', 'wrench']
+------------------------------------------------------------------------
+Agent 1: UNKNOWN, other agents: RANDOM
+0
+1
+2
+3
+4
+5
+GAME FINISHED
+Winner is player [1]
+According to this player, the envelope consists of: ["env:['candle', 'Green']"]
+The envelope consists of: ['candle', 'Green']
+GAME FINISHED
+Winner is player [1]
+According to this player, the envelope consists of: ["env:['candle', 'Green']"]
+The envelope consists of: ['candle', 'Green']
+------------------------------------------------------------------------
+Agent 1: ONE_UNKNOWN, other agents: RANDOM
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+GAME FINISHED
+Winner is player [1]
+According to this player, the envelope consists of: ["env:['handgun', 'Plum']"]
+The envelope consists of: ['handgun', 'Plum']
+GAME FINISHED
+Winner is player [1]
+According to this player, the envelope consists of: ["env:['handgun', 'Plum']"]
+The envelope consists of: ['handgun', 'Plum']
+------------------------------------------------------------------------
+Agent 1: REASONING, other agents: RANDOM
+0
+1
+2
+3
+4
+GAME FINISHED
+Winner is player [3]
+According to this player, the envelope consists of: ["env:['candle', 'Mustard']"]
+The envelope consists of: ['candle', 'Mustard']

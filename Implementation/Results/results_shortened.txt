@@ -1,0 +1,185 @@
+Agent 1: RANDOM, other agents: RANDOM
+4 steps, winner: 1
+4 steps, winner: 2
+
+
+Agent 1: RANDOM, other agents: NOT_OWN
+8 steps, winner: 1
+6 steps, winner: 1
+
+
+Agent 1: RANDOM ,other agents: ONE_OWN
+9 steps, winner: 3
+12 steps, winner: 3
+
+
+Agent 1: RANDOM ,other agents: UNKNOWN
+6 steps, winner: 2
+4 steps, winner: 2
+
+
+Agent 1: RANDOM ,other agents: ONE_UNKNOWN
+6 steps, winner: 2
+6 steps, winner: 3
+
+
+Agent 1: RANDOM ,other agents: REASONING
+5 steps, winner: 3
+6 steps, winner: 2
+
+---------------------------------------------------------------
+
+Agent 1: NOT_OWN ,other agents: RANDOM
+4 steps, winner: 2
+4 steps, winner: 1
+
+
+Agent 1: NOT_OWN ,other agents: NOT_OWN
+6 steps, winner: 1
+3 steps, winner: 1
+
+
+Agent 1: NOT_OWN ,other agents: ONE_OWN
+6 steps, winner: 2
+13 steps, winner: 3
+
+
+Agent 1: NOT_OWN, other agents: UNKNOWN
+6 steps, winner: 1
+1 step, winner: 2
+
+Agent 1: NOT_OWN, other agents: ONE_UNKNOWN
+7 steps, winner: 1
+8 steps, winner: 3
+
+Agent 1: NOT_OWN ,other agents: REASONING
+5 steps, winner: 2
+5 steps, winner: 2
+
+----------------------------------------------------------------
+
+Agent 1: ONE_OWN ,other agents: RANDOM
+4 steps, winner: 2
+7 steps, winner: 2
+
+
+Agent 1: ONE_OWN ,other agents: NOT_OWN
+4 steps, winner: 2
+3 steps, winner: 3
+
+Agent 1: ONE_OWN ,other agents: ONE_OWN
+16 steps, winner: 2
+14 steps, winner: 2
+
+Agent 1: ONE_OWN ,other agents: UNKNOWN
+4 steps, winner: 2
+3 steps, winner: 2
+
+Agent 1: ONE_OWN ,other agents: ONE_UNKNOWN
+13 steps, winner: 1
+5 steps, winner: 2
+
+Agent 1: ONE_OWN ,other agents: REASONING
+6 steps, winner: 2
+7 steps, winner: 2
+
+-----------------------------------------------------------------
+
+Agent 1: UNKNOWN ,other agents: RANDOM
+5 steps, winner: 2
+3 steps, winner: 1
+
+Agent 1: UNKNOWN ,other agents: NOT_OWN
+5 steps, winner: 1
+4 steps, winner: 3
+
+Agent 1: UNKNOWN ,other agents: ONE_OWN
+5 steps, winner: 1
+8 steps, winner: 1
+
+Agent 1: UNKNOWN ,other agents: UNKNOWN
+1 step, winner: 2
+4 steps, winner: 3
+
+Agent 1: UNKNOWN ,other agents: ONE_UNKNOWN
+8 steps, winner: 1
+7 steps, winner: 3
+
+Agent 1: UNKNOWN ,other agents: REASONING
+3 steps, winner: 3
+4 steps, winner: 1
+
+-----------------------------------------------------------------
+
+Agent 1: ONE_UNKNOWN ,other agents: RANDOM
+3 steps, winner: 1
+6 steps, winner: 1
+
+Agent 1: ONE_UNKNOWN ,other agents: NOT_OWN
+4 steps, winner: 1
+3 steps, winner: 1
+
+Agent 1: ONE_UNKNOWN ,other agents: ONE_OWN
+13 steps, winner: 1
+8 steps, winner: 3
+
+
+Agent 1: ONE_UNKNOWN ,other agents: UNKNOWN
+5 steps, winner: 2
+3 steps, winner: 3
+
+Agent 1: ONE_UNKNOWN ,other agents: ONE_UNKNOWN
+3 steps, winner: 2
+7 steps, winner: 3
+
+Agent 1: ONE_UNKNOWN ,other agents: REASONING
+5 steps, winner: 1
+4 steps, winner: 1
+
+------------------------------------------------------------------
+
+Agent 1: REASONING ,other agents: RANDOM
+6 steps, winner: 3
+3 steps, winner: 1
+
+Agent 1: REASONING ,other agents: NOT_OWN
+5 steps, winner: 1
+5 steps, winner: 1
+
+Agent 1: REASONING ,other agents: ONE_OWN
+15 steps, winner: 3
+11 steps, winner: 3
+
+Agent 1: REASONING ,other agents: UNKNOWN
+4 steps, winner: 1
+3 steps, winner: 2
+
+Agent 1: REASONING ,other agents: ONE_UNKNOWN
+7 steps, winner: 2
+5 steps, winner: 1
+
+Agent 1: REASONING ,other agents: REASONING
+5 steps, winner: 2
+4 steps, winner: 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
