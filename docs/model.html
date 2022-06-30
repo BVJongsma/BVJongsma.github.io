@@ -63,50 +63,6 @@ layout: dinky
                 In the example \(\textrm{Scarlet}_{\textrm{env}}\), Scarlet is the suspect that is in the case file envelope.
             </p>
         </div>
-        <!-- 5.1.2 Rules that players can use to determine more information -->
-        <div id="formal-rules">
-            <h3>Rules that players can use to determine more information</h3>
-            In a game of clue, some logical rules apply.
-            Players can use these rules to update their knowledge on the game.
-            <ol>
-                <li> If one player has a certain card, then the other player cannot have that card.
-                    If \(card_i\) with \(card \in \textrm{Cards}\) and
-                    \(i \in \textrm{Players} \cup \textrm{Envelope}\),
-                    then \(\neg card_j\) with \(j \in \textrm{Players} \cup \textrm{Envelope}\) and
-                    \(i \neq j\).
-                    That is, \(card_i \rightarrow \neg card_j\) for \(i \neq j\).
-                </li>
-                <br>
-                <li>
-                    If you know that a player has a card, then they have that card.
-                    If player \(i\) knows that player \(j\) has a card \(card\) with
-                    \(i, j \in \textrm{Players} \cup \textrm{Envelope}\) and \(card \in \textrm{Cards}\),
-                    then player \(j\) has that card.
-                    So, \(K_i card_j \rightarrow card_j\).<br>
-                    <strong>\(K_i (card_j \rightarrow card_j)\) or \((K_i card_j) \rightarrow card_j\)</strong>
-
-                </li>
-                <br>
-                <li>
-                    If each player has \(n\) cards and player \(i\) knows that player \(j\) has the set \(Cards_j\)
-                    with \(|Cards_j| = n\) (here, we use absolutes to denote the size),
-                    then if \(card \notin Cards_j\): \(\neg card_j\).
-                    Thus, \((card \notin Cards_j \textrm{ and } |Cards_j| = n) \rightarrow \neg card_j\).
-                </li>
-                <br>
-                <li>
-                    If all except one of \(\textrm{Players} \cup \textrm{Envelope}\) does not have a certain card, then the remaining player or envelope must have this card. <br>
-                    \(\neg card_i \textrm{ and } \neg card_j \textrm{ and } \neg card_k \rightarrow card_l\) with \(i, j, k, l \in \textrm{Players} \cup \textrm{Envelope}\) and \(i \neq j \neq k \neq l\).
-                </li>
-                <br>
-                <li>
-                    If for all except one weapons in \(Weapons\) or for all except one suspects in \(Suspects\), you know that they belong to any player, then the remaining weapon or suspect is in the envelope. <br>
-                    If \(\forall card \in \textrm{Weapons} \backslash \{x\}\), \(card_j\) where \(j\ \in \textrm{Players}\), then \(x_{env}\) <br>
-                    If \(\forall card \in \textrm{Suspects} \backslash \{x\}, \(card_j\) where \(j\ \in \textrm{Players}\), then \(x_{env}\)
-                </li>
-            </ol>
-        </div>
-    </div>
     <!-- subsection 5.2: kripke model -->
     <div id="the-kripke-model">
         <h2>The Kripke Model</h2>
@@ -136,15 +92,15 @@ layout: dinky
             The Kripke model \(M = \langle S, \pi, R_1, R_2, R_3 \rangle\) can be defined as follows:
             <ol>
                 <li>
-                    \(S\) is the total set of states \(s = \{s_1, s_26880} \}\).
+                    \(S\) is the total set of states \(s = \{s_1, s_{26880}} \}\).
                     A state consists of a tuple of four pairwise disjoint sets:
                     \(s = \langle c_1, c_2, c_3, c_4 \rangle \).
                     The first of these sets denotes the cards in the envelope.
                     The second, third and fourth sets denote the cards of players 1, 2 and 3 respectively.
-                    So, \(s = \langle \{card_env, card_env\}, \{card_1, card_1, card_1\}, \{card_2, card_2, card_2\}, \{card_3, card_3, card_3\}\).
+                    So, \(s = \langle \{card_{env}, card_{env}\}, \{card_1, card_1, card_1\}, \{card_2, card_2, card_2\}, \{card_3, card_3, card_3\}\).
                 </li>
                 <li>
-                    \(\pi : P \rightarrow (S \rightarrow \{T, F}\)\) assigns a truth value to all propositions P.
+                    \(\pi : P \rightarrow (S \rightarrow \{T, F\}\) assigns a truth value to all propositions P.
                 </li>
                 <li>
                     \( R_1, R_2\) and \(R_3\) denote the set of relations for each player 1, 2 and 3.
@@ -152,11 +108,60 @@ layout: dinky
                     \(R_j \subseteq S \times S\) such that \(R_j = \{(s, t) \in S \times S | c_j in s = c_j in t\}\), where \(j \in Players\).
                     In other words, each player knows their own cards.
                 </li>
-                <li>
-                    There are some additional rules...
-                </li>
             </ol>
         </p>
+    </div>
+
+            <!-- 5.1.2 Rules that players can use to determine more information -->
+    <div id="formal-rules">
+        <h3>Rules that players can use to gain more information</h3>
+        In a game of clue, some logical rules apply.
+        Players can use these rules to update their knowledge on the game.
+        Using (a combination of) these rules, relations in \(R\) are removed from the Kripke model.
+        <ol>
+            <li> If one player has a certain card, then the other player cannot have that card.
+                If \(card_i\) with \(card \in \textrm{Cards}\) and
+                \(i \in \textrm{Players} \cup \textrm{Envelope}\),
+                then \(\neg card_j\) with \(j \in \textrm{Players} \cup \textrm{Envelope}\) and
+                \(i \neq j\).
+                That is, \(card_i \rightarrow \neg card_j\) for \(i \neq j\).
+            </li>
+            <br>
+            <li>
+                If you know that a player has a card, then they have that card.
+                If player \(i\) knows that player \(j\) has a card \(card\) with
+                \(i, j \in \textrm{Players} \cup \textrm{Envelope}\) and \(card \in \textrm{Cards}\),
+                then player \(j\) has that card.
+                So, \(K_i card_j \rightarrow card_j\).<br>
+                <strong>\(K_i (card_j \rightarrow card_j)\) or \((K_i card_j) \rightarrow card_j\)</strong>
+
+            </li>
+            <br>
+            <li>
+                If each player has \(n\) cards and player \(i\) knows that player \(j\) has the set \(Cards_j\)
+                with \(|Cards_j| = n\) (here, we use absolutes to denote the size),
+                then if \(card \notin Cards_j\): \(\neg card_j\).
+                Thus, \((card \notin Cards_j \textrm{ and } |Cards_j| = n) \rightarrow \neg card_j\).
+            </li>
+            <br>
+            <li>
+                If all except one of \(\textrm{Players} \cup \textrm{Envelope}\) does not have a certain card, then the remaining player or envelope must have this card. <br>
+                \(\neg card_i \textrm{ and } \neg card_j \textrm{ and } \neg card_k \rightarrow card_l\) with \(i, j, k, l \in \textrm{Players} \cup \textrm{Envelope}\) and \(i \neq j \neq k \neq l\).
+            </li>
+            <br>
+            <li>
+                If for all except one weapons in \(Weapons\) or for all except one suspects in \(Suspects\), you know that they belong to any player, then the remaining weapon or suspect is in the envelope. <br>
+                If \(\forall card \in \textrm{Weapons} \backslash \{x\}\), \(card_j\) where \(j\ \in \textrm{Players}\), then \(x_{env}\) <br>
+                If \(\forall card \in \textrm{Suspects} \backslash \{x\}\), \(card_j\) where \(j\ \in \textrm{Players}\), then \(x_{env}\)
+            </li>
+        </ol>
+    </div>
+    <div id="Updating the Kripke model">
+        As the players take turns, they gain more and more information
+    </div>
+
+    <div id="A game example">
+
         <p>
             We will now show examples of a (illustrated) Kripke model.
             We will see how players base their decisions on this model and how the model is updated as the game of Clue progresses.
