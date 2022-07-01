@@ -13,9 +13,11 @@ layout: dinky
     </p>
     <div id="strategies">
     <h2>The strategies</h2>
-    Below we will outline the strategies that the players can use to select cards they will ask the next player about.
-    These strategies vary in how much information is used. In some cases, no such cards exist and then the model will
-    default to selecting one or both cards at random.
+    <p>
+        Below we will outline the strategies that the players can use to select cards they will ask the next player
+        about. These strategies vary in how much information is used. In some cases, no such cards exist and then
+        the model will default to selecting one or both cards at random.
+    </p>
     <ul>
         <li>RANDOM: randomly pick a weapon and suspect card.</li>
         <li>NOT_OWN: pick a weapon card and a suspect card that the agent does not have themselves.</li>
@@ -34,9 +36,11 @@ layout: dinky
     <div id="experimental-setup">
     <h2>The experimental setup</h2>
         <p>
-            We tested the strategies mentioned above versus the random strategy. For each strategy, we ran the model
-            until a winner was found ten times and determined the average amount of steps and the win rate of the first
-            player.
+            We tested the strategies mentioned above versus the random strategy. Player 1 would get one of the strategies
+            and the other players would use the random strategy. For each strategy, we ran the model until a winner was
+            found ten times and determined the average amount of steps and the win rate of the first
+            player. The division of cards among the players and the envelope was randomised, which can lead to big
+            differences in a single run, but should even out in 10 runs per strategy.
         </p>
     </div>
 </div>
@@ -44,9 +48,42 @@ layout: dinky
 <!-- results -->
 <div id="results">
     <h1>Results</h1>
-
+<table>
+  <tr>
+    <th></th>
+    <th>NOT_OWN</th>
+    <th>ONE_OWN</th>
+    <th>UNKNOWN</th>
+    <th>ONE_UNKNOWN</th>
+    <th>REASONING</th>
+  </tr>
+  <tr>
+    <td>Win rate player 1</td>
+    <td>60%</td>
+    <td>20%</td>
+    <td>50%</td>
+    <td>70%</td>
+    <td>30%</td>
+  </tr>
+  <tr>
+    <td>Average amount of turns per player</td>
+    <td>5.6</td>
+    <td>6.5</td>
+    <td>6</td>
+    <td>6.9</td>
+    <td>5.8</td>
+  </tr>
+</table>
 </div>
+
+
 <!-- discussion -->
 <div id="discussion">
     <h1>Discussion</h1>
+</div>
+
+
+<!-- conclusion -->
+<div id="conclusion">
+    <h1>Conclusion</h1>
 </div>
