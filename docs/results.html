@@ -13,28 +13,77 @@ layout: dinky
     </p>
     <div id="strategies">
     <h2>The strategies</h2>
-    <!-- TODO: determine which strategies to use, explain more -->
+    <p>
+        Below we will outline the strategies that the players can use to select cards they will ask the next player
+        about. These strategies vary in how much information is used. In some cases, no such cards exist and then
+        the model will default to selecting one or both cards at random.
+    </p>
     <ul>
-        <li>Random cards</li>
-        <li>Pick two cards that the agent does not have themselves</li>
-        <li>Pick one card that the agent has themselves and another that the agent does not have themselves</li>
-        <li>Pick two cards for which the agent does not know to whom they belong</li>
-        <li>Pick one card that the agent knows about and isn't of the next agent, and one unknown card</li>
-        <li>Pick one card that the agent knows about and isn't of the next agent, and one card that might be of the next
-         agent or in the envelope (or if there are none such cards: that might be of the next agent)</li>
+        <li>RANDOM: randomly pick a weapon and suspect card.</li>
+        <li>NOT_OWN: pick a weapon card and a suspect card that the agent does not have themselves.</li>
+        <li>ONE_OWN: pick a weapon and a suspect card, one of which the agent has themselves and another that the
+            agent does not have themselves. </li>
+        <li>UNKNOWN: pick a weapon and a suspect card for which the agent does not know to whom they belong.</li>
+        <li>ONE_UNKNOWN: pick a weapon and a suspect card, where the agent knows who has one card, but not the other.</li>
+        <li>REASONING: pick a weapon and a suspect card. Pick one card that the agent knows about and isn't of the next
+            agent, so you do not see the same card multiple times. Pick the other card, so that it might be of the next
+            agent or in the envelope. For this card you do not know where it is yet, and you know it might still belong
+            to the next agent, so this should give you a lot of information. If there are no such cards: select one that
+            might be of the next agent.</li>
     </ul>
     </div>
 
     <div id="experimental-setup">
     <h2>The experimental setup</h2>
+        <p>
+            We tested the strategies mentioned above versus the random strategy. Player 1 would get one of the strategies
+            and the other players would use the random strategy. For each strategy, we ran the model until a winner was
+            found ten times and determined the average amount of steps and the win rate of the first
+            player. The division of cards among the players and the envelope was randomised, which can lead to big
+            differences in a single run, but should even out in 10 runs per strategy.
+        </p>
     </div>
 </div>
 
 <!-- results -->
 <div id="results">
     <h1>Results</h1>
+<table>
+  <tr>
+    <th></th>
+    <th>NOT_OWN</th>
+    <th>ONE_OWN</th>
+    <th>UNKNOWN</th>
+    <th>ONE_UNKNOWN</th>
+    <th>REASONING</th>
+  </tr>
+  <tr>
+    <td>Win rate player 1</td>
+    <td>60%</td>
+    <td>20%</td>
+    <td>50%</td>
+    <td>70%</td>
+    <td>30%</td>
+  </tr>
+  <tr>
+    <td>Average amount of turns per player</td>
+    <td>5.6</td>
+    <td>6.5</td>
+    <td>6</td>
+    <td>6.9</td>
+    <td>5.8</td>
+  </tr>
+</table>
 </div>
+
+
 <!-- discussion -->
 <div id="discussion">
     <h1>Discussion</h1>
+</div>
+
+
+<!-- conclusion -->
+<div id="conclusion">
+    <h1>Conclusion</h1>
 </div>
