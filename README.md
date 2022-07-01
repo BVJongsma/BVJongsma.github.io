@@ -27,14 +27,14 @@ Running the implementation goes as follows:
     * NUM_WEAPONS (default: 4). This is the total amount of weapon cards, and can be set to either 4 or 7.
     * NUM_SUSPECTS (default: 4). This is the total amount of suspect cards, and can be set to either 4 or 7.
 
-    Please note that setting either NUM_WEAPONS or NUM_SUSPECTS significantly slows down the model,
-especially the interface. While it does work, we don't recommend setting NUM_WEAPONS or NUM_SUSPECTS to 7 in
+    Please note that setting either NUM_WEAPONS or NUM_SUSPECTS to 7 significantly slows down the model,
+especially the interface. While it does work, we do not recommend setting NUM_WEAPONS or NUM_SUSPECTS to 7 in
    combination with SHORT_RUN = True.
 
 # Program and File Structure
 ## Implementation
 ### Results
-This contains some text files where the results from our experiments are ran.
+This contains some text files with the results from our experiments.
 ### src
 This contains all the necessary files to run the implementation.
 ## docs
