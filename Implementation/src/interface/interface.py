@@ -98,7 +98,6 @@ class GameInterface:
         self.input_KB_table()  # put KB knowledge in the table
         if self.finished is True:
             self.message_frame(self.line1, self.line2, 0, "s", "r")
-            main.loop_strategies()
             return
         self.message_frame(self.line1, self.line2, self.last_agent, s, r)
         return

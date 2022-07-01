@@ -114,10 +114,11 @@ class ClueModel(mesa.Model):
         if not winner:
             return False
         else:
-            print("GAME FINISHED")
-            print("Winner is player " + str(winner))
-            print("According to this player, the envelope consists of: " + str(guess))
-            print("The envelope consists of: " + str(self.envelope.get_envelope_cards()))
+            if PRINT:
+                print("GAME FINISHED")
+                print("Winner is player " + str(winner))
+                print("According to this player, the envelope consists of: " + str(guess))
+                print("The envelope consists of: " + str(self.envelope.get_envelope_cards()))
             return True
 
     # Get the agents in the game.
