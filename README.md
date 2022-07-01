@@ -1,5 +1,5 @@
 # Implementation
-###The different strategies
+### The different strategies
 Agents can ask other agents about what cards they have. What kind of questions they ask, is according to which strategy they follow.
 The different strategies are as following:
 * RANDOM: The agent asks for a random weapon and random suspect card.
@@ -9,7 +9,7 @@ The different strategies are as following:
 * ONE_UNKNOWN: The agent asks about one card that they know where it is, and one card that they don't know where it is.
 * REASONING: The agent asks about one card that they know about and isn't of the next agent, and one card that might be of the next
             agent or in the envelope (or if there are none such cards: that might be of the next agent)
-###Running the implementation
+### Running the implementation
 Our code was tested with `python3.9` on Ubuntu and Windows.
 Various python packages where used that can be obtained via pip. For the exact programs, see [the requirements file](requirements.txt).
 
@@ -31,13 +31,13 @@ Running the implementation goes as follows:
 especially the interface. While it does work, we don't recommend setting NUM_WEAPONS or NUM_SUSPECTS to 7 in
    combination with SHORT_RUN = True.
 
-#Program and File Structure
-##Implementation
-###Results
+# Program and File Structure
+## Implementation
+### Results
 This contains some text files where the results from our experiments are ran.
-###src
+### src
 This contains all the necessary files to run the implementation.
 ## docs
 All files related to the creation of the website are contained here.
-###figures
+### figures
 All figures related to the website are contained in this folder.
