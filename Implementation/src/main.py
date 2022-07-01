@@ -20,7 +20,6 @@ def run(strategy_agent1, strategy_other_agents, use_interface):
     # Let the players take turns in a game of Clue
     turn = 0
     while not clue_model.check_end_state():
-        print(turn)
         if PRESS_ENTER:
             input("press enter to continue")
         clue_model.step()
@@ -54,4 +53,5 @@ if __name__ == "__main__":
         strat_agent1 = "RANDOM"
         strat_other_agents = "RANDOM"
         run(strat_agent1, strat_other_agents, True)
-    loop_strategies()
+    else:
+        loop_strategies()
