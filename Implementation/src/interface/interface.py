@@ -3,29 +3,20 @@ from tkinter import ttk
 import Implementation.src.cards as ca
 import main
 
-
-def init_table(num_agents, num_cards):
-    win = tk.Tk()
-    # title
-    win.title('A model of Clue')
-    # dimensions
-    dim = str(num_agents * 150 + 150) + "x" + str(num_cards * 25 + 50)
-    win.geometry(dim)
-    # background color
-    win['bg'] = '#d61e1e'
-    return win
-
-
 class GameInterface:
+    """"
+    The interface of the game: this shows a table displaying what information each agent has.
+
+    """
     def __init__(self, model):
         self.model = model
         self.num_agents = model.num_agents
         cards_set = ca.Cards(self.num_agents, self.model.num_weapons, self.model.num_suspects)
         self.num_cards = len(cards_set.get_all_cards())
-        self.win = init_table(self.num_agents, self.num_cards)
+        self.win = init_window(self.num_agents, self.num_cards)
         self.last_agent = -1
         self.finished = False
-        # start tree
+        self.winner = None
         columns = ('items',)
         for i in range(1, self.num_agents + 1):
             columns += ('agent' + str(i),)
@@ -33,26 +24,52 @@ class GameInterface:
         self.KB, self.unknown_cards = self.model.kripke_model.initialise_known_dictionary(self.model.agents)
         self.tree.pack()
         self.init_table_information()
-        self.input_KB_table(True)
+        self.input_KB_table()
+        self.refresh_button()
+        self.canvas, self.line1, self.line2 = self.message_frame_init()
         self.win.mainloop()
+
+    def message_frame_init(self):
+        frame = tk.Frame()
+        frame.pack(pady=5)
+        canvas = tk.Canvas(self.win, width=300, height=75, bg="#ffffff")
+        line1 = canvas.create_text(150, 10, anchor=tk.CENTER, text="line 1")
+        line2 = canvas.create_text(150, 30, anchor=tk.CENTER, text="line 2")
+        canvas.pack()
+        return canvas, line1, line2
+
+    def message_frame(self, line1, line2, agent, s, r):
+        if self.finished is True:
+            self.canvas.itemconfig(line1, text="There is a winner!")
+            self.canvas.itemconfig(line2, text="It is Agent " + str(self.winner))
+            return
+        suggestion = "Agent "+ str(agent + 1) +" asks Agent " + str(((agent + 1) % self.num_agents) + 1) + " for cards: " + str(s)
+        answer = "Agent "+ str(((agent +1) % self.num_agents) + 1) + " responds with " + str(r)
+        self.canvas.itemconfig(line1, text=suggestion)
+        self.canvas.itemconfig(line2, text=answer)
+        self.canvas.pack()
+        return
+
 
     def update_table(self):
         if self.finished is True:
             print("the winner is already known!")
+            self.message_frame(self.line1, self.line2, 0, "s", "r")
             return
         # the model takes one agent's turn
         self.last_agent += 1
         self.last_agent %= len(self.model.agents)
-        x = self.model.get_agents()[self.last_agent]
-        x.step()  # KB is updated during the step
+        agent_turn = self.model.get_agents()[self.last_agent]
+        s,r = agent_turn.step()  # KB is updated during the step
         self.KB, self.unknown_cards = self.model.knowledge_dict, self.model.unknown_cards
-        self.input_KB_table(False)  # put KB knowledge in the table
+        self.input_KB_table()  # put KB knowledge in the table
+        self.message_frame(self.line1, self.line2, self.last_agent, s,r)
         if self.finished is True:
             main.loop_strategies()
 
     def refresh_button(self):
         refresh_button = tk.Button(self.win, text="Next Agent's turn", command=self.update_table)
-        refresh_button.pack()
+        refresh_button.pack(pady=5)
 
     def init_table_information(self):
         # define columns and headings
@@ -83,53 +100,29 @@ class GameInterface:
             self.tree.insert('', tk.END, values=d, iid=c)
 
         # add an update button
-        self.refresh_button()
         self.tree.pack()
 
         return
 
-    #   TODO: make this prettier
-    def input_KB_table(self, init):
-
-        if init:
-            # list of agents
-            agents = self.model.agents
-
-            # list of cards per agents, cards[x] -> the list of cards of agent x
-            cards = []
-            for i in range(len(agents)):
-                cards.append(agents[i].get_agent_cards())
-
-            agents = [a.get_unique_id() for a in self.model.agents]
-
-            # insert info in the table
-            for agent in agents:
-                for card_name in self.KB[agent - 1]:
-                    for c in cards[agent - 1]:
-                        if c == card_name:
-                            new_tuple = self.tree.item(card_name)['values']
-                            new_tuple[agent] = 'Agent ' + str(agent)
-                            new_tuple = tuple(new_tuple)
-                            self.tree.item(card_name, values=new_tuple)
-        elif not init:
-            for agent in [a.get_unique_id() for a in self.model.agents]:
-                self.tree.item('relations', values=self.get_new_relations())
-                env = 0
-                for card_name in self.KB[agent - 1]:
-                    new_tuple = self.tree.item(card_name)['values']
-                    a = self.KB[agent - 1][card_name]
-                    if a is None:
-                        new_tuple[agent] = '?'
-                    elif a == 0:
-                        new_tuple[agent] = 'Envelope'
-                        env += 1
-                    elif a >= 1:
-                        new_tuple[agent] = 'Agent ' + str(a)
-                    new_tuple = tuple(new_tuple)
-                    self.tree.item(card_name, values=new_tuple)
-                if env >= 2:
-                    self.finished = True
-
+    def input_KB_table(self):
+        for agent in [a.get_unique_id() for a in self.model.agents]:
+            self.tree.item('relations', values=self.get_new_relations())
+            env = 0
+            for card_name in self.KB[agent - 1]:
+                new_tuple = self.tree.item(card_name)['values']
+                a = self.KB[agent - 1][card_name]
+                if a is None:
+                    new_tuple[agent] = '?'
+                elif a == 0:
+                    new_tuple[agent] = 'Envelope'
+                    env += 1
+                elif a >= 1:
+                    new_tuple[agent] = 'Agent ' + str(a)
+                new_tuple = tuple(new_tuple)
+                self.tree.item(card_name, values=new_tuple)
+            if env >= 2:
+                self.finished = True
+                self.winner=agent
         return
 
     def get_new_relations(self):
@@ -145,11 +138,17 @@ class GameInterface:
     def get_num_agents(self):
         return self.num_agents
 
-    def get_win(self):
-        return self.win
+def init_window(num_agents, num_cards):
+    """"This initializes the window"""
+    win = tk.Tk()
+    # title
+    win.title('A model of Clue')
+    # dimensions
+    dim = str(num_agents * 150 + 150) + "x" + str(num_cards * 25 + 150)
+    win.geometry(dim)
+    # background color
+    win['bg'] = '#d61e1e'
 
-    def get_tree(self):
-        return self.tree
-
-# agents, cards, unknown, dict = fake_data()
-# print(dict)
+    main_frame = tk.Frame(win)
+    main_frame.pack(pady=5)
+    return win

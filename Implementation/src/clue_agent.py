@@ -60,20 +60,22 @@ class ClueAgent(mesa.Agent):
     def step(self):
         # The agent takes a turn if the winner has not been determined yet.
         if not self.model.check_end_state():
-            if PRINT:
-                print("This is agent " + str(self.unique_id) + ".")
-                print("With cards " + str(self.agent_cards) + ".")
             # Let the current agent make a suggestion
             suggestion = self.pick_suggestion()
-            if PRINT:
-                print("They suggest " + str(suggestion) + ".")
-                print("The agent they suggest to is agent " + str(self.next_agent.get_unique_id()) + ".")
             # Get a response from the next agent on whether they have any of the cards
             response = self.next_agent.get_response(suggestion)
             if PRINT:
+                print("This is agent " + str(self.unique_id) + ".")
+                print("With cards " + str(self.agent_cards) + ".")
+                print("They suggest " + str(suggestion) + ".")
+                print("The agent they suggest to is agent " + str(self.next_agent.get_unique_id()) + ".")
                 print("Their response is " + str(response) + ".")
             # Update the knowledge of the agents based on the suggestion and response
             self.update_knowledge(suggestion, response)
+        else:
+            suggestion = []
+            response = ""
+        return suggestion, response
 
     # Pick a suggestion, based on the strategy of the agent.
     def pick_suggestion(self):
