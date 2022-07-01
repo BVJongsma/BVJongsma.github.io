@@ -61,14 +61,14 @@ layout: dinky
             The Kripke model should represent the state combinations that include seven weapons,
             four suspects and three players.
             There is one weapon card and one suspect card in the envelope.
-            This means that there are \(4 \times 4 = 16\) possibilities for the envelope.
+            This means that there are \(7 \times 4 = 28\) possibilities for the envelope.
             For the three players, there are nine cards left (weapons and suspects combined).
             Each player gets to have three cards.
             This leads to there being \(\frac{9!}{3! \times (9-3)!} = 84\) possible card combinations for player 1.
             When three of the nine cards are given to player 1, that leaves six cards for player 2.
             In effect, there are \(\frac{6!}{3! \times (6-3)!} = 20\) possible combinations for player 2.
             For player 3 there is only one option: they are left with the \(6 - 3 = 3\) remaining cards.
-            In total, this all results in \(16 \times 84 \times 20 \times 1 = 26880\) states.
+            In total, this all results in \(28 \times 84 \times 20 \times 1 = 47040\) states.
         </p>
         <p>
             Each state contains one of the possible combinations of the 11 weapon and suspect cards.
@@ -83,20 +83,23 @@ layout: dinky
             The Kripke model \(M = \langle S, \pi, R_1, R_2, R_3 \rangle\) can be defined as follows:
             <ol>
                 <li>
-                    \(S\) is the total set of states \(s = \{s_1, s_{26880}\}\).
+                    \(S\) is the total set of states \(s = \{s_1, .., s_{47040}\}\).
                     A state consists of a tuple of four pairwise disjoint sets:
                     \(s = \langle c_{env}, c_1, c_2, c_3 \rangle \).
                     The first of these sets denotes the cards in the envelope.
                     The second, third and fourth sets denote the cards of players 1, 2 and 3 respectively.
-                    So, \(s = \langle \{card_{env}, card_{env}\}, \{card_1, card_1, card_1\}, \{card_2, card_2, card_2\}, \{card_3, card_3, card_3\} \rangle \).
+                    So, \(s = \langle \{card_{env}, card_{env}\}, \{card_1, card_1, card_1\}, \{card_2, card_2, card_2\},
+                    \{card_3, card_3, card_3\} \rangle \).
                 </li>
                 <li>
-                    \(\pi : P \rightarrow (S \rightarrow \{T, F\})\) assigns a truth value to all propositions P.
+                    \(\pi : P \rightarrow (S \rightarrow \{T, F\})\) assigns a truth value to all propositions P
+                    for each state.
                 </li>
                 <li>
                     \( R_1, R_2\) and \(R_3\) denote the set of relations for each player 1, 2 and 3.
                     For each:
-                    \(R_j \subseteq S \times S\) such that \(R_j = \{(s, t) \in S \times S | c_j \textrm{ in } s = c_j \textrm{ in } t\}\), where \(j \in Players\).
+                    \(R_j \subseteq S \times S\) such that \(R_j = \{(s, t) \in S \times S | c_j \textrm{ in } s \iff
+                    c_j \textrm{ in } t\}\), where \(j \in Players\).
                     In other words, each player knows their own cards.
                 </li>
             </ol>
@@ -120,18 +123,6 @@ layout: dinky
                 \(i \neq j\).
                 That is, \(card_i \rightarrow \neg card_j\) for \(i \neq j\).
             </li>
-            <br>
-            <li>
-                >>>>>>>>>>TODO IS THIS NECESSARY????
-                If you know that a player has a card, then they have that card.
-                If player \(i\) knows that player \(j\) has a card \(card\) with
-                \(i \in \textrm{Players}\) and \( j \in \textrm{Players} \cup \textrm{Envelope}\) and \(card \in \textrm{Cards}\),
-                then player \(j\) has that card.
-                So, \(K_i card_j \rightarrow card_j\).<br>
-                <strong>\(K_i (card_j \rightarrow card_j)\) or \((K_i card_j) \rightarrow card_j\).</strong>
-
-            </li>
-            <br>
             <li>
                 If each player has \(n\) cards and player \(i\) knows that player \(j\) has the set \(Cards_j\)
                 with \(|Cards_j| = n\) (here, we use absolutes to denote the size),
@@ -140,14 +131,18 @@ layout: dinky
             </li>
             <br>
             <li>
-                If all except one of \(\textrm{Players} \cup \textrm{Envelope}\) does not have a certain card, then the remaining player or envelope must have this card. <br>
-                \(\neg card_i \textrm{ and } \neg card_j \textrm{ and } \neg card_k \rightarrow card_l\) with \(i, j, k, l \in \textrm{Players} \cup \textrm{Envelope}\) and \(i \neq j \neq k \neq l\).
+                If all except one of \(\textrm{Players} \cup \textrm{Envelope}\) does not have a certain card, then the
+                remaining player or envelope must have this card. <br>
+                \(\neg card_i \textrm{ and } \neg card_j \textrm{ and } \neg card_k \rightarrow card_l\) with
+                \(i, j, k, l \in \textrm{Players} \cup \textrm{Envelope}\) and \(i \neq j \neq k \neq l\).
             </li>
             <br>
             <li>
-                If for all except one weapons in \(Weapons\) or for all except one suspects in \(Suspects\), you know that they belong to any player, then the remaining weapon or suspect is in the envelope. <br>
-                If \( \textrm{ for each } card \in \textrm{Weapons} \backslash \{x\}\), \(card_j\) where \(j\ \in \textrm{Players}\), then \(x_{env}\). <br>
-                If \(\texrm{ for each } card \in \textrm{Suspects} \backslash \{x\}\), \(card_j\) where \(j\ \in \textrm{Players}\), then \(x_{env}\).
+                If for all except one weapons in \(Weapons\) or for all except one suspects in \(Suspects\),
+                you know that they belong to any player, then the remaining weapon or suspect is in the envelope. <br>
+                If \( \textrm{ for each } card \in \textrm{Weapons} \backslash \{x\}\), \(card_j\) where
+                \(j\ \in \textrm{Players}\), then \(x_{env}\). <br> If \(\textrm{ for each } card \in \textrm{Suspects}
+                \backslash \{x\}\), \(card_j\) where \(j\ \in \textrm{Players}\), then \(x_{env}\).
             </li>
         </ol>
     </div>
@@ -157,29 +152,32 @@ layout: dinky
         <p>
             As the players take turns, they gain more and more information.
             During a turn, a player \(i \in Players\) first makes a suggestion \(sug_i\).
-            This suggestion should consist of one weapon and one suspect: \(sug_i = \{A, B\}\) such that \( A \in Weapons \) and \(B \in Suspects \).
+            This suggestion should consist of one weapon and one suspect: \(sug_i = \{A, B\}\) such that
+            \( A \in Weapons \) and \(B \in Suspects \).
         </p>
         <p>
-            The next player \(i + 1\) gives a response \(res_{i+1}\).
+            The next player \(j\) gives a response \(res_{j}\).
             There are two options:
             <ol>
                 <li>
-                    Player \(i + 1\) does not have any of the cards suggested.
+                    Player \(j\) does not have any of the cards suggested.
                     They share a public announcement: <br>
-                    \(\textrm{There does not exist a } card_{i + 1} \textrm{ such that } card \in sug_i\).
+                    \(\textrm{There does not exist a } card_{j} \textrm{ such that } card \in sug_i\).
                 </li>
                 <li>
-                    Player \(i + 1\) does have one or both of the cards suggested.
+                    Player \(j\) does have one or both of the cards suggested.
                     They share a public announcement:
-                    \(\textrm{There exists a } card_{i + 1} \textrm{ such that } card \in sug_i\). <br>
-                    They pick one \(card_{i + 1} \in sug_i\) and share a private announcement for player \(i\) only:<br>
-                    \(card_{i + 1}\).
-                    (Note that here, \(card_{i + 1}\) refers to a specific card, while in the public announcements, it refers to a variable).
+                    \(\textrm{There exists a } card_{j} \textrm{ such that } card \in sug_i\). <br>
+                    They pick one \(card_{j} \in sug_i\) and share a private announcement for player \(i\) only:<br>
+                    \(card_{j}\).
+                    (Note that here, \(card_{j}\) refers to a specific card, while in the public announcements,
+                    it refers to a variable).
                 </li>
             </ol>
         </p>
         <p>
-            Using the public and private announcements and the rules in <a href="#formal-rules">Rules for gaining information</a>, all players update their knowledge.
+            Using the public and private announcements and the rules in <a href="#formal-rules">Rules for gaining information</a>,
+            all players update their knowledge.
             For our model, this means that relations in the Kripke model are (potentially) removed.
             After all, based on a player's new knowledge, this player knows that some states might not be possible anymore.
             All relations pointing to these states are removed for the player.
@@ -190,19 +188,25 @@ layout: dinky
             Relations are removed iteratively after each player's turn.
             The rules described in <a href="#formal-rules">Rules for gaining information</a> are not explicitly stated in the implementation.
             Instead, these rules are elegantly, implicitly applied.
-            This is because we only generate states for which the sets per agent and envelope (\(c_{env}, c_2, c_3\) and \(c_4 )\) are pairwise exclusive, for which these sets are of fixed lengths (two for the envelope, three for the players) and for which the envelope set always has one weapon and one suspect card.
+            This is because we only generate states for which the sets per agent and envelope (\(c_{env}, c_2, c_3\)
+            and \(c_4 )\) are pairwise exclusive, for which these sets are of fixed lengths (two for the envelope, three for the players)
+            and for which the envelope set always has one weapon and one suspect card.
             This limitation in the state generation makes it so that with little new information, a lot of relations can be directly removed.
             An example of this is given in <a href="./example.html">Example</a>.
         </p>
         <p>
-            If for any player j, \(R_j \subseteq S \times S\) such that \(\textrm{ for all } R_j, R_j = \{(s, t) \in S \times S | c_{env} \textrm{ in } t\) (\(c_{env}\) is a constant here), they have won the game.
+            If for any player j, \(R_j \subseteq S \times S\) such that \(\textrm{ for all } R_j, R_j = \{(s, t)
+            \in S \times S | c_{env} \textrm{ in } t\) (\(c_{env}\) is a constant here), they have won the game.
             In other words, if any player knows for sure what cards are in the envelope, they have won the game.
-            In the Kripke model, this means that for this player j, there are only relations \(R_j\) left that are all pointed towards a state with one certain envelope set \(c_{env}\).
+            In the Kripke model, this means that for this player j, there are only relations \(R_j\) left that are all
+            pointed towards a state with one certain envelope set \(c_{env}\).
             Note that this does not have to mean that there is only one relation left for a player.
-            For instance, a player might not have yet found out whether one specific card belongs to player P or Q, but does know what cards are in the envelope.
+            For instance, a player might not have yet found out whether one specific card belongs to player P or Q,
+            but does know which cards are in the envelope.
         </p>
         <p>
-            In our implementation, after each player's turn, after the update of the Kripke model, the system goes through each player's relations in the Kripke model and checks, based on this, if there is a winner.
+            In our implementation, after each player's turn, after the update of the Kripke model, the system goes
+            through each player's relations in the Kripke model and checks, based on this, if there is a winner.
             The system then presents this winner and stops running.
             Notice that it might occur that there are multiple winners.
         </p>
