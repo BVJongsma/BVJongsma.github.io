@@ -19,7 +19,7 @@ layout: dinky
                 <li><a href="#the-kripke-model">The Kripke Model</a></li>
                 <li><a href="#formal-rules">Rules for gaining information</a></li>
                 <li><a href="#updating-the-kripke-model">Updating the Kripke model</a></li>
-                <li><a href="#implementation-explained">The Implementation</a></li>
+                <li><a href="#implementation-explained">The implementation interface</a></li>
         </ul>
     <!--</nav>-->
     <div id="card-player-representation">
@@ -211,7 +211,7 @@ layout: dinky
             Relations are removed iteratively after each player's turn.
             The rules described in <a href="#formal-rules">Rules for gaining information</a> are not explicitly stated in the implementation.
             Instead, these rules are elegantly, implicitly applied.
-            This is because we only generate states for which the sets per agent and envelope (\(c_{env}, c_2, c_3\)
+            This is because we only generate states for which the sets per player and envelope (\(c_{env}, c_2, c_3\)
             and \(c_4\)) are pairwise exclusive, for which these sets are of fixed lengths (two for the envelope, three for the players)
             and for which the envelope set always has one weapon and one suspect card.
             These limitations in the state generation makes it so that with little new information, a lot of relations can be directly removed.
@@ -235,28 +235,29 @@ layout: dinky
         </p>
     </div>
     <div>
-        <h2 id="implementation-explained">The Implementation</h2>
+        <h2 id="implementation-explained">The implementation interface</h2>
         <p>
             The implementation is given as an interface.
-            By running the implementation, a window pops up which shows:
+            By running the implementation, a window pops up that shows:
         </p>
             <ul>
                 <li>
-                    A table displaying the knowledge of the agents.
-                    After each turn, the table is updated, giving the current information on what the agents know.
+                    A table displaying the knowledge of the players.
+                    After each turn, the table is updated, giving the current information on what the players know.
                     The information is displayed as following:
-                    Each column shows the information of one agent.
+                    Each column shows the information of one player.
+                    Notice that we use 'agent' instead of 'player' here, but the meaning is the same.
                     The top row shows for each agent how many relations they still have in the Kripke model.
                     The rows below show for each agent whether they know who owns the card of that row.
                     For example, in the column 'Agent 1', row 'Mustard', the value there tells us whether Agent 1 knows where the card Mustard is.
                     If this is a '?', this agent is not yet aware where that card is.
                     If the value of a row is an Agent X, the column-agent knows that Agent X is in possession of that card.
                 </li>
-                <li>A button, pressing it allows the model to give the next agent a turn.</li>
+                <li>A button. Pressing it allows the model to give the next agent a turn.</li>
                 <li>A message box, which tells you either what happened during the last turn or who is the winner.</li>
             </ul>
         <p>
-            An example of how the interface looks during a game is given below.<br>
+            An example of how the interface looks during a game is given below in Figure 1.<br>
         </p>
         <figure>
             <img src="figures/interface_picture.png" alt="The interface during a turn." style="width:85%">
@@ -266,16 +267,16 @@ layout: dinky
             In this example, already a few turns are taken. From the message box we can see that during the last turn, Agent 2 asked Agent 3
             whether they had any of the cards 'Green' and 'rope'. Agent 3 replied with 'rope'. <br>
             A private announcement is made to Agent 2 that agent 3 has 'rope'. Agent 2 now knows that Agent 3 has the card rope.
-            A public announcement is made that agent 3 has either Green or rope. Since Agent 1 already know that
-            Agent 2 owns the Green card, they now know that Agent 3 has card rope.<br>
+            A public announcement is made that agent 3 has either Green or rope. Since Agent 1 already knew that
+            Agent 2 owns the Green card, they now know that Agent 3 has the rope card.<br>
             This can be seen in the table: The column of both Agent 1 and Agent 2 have 'Agent 3' in the rope column.
         </p>
         <p>
             Note that sometimes during a turn the information in the table is not updated, but the relations are.
             This usually happens during the beginning of the game, when public announcements are made that tell us
-            an agent has either one of two cards.
+            an agent has at least one of two cards.
             The agents cannot definitely tell that a certain agent has a certain card, but they can still cross off some states
-            (namely, the states where the other agent does not have one of the two cards as announced).
+            (namely, the states where the other agent does not have any of the two cards suggested).
         </p>
         <p>
             For more information on how to run the implementation, read the README.md on <a target="_blank" href="https://github.com/BVJongsma/ClueModel">Github</a>
