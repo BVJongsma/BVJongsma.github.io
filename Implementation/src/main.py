@@ -30,7 +30,6 @@ def run(strategy_agent1, strategy_other_agents, use_interface):
 # Function for running code next to interface for some other part.
 def loop_strategies():
     # Loop over different strategies and run for all combinations.
-    INTERFACE = False
     if DIFFERENT_STRATEGIES:
         strats = ["RANDOM", "NOT_OWN", "ONE_OWN", "UNKNOWN", "ONE_UNKNOWN", "REASONING"]
         for strategy_agent1 in strats:
