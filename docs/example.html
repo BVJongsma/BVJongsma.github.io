@@ -42,7 +42,7 @@ layout: dinky
                 since we do not care about potential ways that the envelope can have the same card
                 and about what the envelope 'knows'. For the players, each player has relations
                 from a state to another state if that players has the same cards in both states.
-                This is also explained in <a href="./model.html">Model & Implementation</a>
+                This is also explained in <a href="./model.html">Model & Implementation</a>.
                 For example, in the true state of this example, player 1 has the candle and the dagger.
                 So, from that state, \(R_1\) can reach any state where they also have the candle and dagger.
             </p>
@@ -62,9 +62,11 @@ layout: dinky
 <!-- section 6: what happens during a turn? -->
         <div id="taking-a-turn">
             <h2>What happens during a turn</h2>
+            <p>
             We will now see how the Kripke model example is updated during a turn.
             For this, we will first give an example of when, after a suggestion, the player that is suggested to has at least one of the suggested cards.
             Next, we will show what might happen if the player that is suggested to has none of the suggested cards.
+            </p>
             <!--6.1 Asking for cards: showing a card-->
             <div id="show-a-card"> <!--6.1 Asking for cards: showing a card-->
                 <h3>Card suggestion: player has at least one of the suggested cards</h3>
@@ -75,6 +77,8 @@ layout: dinky
                     This is a private announcement and action models can be used to show the update of the Kripke model after showing the card.
                     We will now consider two examples of what happens when player 2 shows a card to player 1.
                     The difference between these two scenarios is the amount of knowledge player 3 has as a result.
+                    The figures indicate what happens in our model, the action model update is slightly different
+                    as explained in the accompanying text.
                 </p>
 
                 <figure>
@@ -96,6 +100,22 @@ layout: dinky
                     After all, player 3 already knows that player 1 has the dagger.
                     So, player 3 removes all relations to states where player 2 does not
                     have Scarlet.
+                    As far as an action model goes, this is a private announcement:
+                    </p>
+                    <ul>
+                        <li> \(E = \{show(dagger), show(Scarlet)\)
+                        </li>
+                        <li>
+                            \(~_1 = \{(e,e)| e \in E\}, ~_2 = \{(e,e)| e \in E\}, ~_3 = E \times E\)
+                        </li>
+                        <li>
+                            pre(show(dagger)) = dagger_2, pre(show(Scarlet)) = Scarlet_2.
+                        </li>
+                    </ul>
+                    <p>
+                    Player 3 knows pre(show(dagger)) = dagger_2 is false, so there are no states for which this precondition
+                    is relevant. The precondition pre(show(Scarlet)) = Scarlet_2 is relevant, and thus only states
+                    where agent 2 has the Scarlet card will remain.
                     >>>>>>>>>>>>>>> TODO the below description does not hold for our implementation -- Explain this + why?
                     In the last step, we remove one-sided relations, since those start from a state that is
                     impossible for the respective player and therefore are not relevant for finding the content of the envelope.
@@ -121,6 +141,21 @@ layout: dinky
                     where player 2 does not have the candle and does not have Scarlet. In this example, this corresponds
                     to keeping all existing relations, since all relations of player 3 point to states where player 2 has either
                     the candle or Scarlet.
+                    As far as an action model goes, this is a private announcement:
+                    </p>
+                    <ul>
+                        <li> \(E = \{show(candle), show(Scarlet)\)
+                        </li>
+                        <li>
+                            \(~_1 = \{(e,e)| e \in E\}, ~_2 = \{(e,e)| e \in E\}, ~_3 = E \times E\)
+                        </li>
+                        <li>
+                            pre(show(candle)) = candle_2, pre(show(Scarlet)) = Scarlet_2.
+                        </li>
+                    </ul>
+                    <p>
+                    Player 3 does not know that pre(show(candle)) = candle_2 is false. So now all states where one of the
+                    preconditions is true will remain.
                     >>>>>>>>>>>>>>>>>>>> TODO same as previous TODO
                     For step 4, irrelevant relations and states are removed again. Here, more
                     potential states are still considered possible by player 3 than only the actual state.
@@ -147,6 +182,21 @@ layout: dinky
                     does not have Green, so they can remove any states where player 2 has the candle and any state where
                     player 2 has Green. For player 1 this corresponds to removing relations to state 3, because here player 2 has
                     Green. For player 3, relations to state 2 are removed, since here player 2 has the candle.
+                    As far as an action model goes, this is a public announcement:
+                    </p>
+                    <ul>
+                        <li> \(E = \{do_not_show_cards()\)
+                        </li>
+                        <li>
+                            \(~_1 = E \times E, ~_2 = E \times E, ~_3 = E \times E\)
+                        </li>
+                        <li>
+                            pre(do_not_show_cards()) = \neg candle_2 \land \neg Green_2.
+                        </li>
+                    </ul>
+                    <p>
+                    For all agents, only states with this precondition will remain, so there will only be states
+                    where agent 2 does not have the candle and does not have Green.
                     >>>>>>>>>>>>> TODO same as previous TODO
                     In step 4 all irrelevant relations and states are removed, leaving only the actual state.
                 </p>
@@ -157,7 +207,8 @@ layout: dinky
                 <p>
                     If a player knows the content of the envelope,
                     then this player will state this and win the game.
-                    A player knows the content of the envelope when for this player, all states where their relations point to have the same content for the envelope.
+                    A player knows the content of the envelope when for this player, all states where their relations
+                    point to have the same content for the envelope.
                     In the example, this is the case for player 2 in all figures.
                     Player 1 knows the content of the envelope in steps 2 to 4 of Figure 2, steps 2 to 4 of Figure 3 and steps 2 to 4 of Figure 4.
                     Player 3 knows the content of the envelope in steps 3 and 4 of Figure 2 and steps 3 and 4 of Figure 4.
@@ -177,13 +228,18 @@ layout: dinky
                 </p>
                 <p>
                     An example was already given of this in the explanation of Figure 3.
-                    Because player 3 knows that player 1 has the dagger and knows that player 2 might either have the dagger or Scarlet (or both), they can deduce that player 2 must have Scarlet.
+                    Because player 3 knows that player 1 has the dagger and knows that player 2 might either have the
+                    dagger or Scarlet (or both), they can deduce that player 2 must have Scarlet.
                     This does not occur via rules, but instead implicitly due to the way the states are set up.
-                    Because for each state, all sets of cards for the players are pairwise exclusive, there is no state where both players 1 and 2 have the dagger.
-                    As player 3 knows that player 1 has the dagger, there only exist states for this player (i.e. relations are pointed to only these states) where player 1 has the dagger and no-one else has the dagger.
-                    When player 3 gets to know that player 2 might either have the dagger or Scarlet, all relations of player 3 are removed that point towards states in which player 2 has neither the dagger nor Scarlet.
+                    Because for each state, all sets of cards for the players are pairwise exclusive, there is no state
+                    where both players 1 and 2 have the dagger.
+                    As player 3 knows that player 1 has the dagger, there only exist states for this player
+                    (i.e. relations are pointed to only these states) where player 1 has the dagger and no-one else has the dagger.
+                    When player 3 gets to know that player 2 might either have the dagger or Scarlet, all relations of
+                    player 3 are removed that point towards states in which player 2 has neither the dagger nor Scarlet.
                     Only states remain (for the relations of player 3 to point to) that either have the dagger or Scarlet for player 2.
-                    However, because there are only states (for the relations of player 3 to point to) where no-one else but player 1 has the dagger, only these states remain that have Scarlet for player 2.
+                    However, because there are only states (for the relations of player 3 to point to) where no-one
+                    else but player 1 has the dagger, only these states remain that have Scarlet for player 2.
                     Similar implicit deduction occurs for all such rules.
                 </p>
             </div> <!--6.4 After a turn: updating the model-->
