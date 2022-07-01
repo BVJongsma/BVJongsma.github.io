@@ -3,55 +3,116 @@ layout: dinky
 ---
 <!-- experiment -->
 <div id="experiment">
-    <h1>Experiment</h1>
+    <h1>Experiment & Results</h1>
     <p>
-        As explained in the Model section, an implementation of Clue in Python was created.
+        >>>>>>>>>>>>>> TODO not here, but in the model & implementation: make clear that ofc these are perfect logicians, not actually how people would reason in clue.
+        As explained in <a href="./model.html">Model & Implementation</a>, a digital implementation of Clue in Python was created.
         This program makes use of a Kripke model and public and private announcements are used to update this
-        model, so agents can eventually determine the cards in the envelope.
-        We will now consider various strategies that can be used to determine the cards in the envelope and discuss
-        their performance.
+        model, so players can eventually determine the cards in the envelope.
+        Not only did we develop an interface for this implementation, we also ran an experiment.
+        For this experiment, we consider various strategies that can be used for making suggestions.
+        These strategies might influence how quick players can determine the cards in the envelope and win the game.
+        We will discuss these strategies, show their performance and give a conclusion.
+        <ul>
+            <li><a href="#strategies">The strategies</a></li>
+            <ul>
+                <li><a href="#suggestions">Strategies for suggesting</a></li>
+                <li><a href="#responses">Strategies for responding</a></li>
+            </ul>
+            <li><a href="#experimental-setup">Experimental setup</a></li>
+            <li><a href="#results">Results</a></li>
+            <li><a href="#conclusion">Conclusion and discussion</a></li>
+        </ul>
     </p>
     <div id="strategies">
     <h2>The strategies</h2>
     <p>
-        Below we will outline the strategies that the players can use to select cards they will ask the next player
-        about. These strategies vary in how much information is used. In some cases, no such cards exist and then
-        the model will default to selecting one or both cards at random.
+        In <a href="./model.html">Model & Implementation</a> and <a href="./example.html">Example</a>, we explain how players can make suggestions and give responses based on these suggestions.
+        However, we never specify how players decide what they suggest and how they decide to respond when they can choose between which cards to show.
+    </p>
+    <div id="suggestions">
+        <h3>Strategies for suggesting</h3>
+    <p>
+        Below, we first outline the strategies that a player can use to select cards they will ask the next player
+        about (i.e. to select cards for their suggestions). These strategies vary in complexity.
     </p>
     <ul>
-        <li>RANDOM: randomly pick a weapon and suspect card.</li>
-        <li>NOT_OWN: pick a weapon card and a suspect card that the agent does not have themselves.</li>
-        <li>ONE_OWN: pick a weapon and a suspect card, one of which the agent has themselves and another that the
-            agent does not have themselves. </li>
-        <li>UNKNOWN: pick a weapon and a suspect card for which the agent does not know to whom they belong.</li>
-        <li>ONE_UNKNOWN: pick a weapon and a suspect card, where the agent knows who has one card, but not the other.</li>
-        <li>REASONING: pick a weapon and a suspect card. Pick one card that the agent knows about and isn't of the next
-            agent, so you do not see the same card multiple times. Pick the other card, so that it might be of the next
-            agent or in the envelope. For this card you do not know where it is yet, and you know it might still belong
-            to the next agent, so this should give you a lot of information. If there are no such cards: select one that
-            might be of the next agent.</li>
+        <li>RANDOM: randomly pick one weapon and one suspect card.</li>
+        <li>NOT_OWN: pick one weapon and one suspect card where neither belong to the player themselves.</li>
+        <li>ONE_OWN: pick one weapon and one suspect card, one of which the player has themselves and another that the
+            player does not have themselves. </li>
+        <li>UNKNOWN: pick one weapon and one suspect card where for neither the player knows to whom they belong (i.e. they are 'unknown' cards to the player).</li>
+        <li>ONE_UNKNOWN: pick one weapon and one suspect card, one of which the player knows to whom they belong (i.e. they are 'known' to the player), and one of which the player does not know to whom they belong (i.e. they are 'unknown' to the player). </li>
+        <li>REASONING: pick one weapon and one suspect card. Make sure that one of these cards is a known card to the player and isn't of the next
+            player. Make sure that the other card is unknown and might be of the next
+            player or in the envelope. If there are no such unknown cards: select an unknown card that
+            might be of the next player.</li>
     </ul>
+    <p>
+        The first three of these strategies, RANDOM, NOT_OWN and ONE_OWN are simple and straightforward.
+        UNKNOWN is similar to the NOT_OWN strategy, especially in the beginning of the game.
+        However, it keeps track of new information that is gained.
+        ONE_UNKNOWN is a strategy that also keeps track of new information that is gained.
+        It suggests one known card and one unknown card.
+        In this way, a player can attempt to gain information on the unknown card in a more focused way.
+        For example, let us say player P uses this strategy to suggest to player Q.
+        If a player P already knows that the weapon that they suggest belongs to player U, they can gain specific information on the unknown suspect that they suggest.
+        After all, player P now knows that player Q will not have the weapon and therefore will only respond with the suspect or with none of the cards.
+        This is useful if player P for instance already knows about the weapon in the envelope and not about the suspect.
+        If player P would have suggested unknown cards for both the weapon and the suspect, it might be that player Q responds with information on the weapon, information that player P does not need.
+        The ONE_UNKNOWN strategy has the drawbacks that the known card that is suggested might belong to the next player and that the unknown card that is suggested might have no chance of belonging to the next player.
+        If the former is the case, player P will gather no new information as the next player Q will likely show the card that the player P already knows.
+        If the latter is the case, player P already knows that the unknown card does not belong to player Q (though it is still unknown, so it might, for instance, either belong to the envelope or to player U), so they have no use in suggesting this card.
+        This is where the REASONING strategy comes into play.
+        This strategy ensures that the known card isn't of the next player and that the unknown card might be of the next player.
+        Ideally, the unknown card might be of the next player or the envelope.
+        In this way, the player that uses this strategy attempt to find out the contents of the envelope as quickly as possible.
+    </p>
+    <p>
+        In some cases, it might occur that a strategy asks the player to suggest two specific cards.
+        However, due to there being a constraint on what cards to show, namely one weapon and one suspect, it might not be possible for the player to suggest the cards.
+        In these cases, the player suggests one or two random cards.
+        The same goes for when a strategy can not find a suitable card to suggest.
+        For example, the REASONING strategy asks for one unknown card that might be of the next player or in the envelope.
+        Let us say player P wants to use this strategy to suggest to player Q.
+        However, player P already knows the cards of player Q.
+        In this case, there are no unknown cards that might be of the next player or in the envelope.
+        Instead, player P picks a card at random for the unknown card (for the known card, they can just use one of their own cards).
+    </p>
     </div>
-
+    <div id = "responses">
+        <h3>Strategies for responding</h3>
+    <p>
+        If a player that is given a suggestion has none of the suggested cards, there is only one way to respond for this player.
+        Also if a player that is given a suggestion has only one of the suggested cards, this is the case.
+        Yet, when a player that is given a suggestion has both of the suggested cards, there are various ways for the player to respond.
+        For instance, the player might choose to respond with one of the two suggested cards at random.
+        For our implementation, we decided to make use of a simple type of reasoning for the players to decide how to respond.
+        This was done to make the responses more realistic.
+        The idea is that when a player can choose to respond with either one of the two suggested cards, they always respond with the one that they have already shown.
+        If they have not previously responded with any card yet, they respond with one of the two suggested cards at random.
+        We think that this is a better strategy compared to responding at random.
+        After all, giving away as little information about your own cards can help avoid other players from gaining more knowledge than you.
+    </p>
+    </div>
+    </div>
     <div id="experimental-setup">
-    <h2>The experimental setup</h2>
+    <h2>Experimental setup</h2>
         <p>
-            We tested the strategies mentioned above versus the random strategy. Player 1 would get one of the strategies
+            We tested the strategies for suggesting mentioned above versus the RANDOM strategy. Player 1 would get one of the strategies
             and the other players would use the random strategy. For each strategy, we ran the model until a winner was
             found ten times and determined the average amount of steps and the win rate of the first
-            player. The division of cards among the players and the envelope was randomised, and players responded
-            with cards they had already shown if they had both cards.
+            player. The division of cards among the players and the envelope was randomised, and players respond
+            with cards they had already shown if they have both cards in a suggestion.
         </p>
     </div>
-</div>
-
 <!-- results -->
 <div id="results">
-    <h1>Results</h1>
+    <h2>Results</h2>
     <p>
         Table 1 shows the results for all the strategies after 10 runs. There is a large difference between strategies
-        for the win rate of player 1. There are 3 players, so you would expect player 1 to win about 33% of the time.
-        The strategies ONE_OWN and REASONING perform worse with respectively a 20 and 30% win rate for player 1.
+        for the win rate of player 1. There are 3 players, so you would expect player 1 to win about 33% of the time (perhaps a bit more often as player 1's turn is always first).
+        The strategies ONE_OWN and REASONING perform worst with respectively a 20 and 30% win rate for player 1.
         The ONE_UNKNOWN strategy gives the best performance with a win rate of 70% for player 1.
         The difference in the amount of turns
         per player is on average quite small, with a minimum of 5.6 turns when player 1 only asks for cards not owned
@@ -86,30 +147,38 @@ layout: dinky
     <td>5.8</td>
   </tr>
 </table>
-
+<div id="conclusion">
+    <h2>Conclusion and discussion</h2>
     <p>
         When solely considering win rate, the ONE_UNKNOWN strategy gives the best performance. However, the NOT_OWN
         strategy only has 1 win less and has less average turns per player. The difference in performance could
-        potentially be explained away because of random initialisation / the other players selecting random cards.
+        potentially be explained away because of random initialisation or the other players selecting random cards.
         Having many cards from one category and not from another can heavily influence the amount of initial relations
         for a player. Moreover, if two players ask for a card that is in the envelope and do not get shown any cards,
-        then it is easy to determine that this card is in the envelope, resulting in much faster convergence to the
+        then it is easy to determine that this card is in the envelope, resulting in a much faster convergence to the
         solution than in some other cases.
     </p>
-
+    <p>
+        While the REASONING strategy seems to be more intricate than the ONE_UNKNOWN strategy, it gives a worse performance.
+        We think that the reason for this might be partly because of the randomisation, but also possibly because the REASONING strategy gives too much information to other players.
+        After all, the REASONING strategy is designed to give all the right suggestions for the responses that give the most new information.
+        However, via public announcements, this new information also becomes available for the rest of the players.
+        The rest of the players, on the other hand, only use the RANDOM strategy and therefore might give less useful information to player 1 in return.
+    </p>
     <p>
         This performance measure indicates that ONE_UNKNOWN and NOT_OWN give the best performance. However, we did
         not take into account performance against other strategies, as some of these strategies might work really
         well if another player uses another strategy than randomly selecting cards. Moreover, we worked with a
         simplified version of the game and some of these strategies might start to show better performance when using
         more cards. So, it would be interesting to consider a direct comparison of strategies in future research instead
-        of comparing against a random strategy, as well as using less simplifications in the model.
+        of comparing against a random strategy, as well as using fewer simplifications in the model.
     </p>
+    <p>
+        It might also be an idea to explore more different strategies for the suggestion making and responding.
+        For instance, players might be able to use second-order knowledge in their strategies.
+        In this way, they can be more careful in avoiding sharing too much of their own information to other players, or sharing too much information by giving certain suggestions.
+    </p>
+    </div>
 </div>
-
-
-<!-- TODO discussion -->
-<div id="discussion">
-    <h1>Discussion</h1>
 </div>
 
