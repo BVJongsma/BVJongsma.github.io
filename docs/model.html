@@ -4,7 +4,6 @@ layout: dinky
 
 <!-- section 5: implementation-->
 <div id="implementation">
-    >>>>>>>>>>>>>> TODO also show/explain interface!!!
     <h1>Model and Implementation</h1>
     <p>
         We formalise <a href="./simplifications.html">the simplified game of Clue</a> in a model.
@@ -42,7 +41,7 @@ layout: dinky
             Instead of 'spanner', 'wrench' was used because the latter is a more well-known word for the same thing.
             'candlestick' and 'lead pining' were shortened.
             'revolver' was altered to the synonymous 'handgun'.
-            This was done to ensure that all card names have a different first letter (which may be useful when we want to use concise notations for them).
+            This was done to ensure that all card names have a different first letter (which is useful when we want to use concise notations for them).
         </p>
         <p>
             We will use the set \(\textrm{Cards} = \textrm{Weapons} \cup \textrm{Suspects}\) to refer to the set of all cards.
@@ -117,7 +116,8 @@ layout: dinky
         <h2>Rules for gaining information</h2>
         In a game of clue, some logical rules apply.
         Players can use these rules to update their knowledge on the game.
-        Using (a combination of) these rules, relations in \( R_1, R_2\) and \(R_3\) can be removed from the Kripke model.<br>
+        Using (a combination of) these rules, relations in \( R_1, R_2\) and \(R_3\) can be removed from the Kripke model.
+        The rules are: <br>
         <ol>
             <li>
                 If one player has a certain card, then the other player cannot have that card. <br>
@@ -142,7 +142,7 @@ layout: dinky
             </li>
             <br>
             <li>
-                If for all except one weapons in \(Weapons\) or for all except one suspects in \(Suspects\),
+                If for all except one weapon in \(Weapons\) or for all except one suspect in \(Suspects\),
                 you know that they belong to any player, then the remaining weapon or suspect is in the envelope. <br>
                 If \( \textrm{ for each } card \in \textrm{Weapons} \backslash \{x\}\), \(card_j\) where
                 \(j\ \in \textrm{Players}\), then \(x_{env}\). <br> If \(\textrm{ for each } card \in \textrm{Suspects}
@@ -202,7 +202,7 @@ layout: dinky
             </li>
         </ul>
         <p>
-        The precondition when showing a card for example is that the player has that card. In the detailed example of
+        The precondition when showing a card is, for example, that the player has that card. In the detailed example of
         <a href="./example.html">Example</a> we will also discuss the relevant action models.
         </p>
 
@@ -212,16 +212,16 @@ layout: dinky
             The rules described in <a href="#formal-rules">Rules for gaining information</a> are not explicitly stated in the implementation.
             Instead, these rules are elegantly, implicitly applied.
             This is because we only generate states for which the sets per agent and envelope (\(c_{env}, c_2, c_3\)
-            and \(c_4 )\) are pairwise exclusive, for which these sets are of fixed lengths (two for the envelope, three for the players)
+            and \(c_4\)) are pairwise exclusive, for which these sets are of fixed lengths (two for the envelope, three for the players)
             and for which the envelope set always has one weapon and one suspect card.
-            This limitation in the state generation makes it so that with little new information, a lot of relations can be directly removed.
+            These limitations in the state generation makes it so that with little new information, a lot of relations can be directly removed.
             An example of this is given in <a href="./example.html">Example</a>.
         </p>
         <p>
-            If for any player j, \(R_j \subseteq S \times S\) such that \(\textrm{ for all } R_j, R_j = \{(s, t)
+            If for any player \(j\), \(R_j \subseteq S \times S\) such that \(\textrm{ for all } R_j, R_j = \{(s, t)
             \in S \times S | c_{env} \textrm{ in } t\}\) (\(c_{env}\) is a constant here), they have won the game.
             In other words, if any player knows for sure what cards are in the envelope, they have won the game.
-            In the Kripke model, this means that for this player j, there are only relations \(R_j\) left that are all
+            In the Kripke model, this means that for this player \(j\), there are only relations \(R_j\) left that are all
             pointed towards a state with one certain envelope set \(c_{env}\).
             Note that this does not have to mean that there is only one relation left for a player.
             For instance, a player might not have yet found out whether one specific card belongs to player P or Q,
