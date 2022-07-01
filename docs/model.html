@@ -184,6 +184,26 @@ layout: dinky
             A detailed example is given in <a href="./example.html">Example</a>.
         </p>
         <p>
+        Public and private announcements can be seen as action models.
+        Action models are of the structure \( \langle E, ~, pre \rangle \), as described in
+            Dynamic Epistemic Logic by Van der Hoek et al.
+        </p>
+        <ul>
+            <li> \(E\) is a domain of action points or events
+            </li>
+            <li>
+                \(~_a\) is an equivalence relation on \(E\)
+            </li>
+            <li>
+                \(pre: E \rightarrow L \) is a precondition function that assigns a precondition to each \(e \in E\).
+            </li>
+        </ul>
+        <p>
+        The precondition when showing a card for example is that the player has that card. In the detailed example of
+        <a href="./example.html">Example</a> we will also discuss the relevant action models.
+        </p>
+
+        <p>
             In our digital implementation, the Kripke model is indeed updated based on the players' newly gained information.
             Relations are removed iteratively after each player's turn.
             The rules described in <a href="#formal-rules">Rules for gaining information</a> are not explicitly stated in the implementation.
@@ -196,7 +216,7 @@ layout: dinky
         </p>
         <p>
             If for any player j, \(R_j \subseteq S \times S\) such that \(\textrm{ for all } R_j, R_j = \{(s, t)
-            \in S \times S | c_{env} \textrm{ in } t\) (\(c_{env}\) is a constant here), they have won the game.
+            \in S \times S | c_{env} \textrm{ in } t\}\) (\(c_{env}\) is a constant here), they have won the game.
             In other words, if any player knows for sure what cards are in the envelope, they have won the game.
             In the Kripke model, this means that for this player j, there are only relations \(R_j\) left that are all
             pointed towards a state with one certain envelope set \(c_{env}\).
@@ -211,4 +231,4 @@ layout: dinky
             Notice that it might occur that there are multiple winners.
         </p>
     </div>
-
+</div>
