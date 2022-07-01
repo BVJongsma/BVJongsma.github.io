@@ -39,8 +39,8 @@ layout: dinky
             We tested the strategies mentioned above versus the random strategy. Player 1 would get one of the strategies
             and the other players would use the random strategy. For each strategy, we ran the model until a winner was
             found ten times and determined the average amount of steps and the win rate of the first
-            player. The division of cards among the players and the envelope was randomised, which can lead to big
-            differences in a single run, but should even out in 10 runs per strategy.
+            player. The division of cards among the players and the envelope was randomised, and players responded
+            with cards they had already shown if they had both cards.
         </p>
     </div>
 </div>
@@ -48,7 +48,19 @@ layout: dinky
 <!-- results -->
 <div id="results">
     <h1>Results</h1>
+    <p>
+        Table 1 shows the results for all the strategies after 10 runs. There is a large difference between strategies
+        for the win rate of player 1. There are 3 players, so you would expect player 1 to win about 33% of the time.
+        The strategies ONE_OWN and REASONING perform worse with respectively a 20 and 30% win rate for player 1.
+        The ONE_UNKNOWN strategy gives the best performance with a win rate of 70% for player 1.
+        The difference in the amount of turns
+        per player is on average quite small, with a minimum of 5.6 turns when player 1 only asks for cards not owned
+        and a maximum of 6.9 turns per player when player 1 asks for one unknown card. This makes sense, as asking for
+        the cards that update the most knowledge should generally lead to faster games.
+    </p>
+
 <table>
+  <caption>Table 1. Results after 10 runs for all strategies.</caption>
   <tr>
     <th></th>
     <th>NOT_OWN</th>
@@ -58,7 +70,7 @@ layout: dinky
     <th>REASONING</th>
   </tr>
   <tr>
-    <td>Win rate player 1</td>
+    <th>Win rate player 1</th>
     <td>60%</td>
     <td>20%</td>
     <td>50%</td>
@@ -66,7 +78,7 @@ layout: dinky
     <td>30%</td>
   </tr>
   <tr>
-    <td>Average amount of turns per player</td>
+    <th>Average amount of turns per player</th>
     <td>5.6</td>
     <td>6.5</td>
     <td>6</td>
@@ -74,16 +86,30 @@ layout: dinky
     <td>5.8</td>
   </tr>
 </table>
+
+    <p>
+        When solely considering win rate, the ONE_UNKNOWN strategy gives the best performance. However, the NOT_OWN
+        strategy only has 1 win less and has less average turns per player. The difference in performance could
+        potentially be explained away because of random initialisation / the other players selecting random cards.
+        Having many cards from one category and not from another can heavily influence the amount of initial relations
+        for a player. Moreover, if two players ask for a card that is in the envelope and do not get shown any cards,
+        then it is easy to determine that this card is in the envelope, resulting in much faster convergence to the
+        solution than in some other cases.
+    </p>
+
+    <p>
+        This performance measure indicates that ONE_UNKNOWN and NOT_OWN give the best performance. However, we did
+        not take into account performance against other strategies, as some of these strategies might work really
+        well if another player uses another strategy than randomly selecting cards. Moreover, we worked with a
+        simplified version of the game and some of these strategies might start to show better performance when using
+        more cards. So, it would be interesting to consider a direct comparison of strategies in future research instead
+        of comparing against a random strategy, as well as using less simplifications in the model.
+    </p>
 </div>
 
 
-<!-- discussion -->
+<!-- TODO discussion -->
 <div id="discussion">
     <h1>Discussion</h1>
 </div>
 
-
-<!-- conclusion -->
-<div id="conclusion">
-    <h1>Conclusion</h1>
-</div>
