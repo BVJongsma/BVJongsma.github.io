@@ -5,7 +5,6 @@ layout: dinky
 <div id="A game example">
     <h1>Example</h1>
         <p>
-            >>>>>>>>>>>>>>>> TODO add action models
             We will now show examples of a (illustrated) Kripke model.
             We will see how players base their decisions on this model and how the model is updated as the game of Clue progresses.
         </p>
@@ -116,8 +115,7 @@ layout: dinky
                     Player 3 knows \(pre(show(dagger)) = dagger_2\) is false, so there are no states for which this precondition
                     is relevant. The precondition \(pre(show(Scarlet)) = Scarlet_2\) is relevant, and thus only states
                     where agent 2 has the Scarlet card will remain.
-                    >>>>>>>>>>>>>>> TODO the below description does not hold for our implementation -- Explain this + why?
-                    In the last step, we remove one-sided relations, since those start from a state that is
+                    In the last step, for visualisation purposes, we remove one-sided relations, since those start from a state that is
                     impossible for the respective player and therefore are not relevant for finding the content of the envelope.
                     Moreover, states without relations are removed to clarify which potential states are still possible.
                     In this small example, only the actual state remains after all players have updated their relations.
@@ -156,15 +154,13 @@ layout: dinky
                     <p>
                     Player 3 does not know that \(pre(show(candle)) = candle_2\) is false. So now all states where one of the
                     preconditions is true will remain.
-                    >>>>>>>>>>>>>>>>>>>> TODO same as previous TODO
-                    For step 4, irrelevant relations and states are removed again. Here, more
+                    For step 4, irrelevant relations and states are removed again to show the relevant states. Here, more
                     potential states are still considered possible by player 3 than only the actual state.
                 </p>
             </div>
             <!-- 6.2 Asking for cards: not showing a card -->
             <div id="dont-show-a-card"> <!-- 6.2 Asking for cards: not showing a card -->
                 <h3>Card suggestion: player has none of the suggested cards</h3>
-                <strong>[TODO: explain this and work out using an example.]<br></strong>
                 <p>
                     During a turn a player can ask another player for 2 cards: a weapon and a suspect.
                     If this player does not have those cards, then no card will be shown.
@@ -197,7 +193,6 @@ layout: dinky
                     <p>
                     For all agents, only states with this precondition will remain, so there will only be states
                     where agent 2 does not have the candle and does not have Green.
-                    >>>>>>>>>>>>> TODO same as previous TODO
                     In step 4 all irrelevant relations and states are removed, leaving only the actual state.
                 </p>
             </div>
