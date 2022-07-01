@@ -9,7 +9,6 @@ from Implementation.src.mlsolver.kripke import KripkeStructure, World
 
 PRINT = False
 
-
 class Clue:
     """
     Class models the Kripke structure of Clue.
@@ -199,7 +198,6 @@ class Clue:
                     unknown_cards[agent - 1].append(card_info)
         return KB, unknown_cards
 
-    # TODO make prettier + comment
     # Update the knowledge dictionary.
     def update_knowledge_dictionary(self, knowledge_dict, unknown_cards):
         for agent_id in range(1, self.num_agents + 1):
@@ -235,7 +233,7 @@ class Clue:
                     # All cards except for the ones in the dictionary are the unknown cards
         return knowledge_dict, unknown_cards
 
-    # TODO comment
+    # Check if an unknown card is part of the envelope or next agent cards for a specific world
     def find_card_in_world(self, unknown_cards, relation_world, index):
         # Check the envelope cards and agent cards for this world
         cards = re.findall(r'\:(.*)', str(list(relation_world.assignment.keys())[index]))[0]
@@ -247,7 +245,7 @@ class Clue:
                 unknown_cards.remove(card)
         return unknown_cards
 
-    # TODO comment
+    # Find unknown cards that might part of the envelope or next agent
     def find_possible_cards(self, unknown_cards, self_agent_id, next_agent_id):
         unknown_envelope_cards = copy.deepcopy(unknown_cards)
         unknown_next_agent_cards = copy.deepcopy(unknown_cards)
@@ -263,38 +261,6 @@ class Clue:
         possible_next_agent_cards = list(set(unknown_cards).difference(unknown_next_agent_cards))
 
         return sorted(possible_envelope_cards, key=str.lower), sorted(possible_next_agent_cards, key=str.lower)
-
-    # TODO Remove. Still to remove?
-    # Get cards that are unknown for an agent (i.e. could be in the hands of various players/the envelope)
-    def get_unknown_cards(self, cards, agent_id):
-        unknown_cards = []
-        # Go through all cards
-        for card in cards:
-            old_i = None
-            unknown = False
-            # For each card, keep track of where they belong according to the worlds
-            for relation in self.relations[str(agent_id)]:
-                relation_world = self.worlds[int(relation[1])]
-                # i is the envelope (0), or one of the agents (1, 2 or 3)
-                for i in range(self.num_agents + 1):
-                    # Turn the strings in a world assignment to a list
-                    i_cards = re.findall(r'\:(.*)', str(list(relation_world.assignment.keys())[i]))[0]
-                    i_cards_list = ast.literal_eval(i_cards)
-                    i_cards_list = [i_card.strip() for i_card in i_cards_list]
-                    if card in i_cards_list:
-                        new_i = i
-                        if old_i == None:
-                            old_i = new_i
-                        elif new_i != old_i:
-                            unknown_cards.append(card)
-                            unknown = True
-                            break
-                        else:
-                            old_i = new_i
-                if unknown:
-                    break
-        return unknown_cards
-
 
 def add_symmetric_edges(relations):
     """Routine adds symmetric edges to Kripke frame

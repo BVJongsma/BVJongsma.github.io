@@ -1,6 +1,5 @@
 import random
 
-
 class Cards:
     """The cards that are present in the game"""
 

@@ -1,6 +1,5 @@
 import mesa
 
-
 class EnvelopeAgent(mesa.Agent):
     """The case file envelope containing the murder weapon and killer cards."""
 

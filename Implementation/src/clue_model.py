@@ -103,14 +103,12 @@ class ClueModel(mesa.Model):
             # Update the relations for the agent that did not ask for the cards.
             self.kripke_model.get_kripke_structure().relation_solve(updating_agent, announcement, asked_agent_id)
 
-    # TODO does this go here? Do we even need it?
     # Update the knowledge dictionary.
     def update_knowledge_dict(self):
         self.knowledge_dict, self.unknown_cards = self.kripke_model.update_knowledge_dictionary(self.knowledge_dict,
                                                                                                 self.unknown_cards)
 
-    # Check if there is a winner of the game
-    # TODO what if there are multiple agents that win at the same time?
+    # Check if there is a winner of the game.
     def check_end_state(self):
         winner, guess = self.kripke_model.find_winner()
         if not winner:

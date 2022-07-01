@@ -4,7 +4,6 @@ from Implementation.src.mlsolver.formula import Atom
 
 PRINT = False
 
-
 class ClueAgent(mesa.Agent):
     """An agent who plays the game of Clue."""
 
@@ -233,7 +232,6 @@ class ClueAgent(mesa.Agent):
         return sorted([known_card, unknown_card], key=str.lower)
 
     # Update the knowledge of all agents via a public or private announcement
-    # TODO move to clue_model?
     def update_knowledge(self, suggestion, response):
         if response is None:  # Next agent does not have any of the cards
             # Publicly announce that next agent does not have any
@@ -243,7 +241,6 @@ class ClueAgent(mesa.Agent):
             self.model.publicly_announce(self, self.next_agent, suggestion, True)
             # Privately announce the card of next agent to this self agent
             self.privately_announce(response)
-        # TODO Where does this go?
         self.model.update_knowledge_dict()
 
     # Announce privately to the suggesting agents that this agent has a certain card

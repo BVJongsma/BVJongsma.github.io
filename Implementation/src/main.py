@@ -10,7 +10,6 @@ PRESS_ENTER = False #make True if you want to press enter between turns
 NUM_WEAPONS = 4
 NUM_SUSPECTS = 4
 
-
 # One run with some selected strategies.
 def run(strategy_agent1, strategy_other_agents, use_interface):
     # Create a Clue model with three players
