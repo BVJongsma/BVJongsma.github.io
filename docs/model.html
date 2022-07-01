@@ -4,7 +4,6 @@ layout: dinky
 
 <!-- section 5: implementation-->
 <div id="implementation">
-    >>>>>>>>>>>>>> TODO also show/explain interface!!!
     <h1>Model and Implementation</h1>
     <p>
         We formalise <a href="./simplifications.html">the simplified game of Clue</a> in a model.
@@ -42,7 +41,7 @@ layout: dinky
             Instead of 'spanner', 'wrench' was used because the latter is a more well-known word for the same thing.
             'candlestick' and 'lead pining' were shortened.
             'revolver' was altered to the synonymous 'handgun'.
-            This was done to ensure that all card names have a different first letter (which may be useful when we want to use concise notations for them).
+            This was done to ensure that all card names have a different first letter (which is useful when we want to use concise notations for them).
         </p>
         <p>
             We will use the set \(\textrm{Cards} = \textrm{Weapons} \cup \textrm{Suspects}\) to refer to the set of all cards.
@@ -117,7 +116,8 @@ layout: dinky
         <h2>Rules for gaining information</h2>
         In a game of clue, some logical rules apply.
         Players can use these rules to update their knowledge on the game.
-        Using (a combination of) these rules, relations in \( R_1, R_2\) and \(R_3\) can be removed from the Kripke model.<br>
+        Using (a combination of) these rules, relations in \( R_1, R_2\) and \(R_3\) can be removed from the Kripke model.
+        The rules are: <br>
         <ol>
             <li>
                 If one player has a certain card, then the other player cannot have that card. <br>
@@ -142,7 +142,7 @@ layout: dinky
             </li>
             <br>
             <li>
-                If for all except one weapons in \(Weapons\) or for all except one suspects in \(Suspects\),
+                If for all except one weapon in \(Weapons\) or for all except one suspect in \(Suspects\),
                 you know that they belong to any player, then the remaining weapon or suspect is in the envelope. <br>
                 If \( \textrm{ for each } card \in \textrm{Weapons} \backslash \{x\}\), \(card_j\) where
                 \(j\ \in \textrm{Players}\), then \(x_{env}\). <br> If \(\textrm{ for each } card \in \textrm{Suspects}
