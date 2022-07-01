@@ -20,7 +20,7 @@ Running the implementation goes as follows:
 1. Please make sure all required packages are installed.
 2. The `Implementation/src/main.py` program can be run, either from the command line or by using bash.
     It does not require additional input, but a few global boolean values can be set in the main.py.
-   * SHORT_RUN (default: True): Play one game. The interface is then only shown for this game.
+   * SHORT_RUN (default: True): Play one game. This shows the interface.
     * DIFFERENT_STRATEGIES: Run all combinations of strategies against each other. Agent 1 has one strategy, agent 2 and 3 both have another stategy.
     * STRAT_VS_RANDOM: Agent 1 has a different strategy every time, while both Agent 2 and Agent 3 have the 'RANDOM' strategy.
     * ENTER (default: False): If this is set to True, you need to continually press enter before the next turn is taken.
