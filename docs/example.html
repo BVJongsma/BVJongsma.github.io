@@ -55,7 +55,7 @@ layout: dinky
             </p>
             <p>
                 The Kripke model is updated during every time step.
-                This is done using public announcement when not showing a card, private announcement when showing a card and applying the additional rules.
+                This is done using public announcements when not showing a card, private announcements when showing a card, plus applying the additional rules.
                 These are all described in <a href="./model.html">Model & Implementation</a>.
             </p>
         </div>
@@ -71,14 +71,13 @@ layout: dinky
             <!--6.1 Asking for cards: showing a card-->
             <div id="show-a-card"> <!--6.1 Asking for cards: showing a card-->
                 <h3>Card suggestion: player has at least one of the suggested cards</h3>
-                <strong>[TODO: explain this and work out using an example.]<br></strong>
                 <p>
                     During a turn a player can ask another player for 2 cards: a weapon and a suspect.
                     If this player has one of those cards, this card will be shown only to the player who asked for the card.
                     This is a private announcement and action models can be used to show the update of the Kripke model after showing the card.
                     We will now consider two examples of what happens when player 2 shows a card to player 1.
                     The difference between these two scenarios is the amount of knowledge player 3 has as a result.
-                    The figures indicate what happens in our model, the action model update is slightly different
+                    The figures indicate what happens in our model. The action model updates are slightly different,
                     as explained in the accompanying text.
                 </p>
 
@@ -88,15 +87,15 @@ layout: dinky
                         determine the card.</figcaption>
                 </figure>
                 <p>
-                    Consider Figure 2 and the following scenario: player 1 asks player 2 {dagger, Scarlet}.
+                    Consider Figure 2 and the following scenario: player 1 asks player 2 {dagger, Scarlet} as a suggestion.
                     Player 2 has Scarlet, and thus shows this card. Note that player 3 already knows that player 1 has the dagger.
                 </p>
                 <p>
-                    Step 1 shows the original model. Step 2 shows the model after player 1 has updates its
+                    Step 1 shows the original model. Step 2 shows the model after player 1 has updated their
                     relations. Player 2 has shown player 1 the Scarlet card, so player 1 removes all relations to states where
-                    player 2 does not have Scarlet, since those states are no longer possible. As can be seen in figure 2,
+                    player 2 does not have Scarlet, since those states are no longer possible. As can be seen in Figure 2,
                     this corresponds to player 1 removing the relation from state 1 to state 3 and the reflexive relation of
-                    state 3. In step 3, player 3 updates its relations.
+                    state 3. In step 3, player 3 updates their relations.
                     Since player 1 asked for {dagger, Scarlet} and was shown a card, it must be the case that player 2 has Scarlet.
                     After all, player 3 already knows that player 1 has the dagger.
                     So, player 3 removes all relations to states where player 2 does not
