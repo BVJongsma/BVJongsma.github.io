@@ -109,12 +109,12 @@ layout: dinky
                             \(~_1 = \{(e,e)| e \in E\}, ~_2 = \{(e,e)| e \in E\}, ~_3 = E \times E\)
                         </li>
                         <li>
-                            pre(show(dagger)) = dagger_2, pre(show(Scarlet)) = Scarlet_2.
+                            \(pre(show(dagger)) = dagger_2, pre(show(Scarlet)) = Scarlet_2\).
                         </li>
                     </ul>
                     <p>
-                    Player 3 knows pre(show(dagger)) = dagger_2 is false, so there are no states for which this precondition
-                    is relevant. The precondition pre(show(Scarlet)) = Scarlet_2 is relevant, and thus only states
+                    Player 3 knows \(pre(show(dagger)) = dagger_2\) is false, so there are no states for which this precondition
+                    is relevant. The precondition \(pre(show(Scarlet)) = Scarlet_2\) is relevant, and thus only states
                     where agent 2 has the Scarlet card will remain.
                     >>>>>>>>>>>>>>> TODO the below description does not hold for our implementation -- Explain this + why?
                     In the last step, we remove one-sided relations, since those start from a state that is
@@ -150,11 +150,11 @@ layout: dinky
                             \(~_1 = \{(e,e)| e \in E\}, ~_2 = \{(e,e)| e \in E\}, ~_3 = E \times E\)
                         </li>
                         <li>
-                            pre(show(candle)) = candle_2, pre(show(Scarlet)) = Scarlet_2.
+                            \(pre(show(candle)) = candle_2, pre(show(Scarlet)) = Scarlet_2\).
                         </li>
                     </ul>
                     <p>
-                    Player 3 does not know that pre(show(candle)) = candle_2 is false. So now all states where one of the
+                    Player 3 does not know that \(pre(show(candle)) = candle_2\) is false. So now all states where one of the
                     preconditions is true will remain.
                     >>>>>>>>>>>>>>>>>>>> TODO same as previous TODO
                     For step 4, irrelevant relations and states are removed again. Here, more
@@ -185,13 +185,13 @@ layout: dinky
                     As far as an action model goes, this is a public announcement:
                     </p>
                     <ul>
-                        <li> \(E = \{do_not_show_cards()\)
+                        <li> \(E = \{do\_not\_show\_cards()\)
                         </li>
                         <li>
                             \(~_1 = E \times E, ~_2 = E \times E, ~_3 = E \times E\)
                         </li>
                         <li>
-                            pre(do_not_show_cards()) = \neg candle_2 \land \neg Green_2.
+                            \(pre(do\_not\_show\_cards()) = \neg candle_2 \land \neg Green_2\).
                         </li>
                     </ul>
                     <p>
