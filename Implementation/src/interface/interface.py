@@ -16,7 +16,7 @@ class GameInterface:
         self.win = init_window(self.num_agents, self.num_cards)
         self.last_agent = -1
         self.finished = False
-        self.winner = None
+        self.winner = []
         columns = ('items',)
         for i in range(1, self.num_agents + 1):
             columns += ('agent' + str(i),)
@@ -32,9 +32,11 @@ class GameInterface:
     def message_frame_init(self):
         frame = tk.Frame()
         frame.pack(pady=5)
-        canvas = tk.Canvas(self.win, width=300, height=75, bg="#ffffff")
-        line1 = canvas.create_text(150, 10, anchor=tk.CENTER, text="line 1")
-        line2 = canvas.create_text(150, 30, anchor=tk.CENTER, text="line 2")
+        WIDTH=450
+        HEIGHT=75
+        canvas = tk.Canvas(self.win, width=WIDTH, height=HEIGHT, bg="#ffffff")
+        line1 = canvas.create_text(WIDTH/2, 10, anchor=tk.CENTER, text="")
+        line2 = canvas.create_text(WIDTH/2, 30, anchor=tk.CENTER, text=" ")
         canvas.pack()
         return canvas, line1, line2
 
@@ -122,7 +124,7 @@ class GameInterface:
                 self.tree.item(card_name, values=new_tuple)
             if env >= 2:
                 self.finished = True
-                self.winner=agent
+                self.winner.append(agent)
         return
 
     def get_new_relations(self):
