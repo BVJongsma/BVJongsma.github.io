@@ -14,12 +14,15 @@ layout: dinky
         It uses <a href="https://mesa.readthedocs.io/en/latest/">Mesa</a> [2] and <a href="https://github.com/erohkohl/mlsolver">MLsolver</a> [3].
     </p>
     <!-- navigation -->
-    <ul>
-            <li><a href="#card-player-representation">Formal card and player representation</a></li>
-            <li><a href="#the-kripke-model">The Kripke Model</a></li>
-            <li><a href="#formal-rules">Rules for gaining information</a></li>
-            <li><a href="#formal-rules">Updating the Kripke model</a></li>
-    </ul>
+    <!--<nav>-->
+        <ul>
+                <li><a href="#card-player-representation">Formal card and player representation</a></li>
+                <li><a href="#the-kripke-model">The Kripke Model</a></li>
+                <li><a href="#formal-rules">Rules for gaining information</a></li>
+                <li><a href="#updating-the-kripke-model">Updating the Kripke model</a></li>
+                <li><a href="#implementation-explained">The Implementation</a></li>
+        </ul>
+    <!--</nav>-->
     <div id="card-player-representation">
         <h2>Formal card and player representation</h2>
         <p>
@@ -148,7 +151,7 @@ layout: dinky
         </ol>
     </div>
 
-    <div id="Updating the Kripke model">
+    <div id="updating-the-kripke-model">
         <h2>Updating the Kripke model</h2>
         <p>
             As the players take turns, they gain more and more information.
@@ -186,8 +189,7 @@ layout: dinky
         </p>
         <p>
         Public and private announcements can be seen as action models.
-        Action models are of the structure \( \langle E, ~, pre \rangle \), as described in
-            Dynamic Epistemic Logic by Van der Hoek et al.
+        Action models are of the structure \( \langle E, \sim, pre \rangle \) [4].
         </p>
         <ul>
             <li> \(E\) is a domain of action points or events
@@ -230,6 +232,53 @@ layout: dinky
             through each player's relations in the Kripke model and checks, based on this, if there is a winner.
             The system then presents this winner and stops running.
             Notice that it might occur that there are multiple winners.
+        </p>
+    </div>
+    <div>
+        <h2 id="implementation-explained">The Implementation</h2>
+        <p>
+            The implementation is given as an interface.
+            By running the implementation, a window pops up which shows:
+        </p>
+            <ul>
+                <li>
+                    A table displaying the knowledge of the agents.
+                    After each turn, the table is updated, giving the current information on what the agents know.
+                    The information is displayed as following:
+                    Each column shows the information of one agent.
+                    The top row shows for each agent how many relations they still have in the Kripke model.
+                    The rows below show for each agent whether they know who owns the card of that row.
+                    For example, in the column 'Agent 1', row 'Mustard', the value there tells us whether Agent 1 knows where the card Mustard is.
+                    If this is a '?', this agent is not yet aware where that card is.
+                    If the value of a row is an Agent X, the column-agent knows that Agent X is in possession of that card.
+                </li>
+                <li>A button, pressing it allows the model to give the next agent a turn.</li>
+                <li>A message box, which tells you either what happened during the last turn or who is the winner.</li>
+            </ul>
+        <p>
+            An example of how the interface looks during a game is given below.<br>
+        </p>
+        <figure>
+            <img src="figures/interface_picture.png" alt="The interface during a turn." style="width:85%">
+            <figcaption>Figure 1 - The interface</figcaption>
+        </figure>
+        <p>
+            In this example, already a few turns are taken. From the message box we can see that during the last turn, Agent 2 asked Agent 3
+            whether they had any of the cards 'Green' and 'rope'. Agent 3 replied with 'rope'. <br>
+            A private announcement is made to Agent 2 that agent 3 has 'rope'. Agent 2 now knows that Agent 3 has the card rope.
+            A public announcement is made that agent 3 has either Green or rope. Since Agent 1 already know that
+            Agent 2 owns the Green card, they now know that Agent 3 has card rope.<br>
+            This can be seen in the table: The column of both Agent 1 and Agent 2 have 'Agent 3' in the rope column.
+        </p>
+        <p>
+            Note that sometimes during a turn the information in the table is not updated, but the relations are.
+            This usually happens during the beginning of the game, when public announcements are made that tell us
+            an agent has either one of two cards.
+            The agents cannot definitely tell that a certain agent has a certain card, but they can still cross off some states
+            (namely, the states where the other agent does not have one of the two cards as announced).
+        </p>
+        <p>
+            For more information on how to run the implementation, read the README.md on <a target="_blank" href="https://github.com/BVJongsma/ClueModel">Github</a>
         </p>
     </div>
 </div>

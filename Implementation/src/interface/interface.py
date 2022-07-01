@@ -6,9 +6,16 @@ import main
 class GameInterface:
     """"
     The interface of the game: this shows a table displaying what information each agent has.
-
+    The columns show a database of what each agent knows.
+    The rows show the different cards.
+    e.g. If in column "Agent 1", row "dagger" it says: "Agent 3", this means that Agent 1 knows that Agent 3 has the card "dagger".
+    A '?' means that the agent still does not know where the card is.
     """
     def __init__(self, model):
+        """"
+        Initialising the Gameinterface.
+        """
+        #Initialise model and values
         self.model = model
         self.num_agents = model.num_agents
         cards_set = ca.Cards(self.num_agents, self.model.num_weapons, self.model.num_suspects)
@@ -17,19 +24,31 @@ class GameInterface:
         self.last_agent = -1
         self.finished = False
         self.winner = []
+        # initialise table structure
         columns = ('items',)
         for i in range(1, self.num_agents + 1):
             columns += ('agent' + str(i),)
         self.tree = ttk.Treeview(self.win, column=columns, show='headings', height=(self.num_cards + 1))
         self.KB, self.unknown_cards = self.model.kripke_model.initialise_known_dictionary(self.model.agents)
         self.tree.pack()
+        #input table information
         self.init_table_information()
         self.input_KB_table()
+        #input 'Next Agent's turn' button
         self.refresh_button()
+        #input message box
         self.canvas, self.line1, self.line2 = self.message_frame_init()
+        #Let the interface run
         self.win.mainloop()
 
     def message_frame_init(self):
+        """"
+        initialise the message frame
+        :returns
+            canvas: type tk.Canvas, the canvas in which text is written.
+            line1: type tk.Canvas.create_text, line 1 of the text.
+            line2: type tk.Canvas.create_text, line 2 of the text.
+        """
         frame = tk.Frame()
         frame.pack(pady=5)
         WIDTH=450
@@ -41,6 +60,15 @@ class GameInterface:
         return canvas, line1, line2
 
     def message_frame(self, line1, line2, agent, s, r):
+        """"
+        The message box of the interface is updated.
+        :returns
+            line1: type tk.Canvas.create_text
+            line2: type tk.Canvas.create_text
+            agent: type int. The agent which turn it is. This is the agent that asks the question.
+            s: type List[String]. the cards the agent asks for.
+            r: type String. the response from the other agent: either a weapon card, color card or None.
+        """
         if self.finished is True:
             self.canvas.itemconfig(line1, text="There is a winner!")
             self.canvas.itemconfig(line2, text="It is Agent " + str(self.winner))
@@ -52,11 +80,14 @@ class GameInterface:
         self.canvas.pack()
         return
 
-
     def update_table(self):
+        """"
+        When refresh_button is pressed, the next agent takes it turn.
+        The relations and KB are updated, after which
+        the table as shown in the interface and the message box are updated.
+        """
         if self.finished is True:
             print("the winner is already known!")
-            self.message_frame(self.line1, self.line2, 0, "s", "r")
             return
         # the model takes one agent's turn
         self.last_agent += 1
@@ -65,15 +96,24 @@ class GameInterface:
         s,r = agent_turn.step()  # KB is updated during the step
         self.KB, self.unknown_cards = self.model.knowledge_dict, self.model.unknown_cards
         self.input_KB_table()  # put KB knowledge in the table
-        self.message_frame(self.line1, self.line2, self.last_agent, s,r)
         if self.finished is True:
+            self.message_frame(self.line1, self.line2, 0, "s", "r")
             main.loop_strategies()
+            return
+        self.message_frame(self.line1, self.line2, self.last_agent, s, r)
+        return
 
     def refresh_button(self):
+        """"the refresh button that is seen on the interface."""
         refresh_button = tk.Button(self.win, text="Next Agent's turn", command=self.update_table)
         refresh_button.pack(pady=5)
+        return
 
     def init_table_information(self):
+        """"
+        initialise the data to put in the table, before the game starts.
+        This means: the names of the cards and the agent's own cards.
+        """
         # define columns and headings
         self.tree.column("#0", width=0, stretch=tk.NO)
         self.tree.heading("#0", text="", anchor=tk.CENTER)
@@ -107,6 +147,10 @@ class GameInterface:
         return
 
     def input_KB_table(self):
+        """"
+        A function that updates the table. It takes the information from self.KB
+        and makes new tuples, that then get added to the correct table row.
+        """
         for agent in [a.get_unique_id() for a in self.model.agents]:
             self.tree.item('relations', values=self.get_new_relations())
             env = 0
@@ -128,20 +172,25 @@ class GameInterface:
         return
 
     def get_new_relations(self):
-        x = self.model.kripke_model.relations
+        """"
+        :returns
+            values = tuple of strings, containing the relations of all the agents.
+        """
+        rel = self.model.kripke_model.relations
         values = ('relations',)
         for a in self.model.agents:
-            values += (str(len(x[str(a.get_unique_id())])),)
+            values += (str(len(rel[str(a.get_unique_id())])),)
         return values
 
-    def get_model(self):
-        return self.model
-
-    def get_num_agents(self):
-        return self.num_agents
-
 def init_window(num_agents, num_cards):
-    """"This initializes the window"""
+    """"
+    This initializes the window
+    :argument
+        num_agents: the amount of agents. type: int
+        num_cards: the amount of cards. type: int
+    :returns
+        win: the window. type: Tk
+    """
     win = tk.Tk()
     # title
     win.title('A model of Clue')
