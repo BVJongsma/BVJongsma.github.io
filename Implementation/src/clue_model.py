@@ -7,7 +7,7 @@ from Implementation.src.cards import Cards
 from Implementation.src.mlsolver.model import Clue
 from Implementation.src.mlsolver.formula import Atom, And, Not, Or
 
-PRINT = False
+PRINT = True
 
 class ClueModel(mesa.Model):
     """A model with some number of agents."""

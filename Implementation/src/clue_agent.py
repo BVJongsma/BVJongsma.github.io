@@ -2,7 +2,7 @@ import random
 import mesa
 from Implementation.src.mlsolver.formula import Atom
 
-PRINT = False
+PRINT = True
 
 class ClueAgent(mesa.Agent):
     """An agent who plays the game of Clue."""
