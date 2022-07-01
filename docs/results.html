@@ -5,7 +5,6 @@ layout: dinky
 <div id="experiment">
     <h1>Experiment & Results</h1>
     <p>
-        >>>>>>>>>>>>>> TODO not here, but in the model & implementation: make clear that ofc these are perfect logicians, not actually how people would reason in clue.
         As explained in <a href="./model.html">Model & Implementation</a>, a digital implementation of Clue in Python was created.
         This program makes use of a Kripke model and public and private announcements are used to update this
         model, so players can eventually determine the cards in the envelope.
@@ -52,6 +51,8 @@ layout: dinky
         The first three of these strategies, RANDOM, NOT_OWN and ONE_OWN are simple and straightforward.
         UNKNOWN is similar to the NOT_OWN strategy, especially in the beginning of the game.
         However, it keeps track of new information that is gained.
+    </p>
+    <p>
         ONE_UNKNOWN is a strategy that also keeps track of new information that is gained.
         It suggests one known card and one unknown card.
         In this way, a player can attempt to gain information on the unknown card in a more focused way.
@@ -63,6 +64,8 @@ layout: dinky
         The ONE_UNKNOWN strategy has the drawbacks that the known card that is suggested might belong to the next player and that the unknown card that is suggested might have no chance of belonging to the next player.
         If the former is the case, player P will gather no new information as the next player Q will likely show the card that the player P already knows.
         If the latter is the case, player P already knows that the unknown card does not belong to player Q (though it is still unknown, so it might, for instance, either belong to the envelope or to player U), so they have no use in suggesting this card.
+    </p>
+    <p>
         This is where the REASONING strategy comes into play.
         This strategy ensures that the known card isn't of the next player and that the unknown card might be of the next player.
         Ideally, the unknown card might be of the next player or the envelope.
